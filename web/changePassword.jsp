@@ -34,7 +34,6 @@
     <meta name="twitter:card" content="" />
 
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <link rel="shortcut icon" href="favicon.ico">
 
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
 
@@ -48,6 +47,8 @@
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script src="js/inputCheck.js"></script>
+    <!--输入合法性检验-->
 
 </head>
 <body>
@@ -58,7 +59,7 @@
 
 
             <!-- Start Sign In Form -->
-            <form action="ChgPw.action" class="fh5co-form animate-box" data-animate-effect="fadeIn">
+            <form name="form1" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
                 <h2>更改密码</h2>
                 <div class="form-group">
                     <label for="user.username" class="sr-only">Name</label>
@@ -77,7 +78,7 @@
                     <input type="password" class="form-control" id="re-password" placeholder="重复密码" autocomplete="off">
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="更改" class="btn btn-primary">
+                    <input type="submit" onclick="ChgPwCheck()" value="更改" class="btn btn-primary">
                 </div>
             </form>
             <!-- END Sign In Form -->
