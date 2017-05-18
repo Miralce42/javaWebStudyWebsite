@@ -26,6 +26,7 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else{
+            this.addActionMessage("用户名或密码错误！");
             return "Fail";
         }
     }
@@ -36,6 +37,7 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else {
+            this.addActionMessage("用户名或密码错误！");
             return "Fail";
         }
     }

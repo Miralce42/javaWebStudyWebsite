@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -61,6 +62,7 @@
             <!-- Start Sign In Form -->
             <form name="form1" method="post" class="fh5co-form animate-box" data-animate-effect="fadeIn">
                 <h2>更改密码</h2>
+                <s:actionmessage />
                 <div class="form-group">
                     <label for="user.username" class="sr-only">Name</label>
                     <input type="text" class="form-control" id="user.username" name="user.username" placeholder="用户名" autocomplete="off">

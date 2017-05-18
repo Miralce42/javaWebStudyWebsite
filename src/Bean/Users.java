@@ -13,7 +13,6 @@ public class Users {
     }
 
     public void setPassword(String password) {
-        System.out.println("setPassword运行了");
         this.password = password;
     }
 
@@ -22,7 +21,6 @@ public class Users {
     }
 
     public void setUsername(String username) {
-        System.out.println("setUsername运行了");
         this.username = username;
     }
 
