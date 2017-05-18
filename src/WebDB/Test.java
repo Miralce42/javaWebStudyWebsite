@@ -1,7 +1,5 @@
 package WebDB;
 
-import Bean.*;
-
 public class Test {
 
 	/** 

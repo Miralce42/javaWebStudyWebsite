@@ -1,4 +1,4 @@
-package Bean;
+package beans;
 
 /**
  * Created by 韩壮 on 2017/5/17.

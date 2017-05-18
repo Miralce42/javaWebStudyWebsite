@@ -11,6 +11,10 @@
     <title>$Title$</title>
   </head>
   <body>
-  $END$
+  <%@include file="aside.jsp"%><!--左侧布局-->
+  <div id="fh5co-main">
+    11111111
+   <!--右侧布局-->
+  </div>
   </body>
 </html>

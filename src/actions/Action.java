@@ -1,6 +1,6 @@
-package Action;
+package actions;
 
-import Bean.Users;
+import beans.Users;
 import WebDB.*;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
@@ -22,6 +22,7 @@ public class Action extends ActionSupport {
     public String Login ()throws Exception{
         int state = dao.Login(user);
         if (state==1){
+            session.setAttribute("username",user.getUsername());
             return SUCCESS;
         }
         else{

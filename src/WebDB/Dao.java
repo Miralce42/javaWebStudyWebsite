@@ -1,6 +1,6 @@
 package WebDB;
 
-import Bean.*;
+import beans.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
