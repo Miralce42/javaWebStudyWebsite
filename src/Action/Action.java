@@ -2,7 +2,6 @@ package Action;
 
 import Bean.Users;
 import WebDB.*;
-import WebDB.DBConnection;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
 
