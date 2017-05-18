@@ -1,0 +1,19 @@
+<component name="libraryTable">
+  <library name="Struts 2" type="struts2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/asm-commons.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/asm-tree.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/asm.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/commons-io.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/commons-fileupload.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/commons-lang.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/freemarker.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/javassist.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/ognl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/struts2-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../Struts2Login/web/WEB-INF/lib/xwork-core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
