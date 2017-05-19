@@ -7,6 +7,8 @@ package beans;
 public class Users {
     private String username;
     private String password;
+    private String name;
+    private String phone;
 
     private UserType userType;
 
@@ -42,6 +44,22 @@ public class Users {
 
     public void setUserPasswordOne(String userPasswordOne) {
         this.userPasswordOne = userPasswordOne;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
