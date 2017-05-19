@@ -66,7 +66,7 @@
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li class="fh5co-active"><a href="index.html">主页</a></li>
-                <li><a href="about.html">在线测试</a></li>
+                <li><a href="blog.jsp">在线测试</a></li>
                 <li><a href="blog.html">课程互动</a></li>
                 <li><a href="portfolio.html">教学大纲</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
@@ -78,7 +78,7 @@
         </nav>
 
         <div class="fh5co-footer">
-            <p><small>&copy; 2016 Blend Free HTML5. All Rights.</small></p>
+            <p><small>&copy; 2016 CS 151 Class. All Rights.</small></p>
         </div>
 
     </aside>
