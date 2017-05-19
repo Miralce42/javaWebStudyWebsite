@@ -9,6 +9,7 @@
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="Struts 2" />
+          <element id="library" level="project" name="sqljdbc4" />
         </element>
       </element>
     </root>

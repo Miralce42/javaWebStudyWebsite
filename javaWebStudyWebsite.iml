@@ -12,9 +12,9 @@
       </configuration>
       <facet type="Struts2" name="Struts 2">
         <configuration>
-          <fileset id="s2fileset" name="Default File Set " removed="false">
+          <fileset id="s2fileset" name="My Fileset 2" removed="false">
+            <file>jar://$MODULE_DIR$/web/WEB-INF/lib/struts2-core.jar!/struts-default.xml</file>
             <file>file://$MODULE_DIR$/src/struts.xml</file>
-            <file>jar://$MODULE_DIR$/../Struts2Login/web/WEB-INF/lib/struts2-core.jar!/struts-default.xml</file>
           </fileset>
           <propertiesKeys disabled="false" />
         </configuration>
@@ -30,5 +30,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Struts 2" level="project" />
     <orderEntry type="library" name="sqljdbc4" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-5.1.41-bin" level="project" />
   </component>
 </module>
