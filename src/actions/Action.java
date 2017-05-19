@@ -31,7 +31,7 @@ public class Action extends ActionSupport {
         }
     }
 
-    public String ChgPw(){
+    public String ChgPw()throws Exception{
         int states = dao.changePassword(user);
         if(states == 1){
             return SUCCESS;

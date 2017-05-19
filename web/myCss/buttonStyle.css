@@ -1,0 +1,12 @@
+.btn-blue {
+    background-color: #00AAFF;
+    border-color: #00a0f0; }
+.btn-blue:hover, .btn-blue:focus {
+    background-color: #00a0f0;
+    border-color: #00a0f0; }
+
+.btn-danger {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d43f3a;
+}

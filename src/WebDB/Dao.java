@@ -10,6 +10,7 @@ public class Dao {
 	public int Login(Users user){
 		String ssql = "select * from [WebDB].[dbo].[users]  ";
 		ssql += "where username = ? and password = ?";
+
 		ResultSet rs = null;//声明ResulteSet
 		try{
 			rs = db_manager.executeQuery(ssql,new String[]{user.getUsername(),user.getPassword()});//执行用户信息查询语句
