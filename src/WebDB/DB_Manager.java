@@ -5,6 +5,8 @@ import java.sql.*;
 
 /**
  * Created by Vove on 2017/3/21.
+ *
+ * 数据库连接、执行管理
  */
 public class DB_Manager {
     private Connection connection = null;
@@ -67,8 +69,7 @@ public class DB_Manager {
         }
     }
 
-    protected void finalize()
-    {
+    protected void finalize() {
         if (connection != null)
             try {
                 connection.close();
