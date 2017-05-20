@@ -66,6 +66,5 @@ public class Users {
     public enum UserType{
         STUDENT,//学生
         TEACHER,//教师
-        ADMINISTRATOR//后台管理员
     }
 }

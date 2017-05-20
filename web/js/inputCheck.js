@@ -5,9 +5,6 @@ function loginCheck() {
     if(username === ""){
         alert("请输入用户名！");
     }
-    else if(username.length<=3||username.length>=15){
-        alert("用户名长度不正确！");
-    }
     else if(password === ""){
         alert("请输入密码！");
     }

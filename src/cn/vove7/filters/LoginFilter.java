@@ -14,6 +14,8 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Vove on 2017/4/13.
+ *
+ * 登陆过滤器
  */
 public class LoginFilter implements Filter {
     public void destroy() {

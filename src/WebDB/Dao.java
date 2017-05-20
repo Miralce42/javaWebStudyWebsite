@@ -8,8 +8,8 @@ public class Dao {
 	private DB_Manager db_manager=new DB_Manager();
 		
 	public int Login(Users user){
-		String ssql = "select * from [WebDB].[dbo].[users]  ";
-		ssql += "where username = ? and password = ?";
+		String ssql = "select * from javawebcourseresources.users  ";
+		ssql += "where user_id = ? and password = ?";
 
 		ResultSet rs = null;//声明ResulteSet
 		try{
