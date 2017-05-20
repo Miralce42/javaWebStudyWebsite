@@ -3,7 +3,7 @@ package beans;
 /**
  * Created by 韩壮 on 2017/5/19.
  */
-public class topicComments {
+public class TopicComments {
     private String topicId;
     private String commentId;
     private String username;
