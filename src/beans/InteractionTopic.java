@@ -7,10 +7,11 @@ package beans;
  */
 public class InteractionTopic {
     private TopicType topicType;
+    private String username;
     private String topicId;
     private String title;
     private String content;
-    private String createDate="now()";
+    private Boolean isDeleted;
 
     public TopicType getTopicType() {
         return topicType;
@@ -44,17 +45,26 @@ public class InteractionTopic {
         this.content = content;
     }
 
-    public String getCreateDate() {
-        return createDate;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCreateDate(String createDate) {
-        this.createDate = createDate;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        isDeleted = deleted;
     }
 
     public enum TopicType{
         HTML,
         JSP,
+        othser,
         BACK_END
     }
 }
