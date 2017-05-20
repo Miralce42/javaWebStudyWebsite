@@ -7,7 +7,7 @@
 <struts>
     <package name="struts2" extends="struts-default">
         <action name="login" class="actions.Action" method="Login">
-            <result name="success">/模板.jsp</result>
+            <result name="success">/frontDesk_template.jsp</result>
             <result name="Fail">/login.jsp</result>
         </action>
         <action name="ChgPw" class="actions.Action" method="ChgPw">
