@@ -18,18 +18,24 @@
 <div id="fh5co-main">
     <!--右侧布局-->
     <%
-        Users user=(Users)session.getAttribute("user");
+        Users student =(Users)session.getAttribute("user");
 
-        if(user==null){//过滤器
+        if(student ==null){//过滤器
            return;
         }
 
-        StudentDAO studentDAO=new StudentDAO(user);
+        StudentDAO studentDAO=new StudentDAO(student);
 
-        ArrayList<StudentHomework> homeworkList=studentDAO.getStudentHomework();
+        ArrayList<StudentHomework> homeworkList=studentDAO.getUnfinishedHomework();
+
 
         for(StudentHomework homework:homeworkList){
-           out.println("1111111111111111111111111");
+           out.println("<div>");
+
+           out.println("<p>"+homework.getTitle()+"</p>");
+
+
+           out.println("</div>");
         }
 
     %>

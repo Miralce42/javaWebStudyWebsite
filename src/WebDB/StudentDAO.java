@@ -24,21 +24,30 @@ public class StudentDAO {
       return student;
    }
 
-   public ArrayList<StudentHomework> getStudentHomework(){
-      String sql="select homework.*,homework_status.status from homework_status,homework " +
-              "where is_closing=1 and homework_status.hw_id=homework.id and user_id=?";
+   public ArrayList<StudentHomework> getUnfinishedHomework(){
+      String sql="SELECT * FROM javawebcourseresources.homework where is_closing=0";
 
       ArrayList<StudentHomework> homeworkList=new ArrayList<StudentHomework>();
-      ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername()});
+      ResultSet resultSet=db_manager.executeQuery(sql,null);
       try {
          while (resultSet.next()){
             String id=resultSet.getString("id");
             String title=resultSet.getString("title");
             String createTime=resultSet.getString("create_time");
             String closingTime=resultSet.getString("closing_time");
-            HomeworkStatus homeworkStatus=HomeworkStatus.valueOf(resultSet.getString("status"));
 
-            StudentHomework studentHomework=new StudentHomework(id,title,createTime,closingTime,homeworkStatus);
+            StudentHomework studentHomework=new StudentHomework(id,title,createTime,closingTime);
+
+            String sql_GetStatus="SELECT * FROM javawebcourseresources.homework_status where hw_id=? and user_id=?";
+            ResultSet statusSet=db_manager.executeQuery(sql_GetStatus,new String[]{id,student.getUsername()});
+
+            if(statusSet.next()){//存在保存/完成记录
+               HomeworkStatus homeworkStatus=HomeworkStatus.valueOf(statusSet.getString("status"));
+               studentHomework.setHomeworkStatus(homeworkStatus);
+            }else {//未做无记录
+               studentHomework.setHomeworkStatus(HomeworkStatus.UNFINISHED);
+            }
+
             homeworkList.add(studentHomework);
          }
          return homeworkList;

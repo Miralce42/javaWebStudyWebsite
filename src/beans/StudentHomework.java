@@ -12,6 +12,13 @@ public class StudentHomework {
    private String closingTime;
    private HomeworkStatus homeworkStatus;
 
+   public StudentHomework(String id, String title, String createTime, String closingTime) {
+      this.id = id;
+      this.title = title;
+      this.createTime = createTime;
+      this.closingTime = closingTime;
+   }
+
    public StudentHomework(String id, String title, String createTime, String closingTime, HomeworkStatus homeworkStatus) {
       this.id = id;
       this.title = title;
