@@ -75,9 +75,6 @@
                       autocomplete="off">
             </div>
             <div class="form-group">
-               <p>更改密码 <a href="changePassword.jsp">更改密码</a></p>
-            </div>
-            <div class="form-group">
                <input type="button" onclick="loginCheck()" value="登录" class="btn btn-primary">
             </div>
          </form>
