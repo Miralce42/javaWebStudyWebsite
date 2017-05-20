@@ -43,8 +43,8 @@ public class Action extends ActionSupport {
     }
 
     public String ChgPh()throws Exception{
-        String username = (String)session.getAttribute("username");
-        user.setUsername(username);
+        user = (Users)session.getAttribute("user");
+        user.setPhone(request.getParameter("user.phone"));
         int states = dao.ChangePhoneNum(user);
         if(states == 1){
             return SUCCESS;
