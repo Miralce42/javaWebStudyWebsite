@@ -37,3 +37,19 @@ function ChgPwCheck() {
         document.form1.action = "ChgPw.action";
     }
 }
+
+function phoneNumCheck() {
+    var phoneNum = document.getElementById("user.phone").value;
+    if(phoneNum.length !== 11){
+        alert("你家手机号不是11位吗！？")
+    }
+    else if(!/^[0-9]*$/.test(phoneNum)){
+        alert("你家手机号不全是数字吗！？");
+    }
+    else if( phoneNum.charAt(0) !== '1'){
+        alert("你家手机号第一位不是1吗！？")
+    }
+    else{
+        document.form1.submit();
+    }
+}

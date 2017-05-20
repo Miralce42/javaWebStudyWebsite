@@ -39,21 +39,21 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
 
     <!-- Animate.css -->
-    <link rel="stylesheet" href="assets_frontDesk/css/animate.css">
+    <link rel="stylesheet" href="../frontDesk_assets/css/animate.css">
     <!-- Icomoon Icon Fonts-->
-    <link rel="stylesheet" href="assets_frontDesk/css/icomoon.css">
+    <link rel="stylesheet" href="../frontDesk_assets/css/icomoon.css">
     <!-- Bootstrap  -->
-    <link rel="stylesheet" href="assets_frontDesk/css/bootstrap.css">
+    <link rel="stylesheet" href="../frontDesk_assets/css/bootstrap.css">
     <!-- Flexslider  -->
-    <link rel="stylesheet" href="assets_frontDesk/css/flexslider.css">
+    <link rel="stylesheet" href="../frontDesk_assets/css/flexslider.css">
     <!-- Theme style  -->
-    <link rel="stylesheet" href="assets_frontDesk/css/style.css">
+    <link rel="stylesheet" href="../frontDesk_assets/css/style.css">
 
     <!-- Modernizr JS -->
-    <script src="assets_frontDesk/js/modernizr-2.6.2.min.js"></script>
+    <script src="../frontDesk_assets/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
     <!--[if lt IE 9]>
-    <script src="assets_frontDesk/js/respond.min.js"></script>
+    <script src="../frontDesk_assets/js/respond.min.js"></script>
     <![endif]-->
 
 </head>
@@ -62,15 +62,15 @@
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
     <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
-        <h3 id="fh5co-logo"><a href="main.jsp">Java Web</a></h3>
+        <h3 id="fh5co-logo"><a href="myInfo.jsp">Java Web</a></h3>
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
-                <li class="fh5co-active"><a href="index.html">主页</a></li>
+                <li><a href="index.jsp">主页</a></li>
                 <li><a href="myInfo.jsp">我的信息</a></li>
                 <li><a href="blog.jsp">在线测试</a></li>
                 <li><a href="blog.html">课程互动</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
-                <li><a href="about.html">教学视频</a></li>
+                <li><a href="about.html">教学资源</a></li>
                 <li><a href="about.html">课程评价</a></li>
                 <li><a href="about.html">实践教学</a></li>
                 <li><a href="contact.html">联系</a></li>
@@ -80,24 +80,23 @@
         <div class="fh5co-footer">
             <p><small>&copy; 2016 CS 151 Class. All Rights.</small></p>
         </div>
-
     </aside>
 </div>
 
 <!-- jQuery -->
-<script src="assets_frontDesk/js/jquery.min.js"></script>
+<script src="../frontDesk_assets/js/jquery.min.js"></script>
 <!-- jQuery Easing -->
-<script src="assets_frontDesk/js/jquery.easing.1.3.js"></script>
+<script src="../frontDesk_assets/js/jquery.easing.1.3.js"></script>
 <!-- Bootstrap -->
-<script src="assets_frontDesk/js/bootstrap.min.js"></script>
+<script src="../frontDesk_assets/js/bootstrap.min.js"></script>
 <!-- Waypoints -->
-<script src="assets_frontDesk/js/jquery.waypoints.min.js"></script>
+<script src="../frontDesk_assets/js/jquery.waypoints.min.js"></script>
 <!-- Flexslider -->
-<script src="assets_frontDesk/js/jquery.flexslider-min.js"></script>
+<script src="../frontDesk_assets/js/jquery.flexslider-min.js"></script>
 
 
 <!-- MAIN JS -->
-<script src="assets_frontDesk/js/main.js"></script>
+<script src="../frontDesk_assets/js/main.js"></script>
 
 </body>
 </html>

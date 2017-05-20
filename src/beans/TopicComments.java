@@ -8,6 +8,7 @@ public class TopicComments {
     private String commentId;
     private String username;
     private String content;
+    private boolean isDelete;
 
     public String getTopicId() {
         return topicId;
@@ -39,5 +40,13 @@ public class TopicComments {
 
     public void setCommentId(String commentId) {
         this.commentId = commentId;
+    }
+
+    public boolean isDelete() {
+        return isDelete;
+    }
+
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
 }

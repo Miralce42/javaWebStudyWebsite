@@ -27,7 +27,7 @@ public class Action extends ActionSupport {
         }
         else{
             this.addActionMessage("用户名或密码错误！");
-            return "Fail";
+            return ERROR;
         }
     }
 
@@ -38,7 +38,19 @@ public class Action extends ActionSupport {
         }
         else {
             this.addActionMessage("用户名或密码错误！");
-            return "Fail";
+            return ERROR;
+        }
+    }
+
+    public String ChgPh()throws Exception{
+        String username = (String)session.getAttribute("username");
+        user.setUsername(username);
+        int states = dao.ChangePhoneNum(user);
+        if(states == 1){
+            return SUCCESS;
+        }
+        else{
+            return ERROR;
         }
     }
 
