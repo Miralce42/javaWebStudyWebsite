@@ -14,13 +14,22 @@ import beans.Users;
  */
 public class StudentDAO {
    private DB_Manager db_manager=new DB_Manager();
+   private Users student;
 
-   public ArrayList<StudentHomework> getStudentHomework(Users user){
+   public StudentDAO(Users student) {
+      this.student = student;
+   }
+
+   public Users getStudent() {
+      return student;
+   }
+
+   public ArrayList<StudentHomework> getStudentHomework(){
       String sql="select homework.*,homework_status.status from homework_status,homework " +
               "where is_closing=1 and homework_status.hw_id=homework.id and user_id=?";
 
       ArrayList<StudentHomework> homeworkList=new ArrayList<StudentHomework>();
-      ResultSet resultSet=db_manager.executeQuery(sql,new String[]{user.getUsername()});
+      ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername()});
       try {
          while (resultSet.next()){
             String id=resultSet.getString("id");

@@ -22,7 +22,7 @@ public class Action extends ActionSupport {
     public String Login ()throws Exception{
         int state = dao.Login(user);
         if (state==1){
-            session.setAttribute("username",user.getUsername());
+            session.setAttribute("user",user);
             return SUCCESS;
         }
         else{

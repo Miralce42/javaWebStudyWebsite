@@ -14,43 +14,45 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Vove on 2017/4/13.
- *
+ * <p>
  * 登陆过滤器
  */
 public class LoginFilter implements Filter {
-    public void destroy() {
-    }
+   public void destroy() {
+   }
 
-    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
-        HttpServletRequest request = (HttpServletRequest) req;
-        HttpServletResponse response = (HttpServletResponse) resp;
-        HttpSession session = ((HttpServletRequest) req).getSession();
+   public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws ServletException, IOException {
+      HttpServletRequest request = (HttpServletRequest) req;
+      HttpServletResponse response = (HttpServletResponse) resp;
+      HttpSession session = ((HttpServletRequest) req).getSession();
+      String contextPath = request.getContextPath();//工程
+      String uri = request.getRequestURI();//当前uri
+      System.out.println("Login Filter:" + uri);
 
-        String contextPath=request.getContextPath();//工程
-        String uri = request.getRequestURI();//当前uri
+      String[] filterPage = new String[]{//过滤页面
+              "/frontDesk/studentHomework.jsp"
+      };
+      boolean isFilter=false;
+      for (String page : filterPage) {
+         if (uri.equals(contextPath + page)) {
+            isFilter=true;
+            break;
+         }
+      }
+      if(!isFilter){
+         chain.doFilter(req, resp);
+         return;
+      }
 
-        String[] noFilterPage = new String[]{//防过滤页面
-                "/login.jsp",
+      if (session.getAttribute("user") == null) {
+         System.out.println("过滤");
+         response.sendRedirect(contextPath + "/login.jsp");
+      }
+      chain.doFilter(req, resp);
+   }
 
-                "/login.action"
-        };
-        for (String page : noFilterPage) {
-            if (uri.equals(contextPath+page)) {
-                chain.doFilter(req, resp);
-                return;
-            }
-        }
+   public void init(FilterConfig config) throws ServletException {
 
-        System.out.println("Login Filter:" + uri);
-
-        if (session.getAttribute("user") == null) {
-            response.sendRedirect(contextPath+"/login.jsp");
-        }
-        chain.doFilter(req, resp);
-    }
-
-    public void init(FilterConfig config) throws ServletException {
-
-    }
+   }
 
 }
