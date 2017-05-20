@@ -9,7 +9,7 @@ public class Dao {
 		
 	public int Login(Users user){
 		String ssql = "select * from [WebDB].[dbo].[users]  ";
-		ssql += "where username = ? and password = ?";
+		ssql += "where user_id = ? and password = ?";
 
 		ResultSet rs = null;//声明ResulteSet
 		try{
@@ -32,7 +32,7 @@ public class Dao {
 	public int changePassword(Users user){
 		int loginStat = Login(user);//用户测试是否存在此用户
 		if(loginStat == 1){
-			String ssql = "update [WebDB].[dbo].[users] set password = ? where username = ?";
+			String ssql = "update [WebDB].[dbo].[users] set password = ? where user_id = ?";
 				int state = db_manager.executeUpdate(ssql,new String[]{user.getUserPasswordOne(),user.getUsername()});
 				if(state == 1)
 					return 1;//用户存在，且更改密码成功
