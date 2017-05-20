@@ -66,13 +66,13 @@
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li><a href="index.jsp">主页</a></li>
-                <li><a href="myInfo.jsp">我的信息</a></li>
-                <li><a href="blog.jsp">在线测试</a></li>
-                <li><a href="interaction.jsp">课程互动</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
                 <li><a href="about.html">教学资源</a></li>
-                <li><a href="about.html">课程评价</a></li>
+                <li><a href="blog.html">课程互动</a></li>
+                <li><a href="studentHomework.jsp">我的作业</a></li>
                 <li><a href="about.html">实践教学</a></li>
+                <li><a href="myInfo.jsp">我的信息</a></li>
+                <li><a href="about.html">课程评价</a></li>
                 <li><a href="contact.html">联系</a></li>
             </ul>
         </nav>
