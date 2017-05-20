@@ -11,7 +11,7 @@ import java.sql.*;
 public class DB_Manager {
     private Connection connection = null;
     private static final String driverStr="com.mysql.jdbc.Driver";//驱动
-    private static final String DB_Url = "jdbc:mysql://localhost:3306/javawebcourseresources";//连接字符串
+    private static final String DB_Url = "jdbc:mysql://localhost:3306/MessageBoard?characterEncoding=utf8&useSSL=false";//连接字符串
     private static final String db_User = "webuser";//数据库登录名
     private static final String password = "iamuser";//登录密码
     private PreparedStatement pStatement = null;

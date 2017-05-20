@@ -12,22 +12,22 @@
 }
 
 a.floatButton {
+    margin: 10px;
     box-sizing: inherit;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
-    padding: 8px 16px;
+    text-align: center;
     background-color: #4285f4;
     border: 0;
+    padding:5px;
     border-radius: 2px;
     color: #fff;
     cursor: pointer;
     display: inline-block;
-    font-size: 1.3em;
-    height: 36px;
-    margin: 0;
-    min-width: 36px;
+    font-size: 1.1em;
+    height: 30px;
+    min-width: 50px;
     outline: 0;
     overflow: hidden;
-    text-align: center;
     text-decoration: none;
     text-overflow: ellipsis;
     text-transform: uppercase;
@@ -35,7 +35,10 @@ a.floatButton {
     vertical-align: middle;
     white-space: nowrap;
 }
-
+a.floatButton:visited{
+    color: #fff;
+}
 a.floatButton:hover {
+    color: #fff;
     background-color: #039be5;
 }

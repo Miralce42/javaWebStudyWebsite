@@ -27,6 +27,19 @@ public class StudentHomework {
       this.homeworkStatus = homeworkStatus;
    }
 
+   public String getStu_Status(){
+      switch (homeworkStatus) {
+         case SAVED:
+            return "重新编辑";
+         case FINISHED:
+            return "查看";
+         case UNFINISHED:
+            return "做作业";
+         default:
+            return "";
+      }
+   }
+
    public String getId() {
       return id;
    }

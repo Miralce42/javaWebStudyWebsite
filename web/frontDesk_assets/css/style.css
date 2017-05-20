@@ -258,6 +258,7 @@ figure figcaption {
 }
 
 #fh5co-main {
+  padding: 10px;
   width: 80%;
   float: right;
   -webkit-transition: 0.5s;
