@@ -141,7 +141,7 @@ a:hover {
   -o-box-shadow: -2px 10px 20px -1px rgba(51, 204, 204, 0.4);
   box-shadow: -2px 10px 20px -1px rgba(51, 204, 204, 0.4);
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+.btn-pri:hover, .btn-pri:focus, .btn-pri:active {
   color: #ffffff;
   background: #47d1d1 !important;
   outline: none;

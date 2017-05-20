@@ -65,7 +65,7 @@
         <h3 id="fh5co-logo"><a href="myInfo.jsp">Java Web</a></h3>
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
-                <li class="fh5co-active"><a href="index.jsp">主页</a></li>
+                <li><a href="index.jsp">主页</a></li>
                 <li><a href="myInfo.jsp">我的信息</a></li>
                 <li><a href="blog.jsp">在线测试</a></li>
                 <li><a href="blog.html">课程互动</a></li>

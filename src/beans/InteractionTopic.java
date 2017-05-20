@@ -62,6 +62,7 @@ public class InteractionTopic {
     }
 
     public enum TopicType{
+        java,
         HTML,
         JSP,
         othser,
