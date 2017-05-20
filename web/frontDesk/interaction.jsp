@@ -25,7 +25,7 @@
                 </form>
             </td>
             <td height="20" align="right">
-                    <span class="input-group-btn"><button type="button" class="btn btn-pri">创建留言</button></span>
+                <span class="input-group-btn"><button type="button" class="btn btn-pri">创建留言</button></span>
             </td>
         </tr>
     </table>
