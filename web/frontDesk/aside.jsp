@@ -68,7 +68,7 @@
                 <li><a href="index.jsp">主页</a></li>
                 <li><a href="myInfo.jsp">我的信息</a></li>
                 <li><a href="blog.jsp">在线测试</a></li>
-                <li><a href="blog.html">课程互动</a></li>
+                <li><a href="interaction.jsp">课程互动</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
                 <li><a href="about.html">教学资源</a></li>
                 <li><a href="about.html">课程评价</a></li>
