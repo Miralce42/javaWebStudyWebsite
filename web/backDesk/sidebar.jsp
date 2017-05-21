@@ -27,6 +27,18 @@
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="../backDesk_assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="../backDesk_assets/img/favicon.png">
+    <style type="text/css" rel="stylesheet">
+        #fh5co-main{
+            padding-top: 86px;
+            padding-right: 4px;
+        }
+        .left{
+            padding-left:4;
+        }
+        .right{
+            padding-left:264px;
+        }
+    </style>
 </head>
 <body>
 <!-- WRAPPER -->
@@ -39,6 +51,9 @@
         <div class="container-fluid">
             <div class="navbar-btn">
                 <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
+            </div>
+            <div style="float: left;margin-top: 8px;margin-bottom: 8px;text-align: center; min-width: 66%;max-width: 73%">
+                <h2><%=moduleString%></h2>
             </div>
             <div class="navbar-btn navbar-btn-right">
                 <a class="btn btn-success update-pro" href="../frontDesk/index.jsp" title="main page" target="_blank"><i class="fa fa-rocket"></i> <span>前往前台主页</span></a>
@@ -80,6 +95,19 @@
 <script src="../backDesk_assets/vendor/jquery.easy-pie-chart/jquery.easypiechart.min.js"></script>
 <script src="../backDesk_assets/vendor/chartist/js/chartist.min.js"></script>
 <script src="../backDesk_assets/scripts/klorofil-common.js"></script>
+
+<script type="text/javascript">
+    $('.btn-toggle-fullwidth').click(function () {
+        var rightDiv=$('#fh5co-main');
+        if(rightDiv.hasClass('left')){
+            rightDiv.removeClass('left');
+            rightDiv.addClass('right');
+        }else {
+            rightDiv.removeClass('right');
+            rightDiv.addClass('left');
+        }
+    })
+</script>
 <script>
     $(function() {
         var data, options;

@@ -9,10 +9,15 @@
 <html>
 <head>
     <title>$Title$</title>
+    <%
+        //后台管理页面标题,自行修改.
+        String moduleString="模板";
+    %>
+
 </head>
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
-<div id="fh5co-main">
+<div id="fh5co-main" class="right">
     11111111
     <!--右侧布局-->
 </div>
