@@ -65,9 +65,8 @@ public class Action extends ActionSupport {
 
     public String CrtTopic(){//创建话题
         //先从表单中获取topicType，然后转为TopicType类型
-        InteractionTopic.TopicType topicType = InteractionTopic.TopicType.valueOf( request.getParameter("topicType"));
         Users student = (Users)session.getAttribute("user");
-        topic.setTopicType(topicType);
+        topic.setTopicType(request.getParameter("topicType"));
         topic.setUsername(student.getUsername());
         int states = stuDao.createTopic(topic);
         if(states == 1){

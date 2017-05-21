@@ -1,23 +1,28 @@
 package beans;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  * Created by Vove on 2017/5/19.
  *
  * 互动话题
  */
 public class InteractionTopic {
+    private String topicId;
     private String username;
     private String title;
     private String content;
     private TopicType topicType;
     private Boolean isDeleted;
+    private Date date;
 
-    public TopicType getTopicType() {
-        return topicType;
+    public String getTopicType() {
+        return topicType.toString();
     }
 
-    public void setTopicType(TopicType topicType) {
-        this.topicType = topicType;
+    public void setTopicType(String topicType) {
+        this.topicType = TopicType.valueOf(topicType);
     }
 
     public String getTitle() {
@@ -50,6 +55,22 @@ public class InteractionTopic {
 
     public void setDeleted(Boolean deleted) {
         isDeleted = deleted;
+    }
+
+    @SuppressWarnings("deprecation")
+    public String getDate() {
+        return date.toLocaleString();
+    }
+    public void setDate(Timestamp date) {
+        this.date = date;
+    }
+
+    public String getTopicId() {
+        return topicId;
+    }
+
+    public void setTopicId(String topicId) {
+        this.topicId = topicId;
     }
 
     public enum TopicType{

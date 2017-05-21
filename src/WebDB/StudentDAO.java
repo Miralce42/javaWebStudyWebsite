@@ -2,6 +2,7 @@ package WebDB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import beans.InteractionTopic;
@@ -68,5 +69,39 @@ public class StudentDAO {
       String topicType = topic.getTopicType().toString();//字符转换
       //executeUpdate成功返回1
       return db_manager.executeUpdate(ssql,new String[]{topic.getUsername(),topic.getTitle(),topic.getContent(),topicType});
+   }
+
+   public String getName(String username){
+      String ssql = "select name from javawebcourseresources.users where user_id = ?";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{username});
+      try {
+         if(rs.next()){
+            return rs.getString("name");
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return null;
+   }
+
+   public int getAllTopic(ArrayList<InteractionTopic> Topics) {
+      String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0";
+      ResultSet rs = db_manager.executeQuery(ssql,null);
+      try {
+         while (rs.next()){
+            InteractionTopic topic = new InteractionTopic();
+            topic.setTopicId(rs.getString("topic_id"));
+            topic.setUsername(rs.getString("user_id"));
+            topic.setTopicType(rs.getString("topic_type"));
+            topic.setTitle(rs.getString("title"));
+            topic.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("create_date");
+            topic.setDate(date);
+            Topics.add(topic);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Topics.size();
    }
 }

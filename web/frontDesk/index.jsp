@@ -49,6 +49,7 @@
     <!-- Theme style  -->
     <link rel="stylesheet" href="../frontDesk_assets/css/style.css">
 
+    <link rel="stylesheet" href="../myCss/buttonStyle.css">
     <!-- Modernizr JS -->
     <script src="../frontDesk_assets/js/modernizr-2.6.2.min.js"></script>
     <!-- FOR IE9 below -->
@@ -59,13 +60,12 @@
 </head>
 <body>
 <div id="fh5co-page">
-    <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
     <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-
         <h3 id="fh5co-logo"><a href="myInfo.jsp">Java Web</a></h3>
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li><a href="index.jsp">主页</a></li>
+                <li><a href="../login.jsp">登录</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
                 <li><a href="about.html">教学资源</a></li>
                 <li><a href="interaction.jsp">课程互动</a></li>
