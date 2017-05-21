@@ -15,6 +15,12 @@ public class Dao {
 			rs = db_manager.executeQuery(ssql,new String[]{user.getUsername(),user.getPassword()});//执行用户信息查询语句
 			if(rs.next())//查询到该用户
 			{
+				user.setUser_type(rs.getString("user_type"));
+				user.setName(rs.getString("name"));
+				user.setSex(rs.getString("sex"));
+				user.setPhone(rs.getString("phone"));
+				user.setMajor(rs.getString("major"));
+				user.setClassNum(rs.getString("class"));
 				return 1;
 			}
 			else {//无该用户

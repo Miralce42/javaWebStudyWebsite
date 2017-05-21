@@ -6,9 +6,14 @@ package beans;
  */
 public class Users {
     private String username;
-    private String password;
+    private UserType user_type;
     private String name;
+    private String password;
+    private String sex;
     private String phone;
+    private String major;
+    private String classNum;
+
 
     private UserType userType;
 
@@ -60,6 +65,38 @@ public class Users {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getUser_type() {
+        return user_type.name();
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = userType.valueOf(user_type.toUpperCase());
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+
+    public void setMajor(String major) {
+        this.major = major;
+    }
+
+    public String getClassNum() {
+        return classNum;
+    }
+
+    public void setClassNum(String classNum) {
+        this.classNum = classNum;
     }
 
 
