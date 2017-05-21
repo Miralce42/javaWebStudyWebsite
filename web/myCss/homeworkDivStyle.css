@@ -40,3 +40,7 @@ hr.blue{
     margin-bottom: 15px;
     border: 0;
 }
+
+.title-right{
+    text-align: right;
+}
