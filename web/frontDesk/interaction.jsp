@@ -19,13 +19,14 @@
             <td height="20" align="left">
                 <form class="navbar-form navbar-left">
                     <div class="input-group">
-                        <input type="text" value="" class="form-control" placeholder="搜索标题">
+                        <br>
+                        <input type="text" value="" class="form-control" placeholder="搜索标题">&nbsp;
                         <span class="input-group-btn"><button type="button" class="btn btn-pri">Go</button></span>
                     </div>
                 </form>
             </td>
             <td height="20" align="right">
-                <span class="input-group-btn"><button type="button" class="btn btn-pri">创建留言</button></span>
+                <span class="input-group-btn"><a href="createTopic.jsp"><button type="button" class="btn btn-pri">创建留言</button></a></span>
             </td>
         </tr>
     </table>
