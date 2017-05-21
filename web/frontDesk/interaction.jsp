@@ -10,6 +10,25 @@
 <head>
     <title>课堂互动</title>
     <link rel="stylesheet" href="../css/style.css">
+    <style type="text/css">
+        #btn-pri1{
+             padding: 2px 10px !important;
+             font-size: small;
+             width: 40px;
+             height: 40px;
+             text-align: center;
+         }
+        #btn-pri2{
+            padding: 2px 10px !important;
+            font-size: small;
+            width: 80px;
+            height: 40px;
+            text-align: center;
+        }
+        #title{
+            width: 99%;
+        }
+    </style>
 </head>
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
@@ -20,13 +39,13 @@
                 <form class="navbar-form navbar-left">
                     <div class="input-group">
                         <br>
-                        <input type="text" value="" class="form-control" placeholder="搜索标题">&nbsp;
-                        <span class="input-group-btn"><button type="button" class="btn btn-pri">Go</button></span>
+                        <input id="title"  type="text" value="" class="form-control" placeholder="搜索标题">&nbsp;
+                        <span class="input-group-btn"><button id="btn-pri1"  type="button" class="btn btn-pri">Go</button></span>
                     </div>
                 </form>
             </td>
             <td height="20" align="right">
-                <span class="input-group-btn"><a href="createTopic.jsp"><button type="button" class="btn btn-pri">创建留言</button></a></span>
+                <span class="input-group-btn"><a href="createTopic.jsp"><button type="button" id="btn-pri2" class="btn btn-pri">创建留言</button></a></span>
             </td>
         </tr>
     </table>
