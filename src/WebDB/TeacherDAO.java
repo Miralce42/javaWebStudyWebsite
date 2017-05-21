@@ -17,19 +17,26 @@ public class TeacherDAO {
    public TeacherDAO(Users teacher) {
       this.teacher = teacher;
    }
-   public ArrayList<StudentHomework> getStudentHomework(){
+   public ArrayList<StudentHomework> getHomework(){
       String sql="SELECT * FROM javawebcourseresources.homework";
 
       ArrayList<StudentHomework> homeworkList=new ArrayList<StudentHomework>();
 
-      ResultSet resultSet=db_manager.executeQuery(sql,new String[]{teacher.getUsername()});
+      ResultSet resultSet=db_manager.executeQuery(sql,null);
+
       try {
-         while (resultSet.next()){
+         while (resultSet!=null&&resultSet.next()){
             String id=resultSet.getString("id");
             String title=resultSet.getString("title");
             String createTime=resultSet.getString("create_time");
             String closingTime=resultSet.getString("closing_time");
+            boolean isClosing=resultSet.getInt("is_closing")==1;
+
             StudentHomework studentHomework=new StudentHomework(id,title,createTime,closingTime);
+            if(isClosing){
+               studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.CLOSED);
+            }else
+               studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.UNCLOSED);
             homeworkList.add(studentHomework);
          }
          return homeworkList;

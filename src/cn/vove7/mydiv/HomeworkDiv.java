@@ -17,8 +17,7 @@ public class HomeworkDiv {
       this.buttonValue = buttonValue;
    }
 
-   @Override
-   public String toString() {
+   public String toStuString() {
       return
               "        <div class=\"col-md-4\">\n" +
                       "            <div class=\"panel\">\n" +
@@ -32,6 +31,25 @@ public class HomeworkDiv {
                       "                </div>\n" +
                       "                <div class=\"panel-buttonValue\">\n" +
                       "                  <a href="+hwId+ " class='floatButton'>  " + buttonValue + "</a>\n" +
+                      "                </div>\n" +
+                      "            </div>\n" +
+                      "        </div>\n";
+   }
+   public String toTeaString(){
+      return
+              "        <div class=\"col-md-4\">\n" +
+                      "            <div class=\"panel\">\n" +
+                      "                <div class=\"panel-heading\">\n" +
+                      "                    <div class=\"page-title\">\n" +
+                      "                        " + title + "\n" +
+                      "                    </div>\n" +
+                      "                </div>\n" +
+                      "                <div class=\"panel-body\">\n" +
+                      "\n" + body +
+                      "                </div>\n" +
+                      "                <div class=\"panel-buttonValue\">\n" +
+                           (buttonValue.equals("重新编辑")?("<a href="+hwId+ " class='floatButton'>"+buttonValue+"</a>"):"")+
+                      "                  <a href=studentsHomeworkList.jsp?homeworkId="+hwId+ " class='floatButton'> 批改作业</a>\n" +
                       "                </div>\n" +
                       "            </div>\n" +
                       "        </div>\n";

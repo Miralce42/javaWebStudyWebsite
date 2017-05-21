@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>发布新作业</title>
+    <title>批改作业</title>
     <%
-        String moduleString="发布新作业";
+        String moduleString="批改作业";
     %>
 
 </head>
@@ -18,6 +18,8 @@
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right">
     <!--右侧布局-->
+
+
 
 </div>
 </body>
