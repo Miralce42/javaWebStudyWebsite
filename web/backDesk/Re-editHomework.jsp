@@ -10,7 +10,7 @@
 <head>
     <%
         //后台管理页面标题,自行修改
-        String moduleString="模板";
+        String moduleString="重新编辑作业";
     %>
     <title><%=moduleString%></title>
 
@@ -18,8 +18,8 @@
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right">
-    11111111
     <!--右侧布局-->
+
 </div>
 </body>
 </html>
