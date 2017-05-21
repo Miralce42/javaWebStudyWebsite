@@ -1,4 +1,6 @@
-<%--
+<%@ page import="WebDB.StudentDAO" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="beans.InteractionTopic" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/20
@@ -49,16 +51,36 @@
             </td>
         </tr>
     </table>
+
+    <%
+        StudentDAO stuDao = new StudentDAO();
+        ArrayList<InteractionTopic> Topics = new ArrayList<InteractionTopic>();
+        int count = stuDao.getAllTopic(Topics);
+    %>
+
         <div class="fh5co-narrow-content">
-            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">关于jsp</h2>
+            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他话题</h2>
+            <hr>
+            <%
+                for(int i = 0 ; i < count ; i++){
+                    InteractionTopic topic = Topics.get(i);
+                    String topicType = topic.getTopicType();
+                    if("Other".equals(topicType)) {
+                        //截取话题内容
+                        String shortContent = topic.getContent();
+                        if(shortContent.length() > 20) {
+                            shortContent = shortContent.substring(0,20);
+                        }
+                        String name = stuDao.getName(topic.getUsername());
+            %>
             <div class="row row-bottom-padded-md">
                 <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
                     <div class="blog-entry">
                         <div class="desc">
-                            <h3><a href="#">我是一个长长的标题啦啦啦</a></h3>
+                            <h3><a href="#"><%=topic.getTitle()%></a></h3>
                             <h4>
-                            <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
-                            Design must be functional and functionality must be translated into visual aesthetics
+                            <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
+                            <%=shortContent%>
                             </h4>
                             <h7>最近评论：</h7>
                             <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
@@ -69,6 +91,10 @@
                 </div>
             </div>
         </div>
+    <%
+            }
+        }
+    %>
     </div>
 </body>
 </html>

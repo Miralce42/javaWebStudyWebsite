@@ -65,6 +65,7 @@
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li><a href="index.jsp">主页</a></li>
+                <li><a href="../login.jsp">登录</a></li>
                 <li><a href="portfolio.html">教学课件</a></li>
                 <li><a href="about.html">教学资源</a></li>
                 <li><a href="interaction.jsp">课程互动</a></li>
@@ -75,7 +76,6 @@
                 <li><a href="contact.html">联系</a></li>
             </ul>
         </nav>
-
         <div class="fh5co-footer">
             <p><small>&copy; 2016 CS 151 Class. All Rights.</small></p>
         </div>
