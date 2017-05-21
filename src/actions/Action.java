@@ -23,7 +23,13 @@ public class Action extends ActionSupport {
         int state = dao.Login(user);
         if (state==1){
             session.setAttribute("user",user);
-            return SUCCESS;
+            String userType = user.getUser_type();
+            if("STUDENT".equals(userType)) {
+                return "student";
+            }
+            else{
+                return "teacher";
+            }
         }
         else{
             this.addActionMessage("用户名或密码错误！");
