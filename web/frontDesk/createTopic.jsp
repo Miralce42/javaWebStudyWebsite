@@ -9,6 +9,18 @@
 <html>
 <head>
     <title>创建话题</title>
+    <script src="../ckeditor/ckeditor.js">
+        CKEDITOR.replace("topic_editor");
+    </script>
+    <link rel="stylesheet" href="../myCss/buttonStyle.css">
+    <style type="text/css">
+            #wei {
+                margin-left: 10%;!important;
+                width: 80%;!important;
+            }
+    </style>
+    <script src="../js/inputCheck.js"></script>
+    <!--输入合法性检验-->
 </head>
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
@@ -20,7 +32,7 @@
                     <div class="overlay"></div>
                     <div class="container-fluid">
                         <div class="row">
-                            <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
+                            <div id="wei" class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                 <div class="slider-text-inner">
                                     <!-- INPUTS -->
                                     <div class="panel">
@@ -28,28 +40,30 @@
                                             <h3 class="panel-title">创建话题</h3>
                                         </div>
                                         <hr />
-                                        <form>
+                                        <form name="form1" action="CrtTopic.action"  method="post">
                                             <div class="panel-body">
-                                                话题种类：（必填，请准确选择！）
+                                                话题种类：
                                                 <label class="fancy-radio">
-                                                    <input name="gender" checked="checked" value="Other" type="radio">
+                                                    <input name="topicType" checked="checked" value="Other" type="radio">
                                                     <span><i></i>Other</span>
                                                 </label>
                                                 <label class="fancy-radio">
-                                                    <input name="gender" value="JSP" type="radio">
+                                                    <input name="topicType" value="JSP" type="radio">
                                                     <span><i></i>JSP</span>
                                                 </label>
                                                 <label class="fancy-radio">
-                                                    <input name="gender" value="HTML" type="radio">
+                                                    <input name="topicType" value="HTML" type="radio">
                                                     <span><i></i>HTML</span>
                                                 </label><label class="fancy-radio">
-                                                <input name="gender" value="HTML" type="radio">
+                                                <input name="topicType" value="HTML" type="radio">
                                                 <span><i></i>JAVA</span>
                                             </label>
                                                 <hr />
-                                                <input type="text" class="form-control" placeholder="标题">
+                                                <input id="title" name="topic.title" id="topic.title" type="text" class="form-control" placeholder="标题">
                                                 <hr />
-                                                <textarea class="form-control" placeholder="内容" rows="4"></textarea>
+                                                <textarea style="width: 80%" title="编辑器" name="topic.content" id="content" class="ckeditor"></textarea>
+                                                <hr>
+                                                <a onclick="topicCheck()" class="floatButton">发布</a>
                                             </div>
                                         </form>
                                     </div>

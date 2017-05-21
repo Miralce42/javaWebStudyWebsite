@@ -6,11 +6,10 @@ package beans;
  * 互动话题
  */
 public class InteractionTopic {
-    private TopicType topicType;
     private String username;
-    private String topicId;
     private String title;
     private String content;
+    private TopicType topicType;
     private Boolean isDeleted;
 
     public TopicType getTopicType() {
@@ -19,14 +18,6 @@ public class InteractionTopic {
 
     public void setTopicType(TopicType topicType) {
         this.topicType = topicType;
-    }
-
-    public String getTopicId() {
-        return topicId;
-    }
-
-    public void setTopicId(String topicId) {
-        this.topicId = topicId;
     }
 
     public String getTitle() {
@@ -62,10 +53,10 @@ public class InteractionTopic {
     }
 
     public enum TopicType{
-        java,
+        JAVA,
         HTML,
         JSP,
-        othser,
+        Other,
         BACK_END
     }
 }

@@ -19,5 +19,11 @@
             <result name="success" type="redirect">/frontDesk/myInfo.jsp</result>
             <result name="error" type="redirect">/frontDesk/changePhoneNum.jsp</result>
         </action>
+        <action name="uploadImage" class="actions.UploadImage" method="uploadImage">
+        </action>
+        <action name="CrtTopic" class="actions.Action" method="CrtTopic">
+            <result name="success" type="redirect">/frontDesk/interaction.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
     </package>
 </struts>
