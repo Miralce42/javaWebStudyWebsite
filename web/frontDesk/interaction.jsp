@@ -63,6 +63,7 @@
             <hr>
             <%
                 for(int i = 0 ; i < count ; i++){
+                    if(i > 10) break;//减少页面显示内容
                     InteractionTopic topic = Topics.get(i);
                     String topicType = topic.getTopicType();
                     if("Other".equals(topicType)) {
@@ -77,10 +78,10 @@
                 <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
                     <div class="blog-entry">
                         <div class="desc">
-                            <h3><a href="#"><%=topic.getTitle()%></a></h3>
+                            <h2><a href="#"><%=topic.getTitle()%></a></h2>
                             <h4>
                             <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
-                            <%=shortContent%>
+                             <p><%=shortContent%></p>
                             </h4>
                             <h7>最近评论：</h7>
                             <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
