@@ -27,3 +27,16 @@ body{
     font-weight: normal;
     font-size: 1.2em;
 }
+.float-right{
+    height:20px;
+    padding: 4px;
+    float: right;
+}
+hr.blue{
+    height:1px;
+    width: 98%;
+    background-color: #3d43f1;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border: 0;
+}

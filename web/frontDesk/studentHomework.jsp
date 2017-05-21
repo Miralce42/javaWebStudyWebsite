@@ -32,7 +32,7 @@
         ArrayList<StudentHomework> homeworkList=studentDAO.getUnfinishedHomework();
         int i=1;
         for(StudentHomework homework:homeworkList){
-           if(i%3==0){
+           if(i%3==1){
               out.print("<div class=\"row\">\n");//行div
            }
            String closingTime=homework.getClosingTime();
@@ -40,13 +40,17 @@
            HomeworkDiv homeworkDiv=new HomeworkDiv(homework.getId(),
                    homework.getTitle(),
                    "截止时间:"+closingTime.substring(0,closingTime.length()-2),
-                   homework.getStu_Status());
+                   homework.getStu_Status()
+           );
 
-           out.println(homeworkDiv);//divContent
+           out.println(homeworkDiv.toStuString());//divContent
 
            if(i%3==0){
               out.print("</div>");
            }i++;
+        }
+        if(i%3!=0){
+            out.print("</div>");
         }
     %>
 

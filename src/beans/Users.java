@@ -18,6 +18,10 @@ public class Users {
 
     private String userPasswordOne;
 
+    public UserType getEnumUserType(){
+        return userType;
+    }
+
     public UserType getUserType() {
         return userType;
     }
@@ -71,7 +75,7 @@ public class Users {
     }
 
     public void setUser_type(String user_type) {
-        this.user_type = userType.valueOf(user_type.toUpperCase());
+        this.user_type = UserType.valueOf(user_type.toUpperCase());
     }
 
     public String getSex() {

@@ -2,8 +2,6 @@ package beans;
 
 /**
  * Created by Vove on 2017/5/20.
- *
- *
  */
 public class StudentHomework {
    private String id;
@@ -27,7 +25,18 @@ public class StudentHomework {
       this.homeworkStatus = homeworkStatus;
    }
 
-   public String getStu_Status(){
+   public String getTeac_HomeworkStatus() {//教师获取作业状态
+      switch (homeworkStatus) {
+         case UNCLOSED:
+            return "重新编辑";
+         case CLOSED:
+            return "已结束";
+         default:
+            return "";
+      }
+   }
+
+   public String getStu_Status() {//学生过去作业状态
       switch (homeworkStatus) {
          case SAVED:
             return "重新编辑";
@@ -84,6 +93,9 @@ public class StudentHomework {
    public enum HomeworkStatus {
       UNFINISHED,//未完成
       FINISHED,//完成
-      SAVED//保存
+      SAVED,//保存
+      CLOSED,//关闭
+      UNCLOSED,//未关闭
+      DELETED//删除
    }
 }
