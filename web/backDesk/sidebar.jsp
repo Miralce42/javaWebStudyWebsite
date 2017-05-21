@@ -41,7 +41,7 @@
                 <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
             <div class="navbar-btn navbar-btn-right">
-                <a class="btn btn-success update-pro" href="../frontDesk/myInfo.jsp" title="main page" target="_blank"><i class="fa fa-rocket"></i> <span>前往前台主页</span></a>
+                <a class="btn btn-success update-pro" href="../frontDesk/index.jsp" title="main page" target="_blank"><i class="fa fa-rocket"></i> <span>前往前台主页</span></a>
             </div>
         </div>
     </nav>

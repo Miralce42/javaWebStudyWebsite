@@ -14,7 +14,6 @@ public class Users {
     private String major;
     private String classNum;
 
-
     private UserType userType;
 
     private String userPasswordOne;

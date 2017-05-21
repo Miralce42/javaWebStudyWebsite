@@ -52,7 +52,7 @@ public class Dao {
 		}
 	}
 	public int ChangePhoneNum(Users user) {
-		String ssql = "update [WebDB].[dbo].[users] set phone = ? where user_id = ?";
+		String ssql = "update javawebcourseresources.users set phone = ? where user_id = ?";
 		int state = db_manager.executeUpdate(ssql, new String[]{user.getPhone(), user.getUsername()});
 		if (state == 1) {
 			return 1;//修改手机号称
