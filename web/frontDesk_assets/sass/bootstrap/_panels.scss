@@ -5,6 +5,9 @@
 
 // Base class
 .panel {
+  filter:alpha(Opacity=80);
+  -moz-opacity:0.5;
+  opacity: 0.5;
   margin-bottom: $line-height-computed;
   background-color: $panel-bg;
   border: 1px solid transparent;
@@ -14,12 +17,14 @@
 
 // Panel contents
 .panel-body {
+  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;
   padding: $panel-body-padding;
   @include clearfix;
 }
 
 // Optional heading
 .panel-heading {
+  filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;
   padding: $panel-heading-padding;
   border-bottom: 1px solid transparent;
   @include border-top-radius(($panel-border-radius - 1));

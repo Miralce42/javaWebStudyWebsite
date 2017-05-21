@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.InteractionTopic;
 import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;
 import beans.Users;
@@ -15,6 +16,8 @@ import beans.Users;
 public class StudentDAO {
    private DB_Manager db_manager=new DB_Manager();
    private Users student;
+
+   public StudentDAO(){}
 
    public StudentDAO(Users student) {
       this.student = student;
@@ -58,5 +61,12 @@ public class StudentDAO {
 
    }
 
-
+   public int createTopic(InteractionTopic topic){
+      String ssql = "insert into javawebcourseresources.interactiontopic(" +
+              "user_id,title,content,topic_type,is_deleted) " +
+              "values(?,?,?,?,0)";
+      String topicType = topic.getTopicType().toString();//字符转换
+      //executeUpdate成功返回1
+      return db_manager.executeUpdate(ssql,new String[]{topic.getUsername(),topic.getTitle(),topic.getContent(),topicType});
+   }
 }

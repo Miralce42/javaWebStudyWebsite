@@ -100,7 +100,7 @@
                 <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
                 <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>资源管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
-                <li><a href="notifications.html" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
+                <li><a href="stuInfoManager.jsp" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
                 <li>
                     <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                     <div id="subPages" class="collapse ">

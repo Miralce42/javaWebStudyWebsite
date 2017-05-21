@@ -1001,7 +1001,7 @@ body.offcanvas #fh5co-main, body.offcanvas .fh5co-nav-toggle {
   box-shadow: none;
   background: transparent;
   border: 2px solid rgba(0, 0, 0, 0.1);
-  height: 54px;
+  height: 30px;
   font-size: 18px;
   font-weight: 300;
   -webkit-border-radius: 7px;

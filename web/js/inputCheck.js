@@ -53,3 +53,21 @@ function phoneNumCheck() {
         document.form1.submit();
     }
 }
+
+function topicCheck() {
+    var title = document.getElementsByName("topic.title")[0].value;
+    var content =  CKEDITOR.instances.content.getData();
+
+    if(title === ""){
+        alert("标题不能为空!");
+    }
+    else if(title.length > 20){
+        alert("标题不能多于20字！");
+    }
+    else if(content === ""){
+        alert("内容不能为空！");
+    }
+    else {
+        document.form1.submit();
+    }
+}

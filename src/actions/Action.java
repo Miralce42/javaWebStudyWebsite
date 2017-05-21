@@ -1,5 +1,6 @@
 package actions;
 
+import beans.InteractionTopic;
 import beans.Users;
 import WebDB.*;
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,6 +15,8 @@ import javax.servlet.http.HttpSession;
  */
 public class Action extends ActionSupport {
     private Users user = new Users();
+    private InteractionTopic topic = new InteractionTopic();
+    private StudentDAO stuDao = new StudentDAO();
     private Dao dao = new Dao();;
     private HttpServletRequest request = ServletActionContext.getRequest();
     private HttpServletResponse response = ServletActionContext.getResponse();
@@ -37,7 +40,7 @@ public class Action extends ActionSupport {
         }
     }
 
-    public String ChgPw()throws Exception{
+    public String ChgPw()throws Exception{//更换密码
         int states = dao.changePassword(user);
         if(states == 1){
             return SUCCESS;
@@ -48,10 +51,25 @@ public class Action extends ActionSupport {
         }
     }
 
-    public String ChgPh()throws Exception{
+    public String ChgPh()throws Exception{//更换手机号
         user = (Users)session.getAttribute("user");
         user.setPhone(request.getParameter("user.phone"));
         int states = dao.ChangePhoneNum(user);
+        if(states == 1){
+            return SUCCESS;
+        }
+        else{
+            return ERROR;
+        }
+    }
+
+    public String CrtTopic(){//创建话题
+        //先从表单中获取topicType，然后转为TopicType类型
+        InteractionTopic.TopicType topicType = InteractionTopic.TopicType.valueOf( request.getParameter("topicType"));
+        Users student = (Users)session.getAttribute("user");
+        topic.setTopicType(topicType);
+        topic.setUsername(student.getUsername());
+        int states = stuDao.createTopic(topic);
         if(states == 1){
             return SUCCESS;
         }
@@ -66,5 +84,13 @@ public class Action extends ActionSupport {
 
     public Users getUser(){
         return this.user;
+    }
+
+    public InteractionTopic getTopic() {
+        return topic;
+    }
+
+    public void setTopic(InteractionTopic topic) {
+        this.topic = topic;
     }
 }
