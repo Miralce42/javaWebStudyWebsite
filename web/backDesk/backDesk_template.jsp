@@ -10,7 +10,7 @@
 <head>
     <title>$Title$</title>
     <%
-        //后台管理页面标题,自行修改.
+        //后台管理页面标题,自行修改
         String moduleString="模板";
     %>
 

@@ -32,11 +32,41 @@
             padding-top: 86px;
             padding-right: 4px;
         }
+        @-webkit-keyframes fadeinLeft {
+            from {
+                opacity: 0;
+                /*-webkit-transform: translate3d(-100%, 0, 0);
+                transform: translate3d(-100%, 0, 0);*/
+                -webkit-transform: translate3d(260px, 0, 0);
+                transform: translate3d(260px, 0, 0);
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
+        @-webkit-keyframes fadeinRight {
+            from {
+                opacity: 0;
+                /*-webkit-transform: translate3d(-100%, 0, 0);
+                transform: translate3d(-100%, 0, 0);*/
+                -webkit-transform: translate3d(-260px, 0, 0);
+                transform: translate3d(-260px, 0, 0);
+            }
+            to {
+                opacity: 1;
+                -webkit-transform: none;
+                transform: none;
+            }
+        }
         .left{
-            padding-left:4;
+            animation:fadeinLeft 0.5s;
+            padding-left:4px;
         }
         .right{
             padding-left:264px;
+            animation:fadeinRight 0.5s;
         }
     </style>
 </head>
@@ -66,7 +96,7 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                <li><a href="index.html" class="active"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
+                <li><a href="homeworkManager.jsp" class="active"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
                 <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
                 <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>资源管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
