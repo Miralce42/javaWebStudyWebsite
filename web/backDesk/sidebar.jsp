@@ -96,7 +96,7 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                <li><a href="homeworkManager.jsp" class="active"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
+                <li><a href="homeworkManager.jsp"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
                 <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
                 <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>资源管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
