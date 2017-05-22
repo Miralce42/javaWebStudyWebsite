@@ -2,6 +2,7 @@ package beans;
 
 /**
  * Created by Vove on 2017/5/20.
+ * 学生作业
  */
 public class StudentHomework {
    private String id;
