@@ -1,4 +1,6 @@
-<%--
+<%@ page import="WebDB.Dao" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="beans.Users" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/21
@@ -20,7 +22,7 @@
             width: 30%;
         }
         .td-text{
-            width: 8%;
+            width: 10%;
         }
     </style>
 </head>
@@ -28,26 +30,36 @@
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right">
     <div id="col-md-6" class="col-md-6">
+        <%
+            Dao dao = new Dao();
+            ArrayList<Users> Students = new ArrayList<Users>();
+            ArrayList<String> classNames = new ArrayList<String>();
+            int classNamesCount = dao.selectClassName(classNames);
+            int count = dao.selectStudent(Students,0,null);
+        %>
         <!-- TABLE HOVER -->
         <div class="panel">
             <div class="panel-heading">
                 <h3 class="panel-title">学生管理</h3>
             </div>
             <div class="panel-body">
-                <form>
+                <form name="form1" action="">
                     <table border="0" width="100%">
                         <tr>
                             <td class="td-text" align="right">
                                 班级：
                             </td>
                             <td>
-                                <select class="form-control">
-                                    <option value="cheese">Cheese</option>
-                                    <option value="tomatoes">Tomatoes</option>
-                                    <option value="mozarella">Mozzarella</option>
-                                    <option value="mushrooms">Mushrooms</option>
-                                    <option value="pepperoni">Pepperoni</option>
-                                    <option value="onions">Onions</option>
+                                <select onchange="selectChange()" class="form-control">
+                                    <option></option>
+                                    <%
+                                        for(int i = 0 ; i < classNamesCount ;i++){
+                                            String className = classNames.get(i);
+                                    %>
+                                    <option value="<%=className%>"> <%=className%> </option>
+                                    <%
+                                        }
+                                    %>
                                 </select>
                             </td>
                             <td class="td-search">
@@ -59,6 +71,9 @@
                             <td class="td-search" align="right">
                                 <span class="input-group-btn"><button class="btn btn-primary" type="button">添加学生</button></span>
                             </td>
+                            <td  class="td-text" align="right">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-refresh"></i>刷新</button>
+                            </td>
                         </tr>
                     </table>
                 </form>
@@ -66,86 +81,33 @@
                 <table id="table-hover" class="table table-hover">
                     <thead>
                     <tr>
-                        <th>#</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>专业</th>
+                        <th>班级</th>
+                        <th>手机号</th>
+                        <th>性别</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Steve</td>
-                        <td>Jobs</td>
-                        <td>@steve</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Simon</td>
-                        <td>Philips</td>
-                        <td>@simon</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>@jane</td>
-                    </tr>
+                    <%
 
+                        System.out.println("进来了4");
+                        for(int i = 0 ; i < count ;i++){
+                            Users allStu = Students.get(i);
+
+                    %>
+                        <tr>
+                            <td><%=allStu.getUsername()%></td>
+                            <td><%=allStu.getName()%></td>
+                            <td><%=allStu.getMajor()%></td>
+                            <td><%=allStu.getClassNum()%></td>
+                            <td><%=allStu.getPhone()%></td>
+                            <td><%=allStu.getSex()%></td>
+                        </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
             </div>

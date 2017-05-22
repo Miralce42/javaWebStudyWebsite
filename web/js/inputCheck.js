@@ -71,3 +71,7 @@ function topicCheck() {
         document.form1.submit();
     }
 }
+
+function selectChange() {
+
+}
