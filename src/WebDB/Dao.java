@@ -84,10 +84,10 @@ public class Dao {
 			//万能模糊查询语句
 			String likeCondition = "%"+condition+"%";
 			ssql = "select * from javawebcourseresources.users" +
-					" where user_type = 'student' and " +
+					" where user_type = 'student' and (" +
 					"user_id like ? or name like ? or " +
 					"phone like ? or major like ? or " +
-					"class like ?";
+					"class like ?)";
 			return db_manager.executeQuery(ssql,new String[]{likeCondition,likeCondition,likeCondition,likeCondition,likeCondition});
 		}
 	}

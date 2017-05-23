@@ -42,5 +42,9 @@
             <result name="success" type="chain">selectAllStudents</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
+        <action name="addStudentInfo" class="actions.Action" method="AddStudentInfo">
+            <result name="success" type="chain">selectAllStudents</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
     </package>
 </struts>

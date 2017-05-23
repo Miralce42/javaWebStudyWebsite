@@ -62,6 +62,7 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else{
+            System.out.println("更改密码过程中出错");
             return ERROR;
         }
     }
@@ -75,6 +76,7 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else{
+            System.out.println("创建话题过程中过程中出错");
             return ERROR;
         }
     }
@@ -123,6 +125,7 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else{
+            System.out.println("更新学生信息过程中出错");
             return ERROR;
         }
     }
@@ -133,6 +136,18 @@ public class Action extends ActionSupport {
             return SUCCESS;
         }
         else{
+            System.out.println("删除学生过程中出错");
+            return ERROR;
+        }
+    }
+
+    public String AddStudentInfo(){
+        int state = teacherDAO.addStudentInfo(user);
+        if (state ==1){
+            return SUCCESS;
+        }
+        else{
+            System.out.println("添加学生过程中出错");
             return ERROR;
         }
     }

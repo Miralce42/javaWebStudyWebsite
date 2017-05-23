@@ -90,7 +90,7 @@
                                 </div>
                             </td>
                             <td class="td-search" align="right">
-                                <span class="input-group-btn"><button class="btn btn-primary" type="button">添加学生</button></span>
+                                <a href="addStudent.jsp"><span class="input-group-btn"><button class="btn btn-primary" type="button">添加学生</button></span></a>
                             </td>
                             <td  class="td-text" align="right">
                                 <a href="selectAllStudents.action"><button type="button" class="btn btn-primary"><i class="fa fa-refresh"></i>刷新</button></a>

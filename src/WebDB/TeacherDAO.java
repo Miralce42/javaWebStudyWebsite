@@ -115,6 +115,12 @@ public class TeacherDAO {
         return states;
     }
 
+    public int addStudentInfo(Users student){
+        String ssql = "insert into javawebcourseresources.users values(?,'student',?,?,?,?,?,?)";
+        int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername(),student.getName(),student.getUsername(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum()});
+        return states;
+    }
+
    public boolean publishHomework(ArrayList choices,ArrayList completions){
 
       return true;
