@@ -85,7 +85,7 @@ public class StudentDAO {
    }
 
    public int getAllTopic(ArrayList<InteractionTopic> Topics) {
-      String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0";
+      String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0 order by topic_id DESC";
       ResultSet rs = db_manager.executeQuery(ssql,null);
       try {
          while (rs.next()){
@@ -106,7 +106,7 @@ public class StudentDAO {
    }
 
    public InteractionTopic getOneTopic(String topicId) {
-      String ssql = "select * from javawebcourseresources.interactiontopic where topic_id=？and is_deleted = 0";
+      String ssql = "select * from javawebcourseresources.interactiontopic where  is_deleted=0 and topic_id=?";
       ResultSet rs = db_manager.executeQuery(ssql,new String[]{topicId});
       InteractionTopic topic = new InteractionTopic();
       try {

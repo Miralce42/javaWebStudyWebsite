@@ -71,3 +71,8 @@ function topicCheck() {
         document.form1.submit();
     }
 }
+
+function replaceImg(str) {
+    str=str.replace(/<s?img[^>]*>/gi, '【图片】');
+    return str;
+}

@@ -19,8 +19,19 @@
             margin-left: 10%;!important;
             width: 80%;!important;
         }
+        img{
+            display:block;
+              width: auto;
+              height: auto;
+              max-width: 100%;
+              max-height: 100%;
+        }
+        #contentDetail{
+            padding-left: 20%;
+            padding-right: 20%;
+        }
     </style>
-    <script src="../js/inputCheck.js"></script>
+    <script src="js/myJs.js"></script>
     <!--输入合法性检验-->
 </head>
 <body>
@@ -31,6 +42,8 @@
         StudentDAO studentDAO = new StudentDAO();
         InteractionTopic topic = studentDAO.getOneTopic(topicId);
         String name = studentDAO.getName(topic.getUsername());
+      //  String content = topic.getContent();
+      //  content =  content.replaceAll("<img.*>.*</img>",  "<img.*>.*</img><br>").replaceAll("<img.*/>", "<img.*/><br>");
     %>
     <div class="main">
         <!-- MAIN CONTENT -->
@@ -39,9 +52,11 @@
                 <div class="panel panel-headline">
                     <div class="panel-body">
                         <h2><%=topic.getTitle()%></h2>
-                        <p class="text-primary text-right"> <small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></p>
+                        <p class="text-primary text-right"> by <%=name%>  /  <%=topic.getDate()%> </p>
                         <hr>
-                        <p class="lead"><%=topic.getContent()%></p>
+                        <div id="contentDetail">
+                            <p class="lead"><h4><%=topic.getContent()%></h4></p>
+                        </div>
                         <hr>
                         <div class="well">
                             <p class="text-left"><code>.text-left</code> Left aligned text.</p>

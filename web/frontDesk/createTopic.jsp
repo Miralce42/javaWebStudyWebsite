@@ -19,7 +19,7 @@
                 width: 80%;!important;
             }
     </style>
-    <script src="../js/inputCheck.js"></script>
+    <script src="js/myJs.js"></script>
     <!--输入合法性检验-->
 </head>
 <body>
