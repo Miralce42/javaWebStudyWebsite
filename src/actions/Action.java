@@ -9,6 +9,8 @@ import org.apache.struts2.ServletActionContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /**
  * Created by 韩壮 on 2017/5/17.
@@ -17,6 +19,7 @@ public class Action extends ActionSupport {
     private Users user = new Users();
     private InteractionTopic topic = new InteractionTopic();
     private StudentDAO stuDao = new StudentDAO();
+    private TeacherDAO teacherDAO = new TeacherDAO();
     private Dao dao = new Dao();;
     private HttpServletRequest request = ServletActionContext.getRequest();
     private HttpServletResponse response = ServletActionContext.getResponse();
@@ -64,12 +67,60 @@ public class Action extends ActionSupport {
     }
 
     public String CrtTopic(){//创建话题
-        //先从表单中获取topicType，然后转为TopicType类型
         Users student = (Users)session.getAttribute("user");
         topic.setTopicType(request.getParameter("topicType"));
         topic.setUsername(student.getUsername());
         int states = stuDao.createTopic(topic);
         if(states == 1){
+            return SUCCESS;
+        }
+        else{
+            return ERROR;
+        }
+    }
+
+    public String SelectAllStudents(){
+        ArrayList<Users> Students = new ArrayList<Users>();
+        dao.selectStudent(Students,0,null);
+        session.setAttribute("Students",Students);
+        return SUCCESS;
+    }
+
+    public String SelectStudentByClass(){
+        ArrayList<Users> Students = new ArrayList<Users>();
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String className = request.getParameter("className");
+        System.out.println("className=" + className);
+        dao.selectStudent(Students, 1, className);
+        session.setAttribute("Students",Students);
+        return SUCCESS;
+    }
+
+    public String SelectStudentBySearch(){
+        ArrayList<Users> Students = new ArrayList<Users>();
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setContentType("text/html;charset=utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        String searchCondition = request.getParameter("searchCondition");
+        System.out.println("searchCondition=" + searchCondition);
+        dao.selectStudent(Students, 2, searchCondition);
+        session.setAttribute("Students",Students);
+        return SUCCESS;
+    }
+
+    public String UpdateStudentInfo(){
+        int state = teacherDAO.updateStudentInfo(user);
+        System.out.println(user.getName());
+        session.setAttribute("updatedStuUsername",user.getUsername());
+        if (state ==1){
             return SUCCESS;
         }
         else{

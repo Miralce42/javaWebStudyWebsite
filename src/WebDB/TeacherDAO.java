@@ -15,6 +15,8 @@ public class TeacherDAO {
    private DB_Manager db_manager = new DB_Manager();
    private Users teacher;
 
+   public TeacherDAO(){};
+
    public TeacherDAO(Users teacher) {
       this.teacher = teacher;
    }
@@ -96,6 +98,14 @@ public class TeacherDAO {
          e.printStackTrace();
          return homeworkFinishedAndSavedStudentList;
       }
+   }
+
+   public int updateStudentInfo(Users student){
+      String ssql = "update javawebcourseresources.users" +
+              " set name=?,sex=?,phone=?,major=?,class=? " +
+              "where user_id=?";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
+      return states;
    }
 }
 
