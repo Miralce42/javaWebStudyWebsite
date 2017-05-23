@@ -10,7 +10,7 @@
 <head>
     <%
         //后台管理页面标题,自行修改
-        String moduleString="学生信息编辑";
+        String moduleString="学生信息添加";
     %>
     <title><%=moduleString%></title>
     <style type="text/css">

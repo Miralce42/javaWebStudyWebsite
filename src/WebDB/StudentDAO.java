@@ -104,4 +104,24 @@ public class StudentDAO {
       }
       return Topics.size();
    }
+
+   public InteractionTopic getOneTopic(String topicId) {
+      String ssql = "select * from javawebcourseresources.interactiontopic where topic_id=？and is_deleted = 0";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{topicId});
+      InteractionTopic topic = new InteractionTopic();
+      try {
+         while (rs.next()){
+            topic.setTopicId(rs.getString("topic_id"));
+            topic.setUsername(rs.getString("user_id"));
+            topic.setTopicType(rs.getString("topic_type"));
+            topic.setTitle(rs.getString("title"));
+            topic.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("create_date");
+            topic.setDate(date);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return topic;
+   }
 }
