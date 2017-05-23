@@ -63,7 +63,7 @@
                 <h3 class="panel-title">学生管理</h3>
             </div>
             <div class="panel-body">
-                <form name="form1">
+                <form name="form1" method="post">
                     <table border="0" width="100%">
                         <tr>
                             <td class="td-text" align="right">

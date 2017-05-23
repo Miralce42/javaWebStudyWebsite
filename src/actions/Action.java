@@ -118,8 +118,17 @@ public class Action extends ActionSupport {
 
     public String UpdateStudentInfo(){
         int state = teacherDAO.updateStudentInfo(user);
-        System.out.println(user.getName());
         session.setAttribute("updatedStuUsername",user.getUsername());
+        if (state ==1){
+            return SUCCESS;
+        }
+        else{
+            return ERROR;
+        }
+    }
+
+    public String DeleteStudentInfo(){
+        int state = teacherDAO.deleteStudentInfo(user);
         if (state ==1){
             return SUCCESS;
         }

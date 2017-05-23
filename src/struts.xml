@@ -38,5 +38,9 @@
             <result name="success" type="redirect">/backDesk/showOneStudent.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
+        <action name="deleteStudentInfo" class="actions.Action" method="DeleteStudentInfo">
+            <result name="success" type="chain">selectAllStudents</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
     </package>
 </struts>

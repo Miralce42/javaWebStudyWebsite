@@ -102,12 +102,18 @@ public class TeacherDAO {
    }
 
    public int updateStudentInfo(Users student){
-      String ssql = "update javawebcourseresources.users" +
-              " set name=?,sex=?,phone=?,major=?,class=? " +
-              "where user_id=?";
-      int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
-      return states;
-   }
+        String ssql = "update javawebcourseresources.users" +
+                " set name=?,sex=?,phone=?,major=?,class=? " +
+                "where user_id=?";
+        int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
+        return states;
+    }
+
+    public int deleteStudentInfo(Users student){
+        String ssql = "delete from javawebcourseresources.users where user_id=?";
+        int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername()});
+        return states;
+    }
 
    public boolean publishHomework(ArrayList choices,ArrayList completions){
 
