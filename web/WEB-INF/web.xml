@@ -12,6 +12,14 @@
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <servlet>
+        <servlet-name>PublishHomeworkServlet</servlet-name>
+        <servlet-class>servlets.PublishHomeworkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PublishHomeworkServlet</servlet-name>
+        <url-pattern>/backDesk/publishHomework.servlet</url-pattern>
+    </servlet-mapping>
     <filter>
         <filter-name>LoginFilter</filter-name>
         <filter-class>cn.vove7.filters.LoginFilter</filter-class>

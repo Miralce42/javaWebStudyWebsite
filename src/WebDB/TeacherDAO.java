@@ -10,6 +10,7 @@ import beans.Users;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class TeacherDAO {
    private DB_Manager db_manager = new DB_Manager();
@@ -107,5 +108,11 @@ public class TeacherDAO {
       int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
       return states;
    }
+
+   public boolean publishHomework(ArrayList choices,ArrayList completions){
+
+      return true;
+   }
+
 }
 
