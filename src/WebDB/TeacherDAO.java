@@ -4,13 +4,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.ChoiceHomework;
+import beans.CompletionHomework;
 import beans.HomeworkStudentStatus;
 import beans.StudentHomework;
 import beans.Users;
 
 /**
  * Created by Vove on 2017/5/20.
- *
  */
 public class TeacherDAO {
    private DB_Manager db_manager = new DB_Manager();
@@ -99,9 +100,65 @@ public class TeacherDAO {
       }
    }
 
-   public boolean publishHomework(ArrayList choices,ArrayList completions){
+   public boolean publishHomework(String homeworkTitle
+           , ArrayList<ChoiceHomework> choices, ArrayList<CompletionHomework> completions) {
+      try {
+         db_manager.beginAffair();//开始事务
 
-      return true;
+         String sql = "insert into homework(title,create_time,closing_time,is_closing)" +
+                 " values(?,now(),now(),0)";
+         db_manager.executeUpdate(sql, new String[]{homeworkTitle});//
+
+         String homeworkId = getHomeworkId();//根据刚插入数据获取id
+
+         int questionIndex = 1;
+         for (ChoiceHomework choiceHomework : choices) {//插入选择题记录
+            String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer) " +
+                    "values(?,?,?,?)";
+            db_manager.executeUpdate(insertChoiceSql, new String[]{homeworkId
+                    , Integer.toString(questionIndex++)//*
+                    , choiceHomework.getQuestion()
+                    , choiceHomework.getRef_ky()
+            });
+
+            //插入选项记录
+            String choiceId = getChoiceId();
+            String insertChoice = "insert into choiceofquestion values(?,?,?)";//A
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "A", choiceHomework.getChoice_A()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "B", choiceHomework.getChoice_B()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "C", choiceHomework.getChoice_C()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "D", choiceHomework.getChoice_D()});
+         }
+         for (CompletionHomework completionHomework : completions) {//插入填空记录
+            String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content) values(?,?)";
+            db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId, completionHomework.getCompletionContent()});
+         }
+         db_manager.Commit();//提交
+         return true;
+      } catch (Exception e) {
+         e.printStackTrace();
+         try {
+            db_manager.rollbackAffair();
+            return false;
+         } catch (SQLException e1) {
+            e1.printStackTrace();
+            return false;
+         }
+      }
+   }
+
+   private String getChoiceId() throws SQLException {
+      String getHwIdSql = "SELECT max(id) FROM hw_question_choice";
+      ResultSet resultSet = db_manager.executeQuery(getHwIdSql, null);
+      resultSet.next();
+      return resultSet.getString(1);
+   }
+
+   private String getHomeworkId() throws SQLException {
+      String getHwIdSql = "SELECT max(id) FROM homework";
+      ResultSet resultSet = db_manager.executeQuery(getHwIdSql, null);
+      resultSet.next();
+      return resultSet.getString(1);
    }
 
 }

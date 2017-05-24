@@ -1,5 +1,5 @@
 
-.homework-title,.choice-title,.ref-key,input.choice {
+.homework-title,.choice-title,.ref-key,input.choice,.score {
     margin-left: 2px;
     -moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -20,7 +20,7 @@
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
 input.ref-key{
-    width: 30px;
+    width: 100px;
 }
 .homework-title{
     margin-top: 8px;
