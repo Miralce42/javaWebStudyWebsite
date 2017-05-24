@@ -1,6 +1,7 @@
 <%@ page import="WebDB.StudentDAO" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="beans.InteractionTopic" %><%--
+<%@ page import="beans.InteractionTopic" %>
+<%@ page import="beans.TopicComments" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/20
@@ -53,11 +54,11 @@
     </table>
 
     <%
-        StudentDAO stuDao = new StudentDAO();
+        StudentDAO studentDao = new StudentDAO();
         ArrayList<InteractionTopic> Topics = new ArrayList<InteractionTopic>();
-        int number = stuDao.getAllTopic(Topics);
+        int number = studentDao.getAllTopic(Topics);
     %>
-
+    <!--Other-->
         <div  class="fh5co-narrow-content">
             <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他最新话题</h2>
             <hr>
@@ -74,7 +75,7 @@
                         if(shortContent.length() > 25) {
                             shortContent = shortContent.substring(0,25);
                         }
-                        String name = stuDao.getName(topic.getUsername());
+                        String name = studentDao.getName(topic.getUsername());
             %>
             <div class="row row-bottom-padded-md">
                 <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
@@ -83,13 +84,30 @@
                             <h2><a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>"><%=topic.getTitle()%></a></h2>
                             <h4>
                             <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
-                                <div id="content">
+                                <div class="content">
                                     <p><%=shortContent%></p>
                                 </div>
                             </h4>
+                            <%
+                                ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
+                                String commentUserName,shortCommentContent,date;
+                                if(Comments.size()>0) {
+                                    TopicComments comment = Comments.get(Comments.size()-1);
+                                    commentUserName = studentDao.getName(comment.getUsername());
+                                    shortCommentContent = comment.getContent();
+                                    date = comment.getDate();
+                                    if (shortCommentContent.length() > 25) {
+                                        shortCommentContent = shortCommentContent.substring(0, 25);
+                                    }
+                                }
+                                else {
+                                    commentUserName=date="";
+                                    shortCommentContent="暂时还没有评论";
+                                 }
+                            %>
                             <h7>最近评论：</h7>
-                            <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
-                            <p>Design must be functional and functionality must be translated into visual aesthetics</p>
+                            <span><small>by <%=commentUserName%> </small>/ <small> <%=date%></small></span>
+                            <p><%=shortCommentContent%></p>
                             <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
                         </div>
                     </div>
@@ -99,8 +117,187 @@
                     }
                 %>
             </div>
-
+        </div>
+    <!--JSP-->
+        <div  class="fh5co-narrow-content">
+            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JSP相关最新话题</h2>
+            <hr>
+            <%
+                for(int i = 0; i < number; i++){
+                    if(i > 4) break;
+                    InteractionTopic topic = Topics.get(i);
+                    String topicType = topic.getTopicType();
+                    if("JSP".equals(topicType)) {
+                        //截取话题内容
+                        String shortContent = topic.getContent();
+                        //去掉内容中的图片，用【图片】代替  ！important
+                        shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
+                        if(shortContent.length() > 25) {
+                            shortContent = shortContent.substring(0,25);
+                        }
+                        String name = studentDao.getName(topic.getUsername());
+            %>
+            <div class="row row-bottom-padded-md">
+                <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+                    <div class="blog-entry">
+                        <div class="desc">
+                            <h2><a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>"><%=topic.getTitle()%></a></h2>
+                            <h4>
+                                <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
+                                <div class="content">
+                                    <p><%=shortContent%></p>
+                                </div>
+                            </h4>
+                            <%
+                                ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
+                                String commentUserName,shortCommentContent,date;
+                                if(Comments.size()>0) {
+                                    TopicComments comment = Comments.get(Comments.size()-1);
+                                    commentUserName = studentDao.getName(comment.getUsername());
+                                    shortCommentContent = comment.getContent();
+                                    date = comment.getDate();
+                                    if (shortCommentContent.length() > 25) {
+                                        shortCommentContent = shortCommentContent.substring(0, 25);
+                                    }
+                                }
+                                else {
+                                    commentUserName=date="";
+                                    shortCommentContent="暂时还没有评论";
+                                }
+                            %>
+                            <h7>最近评论：</h7>
+                            <span><small>by <%=commentUserName%> </small>/ <small> <%=date%></small></span>
+                            <p><%=shortCommentContent%></p>
+                            <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <%
+                        }
+                    }
+                %>
+            </div>
+        </div>
+    <!--JAVA-->
+    <div  class="fh5co-narrow-content">
+        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JAVA相关最新话题</h2>
+        <hr>
+        <%
+            for(int i = 0; i < number; i++){
+                if(i > 4) break;
+                InteractionTopic topic = Topics.get(i);
+                String topicType = topic.getTopicType();
+                if("JAVA".equals(topicType)) {
+                    //截取话题内容
+                    String shortContent = topic.getContent();
+                    //去掉内容中的图片，用【图片】代替  ！important
+                    shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
+                    if(shortContent.length() > 25) {
+                        shortContent = shortContent.substring(0,25);
+                    }
+                    String name = studentDao.getName(topic.getUsername());
+        %>
+        <div class="row row-bottom-padded-md">
+            <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+                <div class="blog-entry">
+                    <div class="desc">
+                        <h2><a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>"><%=topic.getTitle()%></a></h2>
+                        <h4>
+                            <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
+                            <div class="content">
+                                <p><%=shortContent%></p>
+                            </div>
+                        </h4>
+                        <%
+                            ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
+                            String commentUserName,shortCommentContent,date;
+                            if(Comments.size()>0) {
+                                TopicComments comment = Comments.get(Comments.size()-1);
+                                commentUserName = studentDao.getName(comment.getUsername());
+                                shortCommentContent = comment.getContent();
+                                date = comment.getDate();
+                                if (shortCommentContent.length() > 25) {
+                                    shortCommentContent = shortCommentContent.substring(0, 25);
+                                }
+                            }
+                            else {
+                                commentUserName=date="";
+                                shortCommentContent="暂时还没有评论";
+                            }
+                        %>
+                        <h7>最近评论：</h7>
+                        <span><small>by <%=commentUserName%> </small>/ <small> <%=date%></small></span>
+                        <p><%=shortCommentContent%></p>
+                        <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                    </div>
+                </div>
+            </div>
+            <%
+                    }
+                }
+            %>
         </div>
     </div>
+    <!--HTML-->
+    <div  class="fh5co-narrow-content">
+        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">HTML相关最新话题</h2>
+        <hr>
+        <%
+            for(int i = 0; i < number; i++){
+                if(i > 4) break;
+                InteractionTopic topic = Topics.get(i);
+                String topicType = topic.getTopicType();
+                if("HTML".equals(topicType)) {
+                    //截取话题内容
+                    String shortContent = topic.getContent();
+                    //去掉内容中的图片，用【图片】代替  ！important
+                    shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
+                    if(shortContent.length() > 25) {
+                        shortContent = shortContent.substring(0,25);
+                    }
+                    String name = studentDao.getName(topic.getUsername());
+        %>
+        <div class="row row-bottom-padded-md">
+            <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
+                <div class="blog-entry">
+                    <div class="desc">
+                        <h2><a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>"><%=topic.getTitle()%></a></h2>
+                        <h4>
+                            <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
+                            <div class="content">
+                                <p><%=shortContent%></p>
+                            </div>
+                        </h4>
+                        <%
+                            ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
+                            String commentUserName,shortCommentContent,date;
+                            if(Comments.size()>0) {
+                                TopicComments comment = Comments.get(Comments.size()-1);
+                                commentUserName = studentDao.getName(comment.getUsername());
+                                shortCommentContent = comment.getContent();
+                                date = comment.getDate();
+                                if (shortCommentContent.length() > 25) {
+                                    shortCommentContent = shortCommentContent.substring(0, 25);
+                                }
+                            }
+                            else {
+                                commentUserName=date="";
+                                shortCommentContent="暂时还没有评论";
+                            }
+                        %>
+                        <h7>最近评论：</h7>
+                        <span><small>by <%=commentUserName%> </small>/ <small> <%=date%></small></span>
+                        <p><%=shortCommentContent%></p>
+                        <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                    </div>
+                </div>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
+    </div>
+</div>
 </body>
 </html>

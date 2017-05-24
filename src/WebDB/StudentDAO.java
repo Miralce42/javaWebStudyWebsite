@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import beans.InteractionTopic;
 import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;
+import beans.TopicComments;
 import beans.Users;
 
 /**
@@ -123,5 +124,33 @@ public class StudentDAO {
          e.printStackTrace();
       }
       return topic;
+   }
+
+   public int createComment(TopicComments comment){
+      String ssql = "insert into javawebcourseresources.topiccomments(" +
+              "topic_id,user_id,content,is_deleted) " +
+              "values(?,?,?,0)";
+      return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
+   }
+
+   public ArrayList<TopicComments> getAllComment(String topic_id){
+      String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
+      ArrayList<TopicComments> Comments = new ArrayList<>();
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{topic_id});
+      try {
+         while (rs.next()){
+            TopicComments comment = new TopicComments();
+            comment.setCommentId(rs.getString("id"));
+            comment.setTopicId(rs.getString("topic_id"));
+            comment.setUsername(rs.getString("user_id"));
+            comment.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("comment_date");
+            comment.setDate(date);
+            Comments.add(comment);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Comments;
    }
 }

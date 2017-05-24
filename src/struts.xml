@@ -46,5 +46,9 @@
             <result name="success" type="chain">selectAllStudents</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
+        <action name="createComment" class="actions.Action" method="CreateComment">
+            <result name="success">/frontDesk/topicDetail.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
     </package>
 </struts>

@@ -1,6 +1,7 @@
 package actions;
 
 import beans.InteractionTopic;
+import beans.TopicComments;
 import beans.Users;
 import WebDB.*;
 import com.opensymphony.xwork2.ActionSupport;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class Action extends ActionSupport {
     private Users user = new Users();
     private InteractionTopic topic = new InteractionTopic();
+    private TopicComments comment = new TopicComments();
     private StudentDAO stuDao = new StudentDAO();
     private TeacherDAO teacherDAO = new TeacherDAO();
     private Dao dao = new Dao();;
@@ -148,6 +150,23 @@ public class Action extends ActionSupport {
         }
         else{
             System.out.println("添加学生过程中出错");
+            return ERROR;
+        }
+    }
+
+    public String CreateComment(){
+        String content = request.getParameter("comment.content");
+        Users user = (Users)session.getAttribute("user");
+        String topicId = (String)session.getAttribute("topicId");
+        comment.setUsername(user.getUsername());
+        comment.setTopicId(topicId);
+        comment.setContent(content);
+        int state = stuDao.createComment(comment);
+        if (state ==1){
+            return SUCCESS;
+        }
+        else{
+            System.out.println("添加评论过程中出错");
             return ERROR;
         }
     }

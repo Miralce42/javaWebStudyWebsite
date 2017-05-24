@@ -76,3 +76,21 @@ function replaceImg(str) {
     str=str.replace(/<s?img[^>]*>/gi, '【图片】');
     return str;
 }
+
+function showDiv(){//点击显示隐藏div
+    if(showdiv_display = document.getElementById('show').style.display=='none'){//如果show是隐藏的
+        document.getElementById('show').style.display='block';//show的display属性设置为block（显示）
+    }else{//如果show是显示的
+        document.getElementById('show').style.display='none';//show的display属性设置为none（隐藏）
+    }
+}
+
+function commentCheck() {
+    var content =  CKEDITOR.instances.comment.getData();
+    if(content === ""){
+        alert("内容不能为空！");
+    }
+    else {
+        document.form1.submit();
+    }
+}

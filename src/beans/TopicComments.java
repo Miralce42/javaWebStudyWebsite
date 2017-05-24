@@ -1,5 +1,8 @@
 package beans;
 
+import java.sql.Timestamp;
+import java.util.Date;
+
 /**
  * Created by 韩壮 on 2017/5/19.
  */
@@ -8,6 +11,7 @@ public class TopicComments {
     private String commentId;
     private String username;
     private String content;
+    private Date date;
     private boolean isDelete;
 
     public String getTopicId() {
@@ -40,6 +44,13 @@ public class TopicComments {
 
     public void setCommentId(String commentId) {
         this.commentId = commentId;
+    }
+
+    public String getDate() {
+        return date.toLocaleString();
+    }
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 
     public boolean isDelete() {
