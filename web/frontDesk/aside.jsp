@@ -66,11 +66,11 @@
             <ul>
                 <li><a href="index.jsp">主页</a></li>
                 <li><a href="../login.jsp">登录</a></li>
-                <li><a href="portfolio.html">教学课件</a></li>
-                <li><a href="about.html">教学资源</a></li>
+                <li><a href="theTeachingCourseware.jsp?section=第一章">教学课件</a></li><!--默认显示第一章-->
+                <li><a href="theTeachingResource.jsp">教学资源</a></li>
                 <li><a href="interaction.jsp">课程互动</a></li>
                 <li><a href="studentHomework.jsp">我的作业</a></li>
-                <li><a href="about.html">实践教学</a></li>
+                <li><a href="thePracticeTeaching.jsp">实践教学</a></li>
                 <li><a href="myInfo.jsp">我的信息</a></li>
                 <li><a href="about.html">课程评价</a></li>
                 <li><a href="contact.html">联系</a></li>

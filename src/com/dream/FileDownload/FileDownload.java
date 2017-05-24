@@ -36,8 +36,8 @@ public class FileDownload extends HttpServlet {
       //  filename = new String(filename.getBytes("UTF-8"),"ISO-8859-1");
 
         System.out.println(filename);
-
-        String truename=filename.substring(filename.lastIndexOf("/")+1);//文件名
+        String[] list=filename.split("/");
+        String truename=list[2];//filename.substring(filename.lastIndexOf("/")+1);//文件名
         System.out.println(truename);
         truename = truename.replaceAll(" ","");//除文件名空格
         System.out.println(truename);
@@ -50,7 +50,7 @@ public class FileDownload extends HttpServlet {
         response.setHeader("Content-Disposition", "attachment;filename="+truename);
 //        读取目标文件，通过response将目标文件写到客户端
 //        获取目标文件的绝对路径
-        String fullFileName = getServletContext().getRealPath(filename);
+        String fullFileName = getServletContext().getRealPath("upload/"+filename);
         System.out.println("fullFileName="+fullFileName);
         //读取文件
         InputStream in = new FileInputStream(fullFileName);

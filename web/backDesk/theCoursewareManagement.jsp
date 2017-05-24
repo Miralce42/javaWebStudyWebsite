@@ -21,6 +21,17 @@
             else
                 document.forms[0].submit();
         }
+        function  mulitSubmitCheck() {
+            var i=0;
+            for(i;i<4;i++) {
+               if(document.forms[1].file[i].value!="") {
+                   document.forms[1].submit();
+                   return;
+               }
+            }
+            alert("未选择文件，请选择文件！");
+
+        }
     </script>
 </head>
 <body>
@@ -30,7 +41,8 @@
         <h3 align="center">课件上传</h3>
     <form name="fileupload" action="uploadaction.action" method="post" enctype="multipart/form-data">
         <input type="text" name="file_type" id="file_type" value="教学课件资料" hidden="hidden"/>
-        struts2文件上传：<input type="file" name="file"/>
+       <label>单文件上传</label> <br/>
+        <input type="file" name="file"/>
         <br/>
         文件类型：
         <select name="Section" onchange="this.parentNode.nextSibling.value=this.value;">
@@ -44,7 +56,8 @@
 
     </form>
     <form action="multifile.action" method="post" enctype="multipart/form-data">
-        <label>多文件上传</label>
+        <label>多文件上传</label><br/>
+        <input type="text" name="file_type" id="file_typem" value="教学课件资料" hidden="hidden"/>
         文件类型：
         <select name="Section" onchange="this.parentNode.nextSibling.value=this.value;">
             <option value="其他">其他</option>
@@ -57,7 +70,7 @@
         <input type="file" name="file"/><br>
         <input type="file" name="file"/><br>
         <input type="file" name="file"/><br>
-        <input type="submit" value="submit"/>
+        <input type="button" value="上传" onclick="mulitSubmitCheck()"/>
     </form>
     </div>
 <!--编辑-->

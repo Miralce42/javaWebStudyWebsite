@@ -1,21 +1,23 @@
 <%--
   Created by Dreamer.
   User: Dreamer
-  Date: 2017/5/22
-  Time: 0:08
+  Date: 2017/5/24
+  Time: 18:20
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>教学课件</title>
+    <title>Title</title>
 </head>
 <body>
+<%@include file="theCourseware_Template.jsp"%>
+<div style="float: right;width: 65%">
+    54645
+    <%
+    out.println(request.getParameter("section"));
 
-<%@include file="aside.jsp"%><!--左侧布局-->
-<div id="fh5co-main">
-    教学课件
-    <!--右侧布局-->
+    %>
 </div>
 </body>
 </html>
