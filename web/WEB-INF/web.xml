@@ -31,4 +31,24 @@
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+    <!--文件下载servlet-->
+    <servlet>
+        <description>This servlet sends file to client</description>
+        <display-name>DownloadFileServlet</display-name>
+        <servlet-name>download</servlet-name>
+        <servlet-class>com.dream.FileDownload.FileDownload</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>download</servlet-name>
+        <url-pattern>/download.servlet</url-pattern>
+    </servlet-mapping>
+    <!--文件删除servlet-->
+    <servlet>
+        <servlet-name>DeleteFile</servlet-name>
+        <servlet-class>com.dream.FileDelete.FileDelete</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFile</servlet-name>
+        <url-pattern>/delete.servlet</url-pattern>
+    </servlet-mapping>
 </web-app>

@@ -12,11 +12,13 @@ public class DB_Manager {
     private Connection connection = null;
     private static final String driverStr="com.mysql.jdbc.Driver";//驱动
     private static final String DB_Url = "jdbc:mysql://localhost:3306/javawebcourseresources?characterEncoding=utf8&useSSL=false";//连接字符串
-    private static final String db_User = "webuser";//数据库登录名
-    private static final String password = "iamuser";//登录密码
+    private static final String db_User = "root";//数据库登录名
+    private static final String password = "123456";//登录密码
     private PreparedStatement pStatement = null;
 
-
+    public Connection getConnection() {
+        return connection;
+    }
     public int executeUpdate(String sql, String[] strs) {
         if (!connect()) {
             System.out.println("连接失败");
@@ -77,4 +79,6 @@ public class DB_Manager {
                 e.printStackTrace();
             }
     }
+
+
 }

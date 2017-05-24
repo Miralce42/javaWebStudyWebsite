@@ -97,8 +97,8 @@
         <nav>
             <ul class="nav">
                 <li><a href="homeworkManager.jsp" class="active"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
-                <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
-                <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>资源管理</span></a></li>
+                <li><a href="theCoursewareManagement.jsp" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
+                <li><a href="theResourceManagement.jsp" class=""><i class="lnr lnr-chart-bars"></i> <span>教学资源管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
                 <li><a href="stuInfoManager.jsp" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
                 <li>
@@ -111,7 +111,7 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>实践教学管理</span></a></li>
+                <li><a href="thePracticeTeaching.jsp" class=""><i class="lnr lnr-dice"></i> <span>实践教学管理</span></a></li>
             </ul>
         </nav>
     </div>

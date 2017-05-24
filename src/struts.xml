@@ -25,5 +25,14 @@
             <result name="success" type="redirect">/frontDesk/interaction.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
+        <action name="uploadaction" class="com.dream.Fileupload.UploadAction">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action><!--单文件-->
+        <action name="multifile" class="com.dream.Fileupload.MultiUploadAction">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action><!--多文件-->
     </package>
+    <constant name="struts.multipart.maxSize" value="-1"/><!--上传文件不受限制-->
 </struts>
