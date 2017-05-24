@@ -34,6 +34,7 @@
             }
             TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
+            //获取所有作业
             ArrayList<StudentHomework> homeworkList = teacherDAO.getHomework();
 
             StringBuilder unclosedBuilder = new StringBuilder();//未关闭
