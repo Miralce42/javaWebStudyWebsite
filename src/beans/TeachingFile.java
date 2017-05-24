@@ -47,8 +47,7 @@ public class TeachingFile {
         return chapter;
     }
 
-    public void setChapter(int chapter) {
-        this.chapter = chapter;
+    public void setChapter(int chapter) {this.chapter =  chapter;
     }
 
     public enum FileType{

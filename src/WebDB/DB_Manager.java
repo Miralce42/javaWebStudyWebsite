@@ -9,6 +9,10 @@ import java.sql.*;
  * 数据库连接、执行管理
  */
 public class DB_Manager {
+   public Connection getConnection() {
+      return connection;
+   }
+
    private Connection connection = null;
    private static final String driverStr = "com.mysql.jdbc.Driver";//驱动
    private static final String DB_Url = "jdbc:mysql://localhost:3306/javawebcourseresources?characterEncoding=utf8&useSSL=false";//连接字符串
