@@ -72,6 +72,7 @@ function topicCheck() {
     }
 }
 
-function selectChange() {
-
+function replaceImg(str) {
+    str=str.replace(/<s?img[^>]*>/gi, '【图片】');
+    return str;
 }

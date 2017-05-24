@@ -76,14 +76,18 @@ public class Dao {
 			ssql = "select * from javawebcourseresources.users where user_type = 'student' and CONCAT(major,class) = ?";
 			return db_manager.executeQuery(ssql,new String[]{condition});
 		}
-		else{
+		else if(method == 3){
+			ssql = "select * from javawebcourseresources.users where user_id = ?";
+			return db_manager.executeQuery(ssql,new String[]{condition});
+		}
+		else{//method==2
 			//万能模糊查询语句
 			String likeCondition = "%"+condition+"%";
 			ssql = "select * from javawebcourseresources.users" +
-					" where user_type = 'student' and " +
+					" where user_type = 'student' and (" +
 					"user_id like ? or name like ? or " +
 					"phone like ? or major like ? or " +
-					"class like ?";
+					"class like ?)";
 			return db_manager.executeQuery(ssql,new String[]{likeCondition,likeCondition,likeCondition,likeCondition,likeCondition});
 		}
 	}

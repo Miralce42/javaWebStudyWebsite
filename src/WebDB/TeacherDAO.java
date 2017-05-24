@@ -12,10 +12,13 @@ import beans.Users;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class TeacherDAO {
    private DB_Manager db_manager = new DB_Manager();
    private Users teacher;
+
+   public TeacherDAO(){};
 
    public TeacherDAO(Users teacher) {
       this.teacher = teacher;
@@ -99,6 +102,28 @@ public class TeacherDAO {
          return homeworkFinishedAndSavedStudentList;
       }
    }
+
+   public int updateStudentInfo(Users student){
+      String ssql = "update javawebcourseresources.users" +
+              " set name=?,sex=?,phone=?,major=?,class=? " +
+              "where user_id=?";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
+      return states;
+   }
+
+   public int deleteStudentInfo(Users student){
+      String ssql = "delete from javawebcourseresources.users where user_id=?";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername()});
+      return states;
+   }
+
+   public int addStudentInfo(Users student){
+      String ssql = "insert into javawebcourseresources.users values(?,'student',?,?,?,?,?,?)";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername(),student.getName(),student.getUsername(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum()});
+      return states;
+   }
+
+
 
    public boolean publishHomework(String homeworkTitle
            , ArrayList<ChoiceHomework> choices, ArrayList<CompletionHomework> completions) {
