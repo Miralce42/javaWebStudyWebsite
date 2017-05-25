@@ -1,7 +1,8 @@
 <%@ page import="WebDB.StudentDAO" %>
 <%@ page import="beans.InteractionTopic" %>
 <%@ page import="beans.TopicComments" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="beans.Users" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/23
@@ -39,10 +40,17 @@
             margin-top: 5px;
             margin-bottom: 5px;
         }
+        #topicDeleteBtn {
+            display: none;
+        }
+        .commentDeleteBtn{
+            display: none;
+        }
     </style>
     <script src="js/myJs.js"></script>
     <!--输入合法性检验-->
 </head>
+
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
 <div id="fh5co-main">
@@ -57,34 +65,53 @@
         StudentDAO studentDAO = new StudentDAO();
         InteractionTopic topic = studentDAO.getOneTopic(topicId);
         ArrayList<TopicComments> Comments = studentDAO.getAllComment(topicId);
-        String topicUserName = studentDAO.getName(topic.getUsername());
-      //  String content = topic.getContent();
-      //  content =  content.replaceAll("<img.*>.*</img>",  "<img.*>.*</img><br>").replaceAll("<img.*/>", "<img.*/><br>");
+        String topicUserId = topic.getUsername();
+        String topicUserName = studentDAO.getName(topicUserId);
+        Users thisUser = (Users)session.getAttribute("user");
+        String thisUserId = thisUser.getUsername();
+        //  String content = topic.getContent();
+        //  content =  content.replaceAll("<img.*>.*</img>",  "<img.*>.*</img><br>").replaceAll("<img.*/>", "<img.*/><br>");
     %>
     <div class="main">
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
                 <div class="panel panel-headline">
-                    <div class="panel-body">
+                    <div class="panel-body"  onmousemove="showTopicDiv(<%=topicUserId%>,<%=thisUserId%>)">
                         <div align="right">
                             <a onclick="location.href='javascript:history.go(-1);'" class="floatButton">返回</a>
                         </div>
                         <hr>
                         <h3><i class="text-primary">标题：</i><%=topic.getTitle()%></h3>
-                        <p class="text-primary text-right"> by <STRONG><%=topicUserName%></STRONG>  /  <%=topic.getDate()%> </p>
-                        <hr>
+                        <table width="100%">
+                            <tr>
+                                <td align="left">
+                                    <div id="topicDeleteBtn">
+                                        <a href="createTopic.jsp">删除</a>
+                                    </div>
+                                </td>
+                                <td align="right">
+                                <p class="text-primary text-right"> by <STRONG><%=topicUserName%></STRONG>  /  <%=topic.getDate()%> </p>
+                                </td>
+                            </tr>
+                        </table>
+                         <hr>
                         <div id="contentDetail">
                             <p class="lead"><h4><i class="text-primary">内容：</i><hr><%=topic.getContent()%></h4></p>
                         </div>
                         <hr>
                         <%
-                            for(int i = 0 ;i < Comments.size() ; i++){
+                            for (int i = 0;i < Comments.size();i++) {
                                 TopicComments comment = Comments.get(i);
+                                String commentUserId = comment.getUsername();
                         %>
-                        <div class="well">
-                            <span class="text-left"><strong><%=studentDAO.getName(comment.getUsername())%></strong></span></h4>/
+                        <!--下面那句话废了我一半的脑细胞，所以不要乱动-->
+                        <div class="well" onmousemove="showCommentDiv(<%=commentUserId%>,<%=thisUserId%>,<%=i%>)">
+                            <span class="text-left"><strong><%=studentDAO.getName(comment.getUsername())%></strong></span>
                             <span class="text-right"><%=comment.getDate()%></span>
+                            <div name="commentDeleteBtn" class="commentDeleteBtn">
+                                <a href="createTopic.jsp">删除</a>
+                            </div>
                             <hr id="shr">
                             <%=comment.getContent()%>
                         </div>
@@ -107,7 +134,7 @@
                     <textarea style="width: 80%" title="编辑器" name="comment.content" id="comment" class="ckeditor"></textarea>
                     <hr>
                     <div align="right">
-                    <a onclick="commentCheck()" class="floatButton">发布评论</a>
+                        <a onclick="commentCheck()" class="floatButton">发布评论</a>
                     </div>
                 </div>
             </form>

@@ -77,12 +77,18 @@ function replaceImg(str) {
     return str;
 }
 
-function showDiv(){//点击显示隐藏div
-    if(showdiv_display = document.getElementById('show').style.display=='none'){//如果show是隐藏的
-        document.getElementById('show').style.display='block';//show的display属性设置为block（显示）
-    }else{//如果show是显示的
-        document.getElementById('show').style.display='none';//show的display属性设置为none（隐藏）
+function showTopicDiv(anthorUsername,thisUsername) {//点击显示隐藏div
+    if (anthorUsername === thisUsername){
+        document.getElementById('topicDeleteBtn').style.display = 'block';//show的display属性设置为block（显示）
+
     }
+}
+
+function showCommentDiv(anthorUsername,thisUsername,i) {//点击显示隐藏div
+        var commentDiv = document.getElementsByName('commentDeleteBtn');//show的display属性设置为block（显示）
+            if (anthorUsername === thisUsername){
+                commentDiv[i].style.display = 'block';
+        }
 }
 
 function commentCheck() {
@@ -98,3 +104,4 @@ function commentCheck() {
 function searchTopic() {
     document.form1.submit();
 }
+
