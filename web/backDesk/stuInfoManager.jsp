@@ -52,10 +52,13 @@
 <div id="fh5co-main" class="right">
     <div id="col-md-6" class="col-md-6">
         <%
+            System.out.println("1");
             Dao dao = new Dao();
             ArrayList<Users> Students = (ArrayList<Users>) session.getAttribute("Students");
+            System.out.println("2");
             ArrayList<String> classNames = new ArrayList<String>();
             int classNamesCount = dao.selectClassName(classNames);
+            System.out.println("3");
         %>
         <!-- TABLE HOVER -->
         <div class="panel">
@@ -112,9 +115,8 @@
                     </thead>
                     <tbody>
                     <%
-
-                        System.out.println("进来了4");
                         for(int i = 0 ; i < Students.size() ;i++){
+                            System.out.println("i="+i);
                             Users allStu = Students.get(i);
 
                     %>
