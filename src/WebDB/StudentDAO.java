@@ -182,4 +182,38 @@ public class StudentDAO {
       }
       return Topics;
    }
+
+   public int deleteTopic(String topicId){
+      String ssql = "update javawebcourseresources.interactiontopic set is_deleted=1 where topic_id=?";
+      return db_manager.executeUpdate(ssql,new String[]{topicId});
+   }
+
+   public TopicComments getOneComment(String commentId) {
+      String ssql = "select * from javawebcourseresources.topiccomments where  is_deleted=0 and id=?";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{commentId});
+      TopicComments comment = new TopicComments();
+      try {
+         while (rs.next()){
+            comment.setCommentId(rs.getString("id"));
+            comment.setUsername(rs.getString("user_id"));
+            comment.setTopicId(rs.getString("topic_id"));
+            comment.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("comment_date");
+            comment.setDate(date);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return comment;
+   }
+
+   public int deleteComment(String commentId){
+      String ssql = "update javawebcourseresources.topiccomments set is_deleted=1 where id=?";
+      return db_manager.executeUpdate(ssql,new String[]{commentId});
+   }
+
+   public int updateTopic(InteractionTopic topic){
+      String ssql = "update javawebcourseresources.interactiontopic set content=? where topic_id=?";
+      return db_manager.executeUpdate(ssql,new String[]{topic.getContent(),topic.getTopicId()});
+   }
 }

@@ -67,7 +67,7 @@
                          <a href="createTopic.jsp" class="floatButton">创建话题</a>
                     </td>
                     <td>
-                        <a onclick="location.href='javascript:history.go(-1);'" class="floatButton">话题主页面</a>
+                        <a href="interaction.jsp" class="floatButton">话题主页面</a>
                     </td>
                 </tr>
                 </table>
