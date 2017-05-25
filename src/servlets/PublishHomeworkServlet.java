@@ -1,11 +1,9 @@
 package servlets;
 
-import org.apache.struts2.ServletActionContext;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,9 +23,6 @@ import beans.Users;
 public class PublishHomeworkServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
       Users teacher = (Users) request.getSession().getAttribute("user");
-      if (teacher == null || !teacher.getUser_type().equals("TEACHER")) {
-         return;
-      }
       TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
       ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();

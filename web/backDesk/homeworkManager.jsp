@@ -29,9 +29,6 @@
     <div style="margin-top: 50px">
         <%
             Users teacher = (Users) session.getAttribute("user");
-            if (teacher == null || "STUDENT".equals(teacher.getUser_type())) {
-                return;
-            }
             TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
             //获取所有作业
@@ -41,10 +38,10 @@
             StringBuilder closedBuilder = new StringBuilder();//已关闭
             //展示未关闭作业
             int unclosedNum = 1;
-            boolean haveClosedHomework=false;
+            boolean haveClosedHomework = false;
             int closedNum = 1;
             for (StudentHomework homework : homeworkList) {
-                if (unclosedNum % 3  == 1) {
+                if (unclosedNum % 3 == 1) {
                     unclosedBuilder.append("<div class=\"row\">\n");//行div
                 }
                 if (closedNum % 3 == 1) {
@@ -61,7 +58,7 @@
                     case CLOSED:
                         closedBuilder.append(managerHomeworkDiv.toTeaString());
                         closedNum++;
-                        haveClosedHomework=true;
+                        haveClosedHomework = true;
                         break;
                     case UNCLOSED:
                         unclosedBuilder.append(managerHomeworkDiv.toTeaString());
@@ -77,10 +74,10 @@
                 }
             }
             //结尾
-            if(unclosedNum % 3 != 1){
+            if (unclosedNum % 3 != 1) {
                 unclosedBuilder.append("</div>");
             }
-            if(haveClosedHomework && closedNum % 3 != 1){
+            if (haveClosedHomework && closedNum % 3 != 1) {
                 closedBuilder.append("</div>");
             }
         %>

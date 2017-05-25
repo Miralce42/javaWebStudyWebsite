@@ -32,7 +32,7 @@ public class ManagerHomeworkDiv {
                       + body +
               "                </div>\n" +
               "                <div class=\"panel-buttonValue\">\n" +
-              "                  <a href="+hwId+ " class='floatButton'>  " + buttonValue + "</a>\n" +
+              "                  <a href=doHomework.jsp?homeworkId="+hwId+ "&homeworkTitle="+title+" class='floatButton'>  " + buttonValue + "</a>\n" +
               "                </div>\n" +
               "            </div>\n" +
               "        </div>\n";
