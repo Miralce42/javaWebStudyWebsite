@@ -87,7 +87,8 @@
                             <tr>
                                 <td align="left">
                                     <div id="topicDeleteBtn">
-                                        <a href="createTopic.jsp">删除</a>
+                                        <a id="topicDelete" onclick="deleteTopic()" href="topicDelete.action?topicId=<%=topic.getTopicId()%>">删除</a>|
+                                        <a id="topicUpdate" href="changeTopic.jsp?topicId=<%=topic.getTopicId()%>">修改</a>
                                     </div>
                                 </td>
                                 <td align="right">
@@ -110,7 +111,7 @@
                             <span class="text-left"><strong><%=studentDAO.getName(comment.getUsername())%></strong></span>
                             <span class="text-right"><%=comment.getDate()%></span>
                             <div name="commentDeleteBtn" class="commentDeleteBtn">
-                                <a href="createTopic.jsp">删除</a>
+                                <a id="commentDelete" onclick="deleteComment()" href="commentDelete.action?commentId=<%=comment.getCommentId()%>">删除</a>
                             </div>
                             <hr id="shr">
                             <%=comment.getContent()%>

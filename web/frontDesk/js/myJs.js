@@ -105,3 +105,30 @@ function searchTopic() {
     document.form1.submit();
 }
 
+function deleteTopic() {
+    if (confirm("删除之后将不再显示，确定要删除吗?")) {
+    }
+    else {
+        document.getElementById("topicDelete").setAttribute("href", window.location.href);
+        alert("已取消删除操作！");
+    }
+}
+
+function deleteComment() {
+    if (confirm("删除之后将不再显示，确定要删除吗?")) {
+    }
+    else {
+        document.getElementById("commentDelete").setAttribute("href", window.location.href);
+        alert("已取消删除操作！");
+    }
+}
+
+function UpdateTopic() {
+    var content =  CKEDITOR.instances.content.getData();
+    if(content === ""){
+        alert("内容不能为空！");
+    }
+    else{
+        document.form1.submit();
+    }
+}

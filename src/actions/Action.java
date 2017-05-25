@@ -171,6 +171,55 @@ public class Action extends ActionSupport {
         }
     }
 
+    public String TopicDelete(){
+        String topicId = request.getParameter("topicId");
+        InteractionTopic topic = stuDao.getOneTopic(topicId);
+        String topicUser = topic.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(topicUser.equals(thisUser)) {
+            int state = stuDao.deleteTopic(topicId);
+            System.out.println("state="+state);
+            if (state == 1){
+                return SUCCESS;
+            }
+        }
+        return ERROR;
+    }
+
+    public String CommentDelete(){
+        String commentId = request.getParameter("commentId");
+        TopicComments comment = stuDao.getOneComment(commentId);
+        String commentUser = comment.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(commentUser.equals(thisUser)) {
+            int state = stuDao.deleteComment(commentId);
+            if (state == 1){
+                session.setAttribute("topicId",comment.getTopicId());
+                return SUCCESS;
+            }
+        }
+        return ERROR;
+    }
+
+    public String UpdateTopic(){
+        String topicId = request.getParameter("topicId");
+        InteractionTopic topic = stuDao.getOneTopic(topicId);
+        topic.setContent(request.getParameter("topic.content"));
+        String topicUser = topic.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(topicUser.equals(thisUser)) {
+            int state = stuDao.updateTopic(topic);
+            if (state == 1){
+                session.setAttribute("topicId",comment.getTopicId());
+                return SUCCESS;
+            }
+        }
+        return ERROR;
+    }
+
     public void setUser(Users user) {
         this.user = user;
     }
