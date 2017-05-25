@@ -2,7 +2,7 @@
 <%@ page import="WebDB.TeacherDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="beans.StudentHomework" %>
-<%@ page import="cn.vove7.mydiv.HomeworkDiv" %><%--
+<%@ page import="cn.vove7.mydiv.ManagerHomeworkDiv" %><%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/5/20
@@ -35,7 +35,7 @@
             TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
             //获取所有作业
-            ArrayList<StudentHomework> homeworkList = teacherDAO.getHomework();
+            ArrayList<StudentHomework> homeworkList = teacherDAO.getHomeworkList();
 
             StringBuilder unclosedBuilder = new StringBuilder();//未关闭
             StringBuilder closedBuilder = new StringBuilder();//已关闭
@@ -51,7 +51,7 @@
                     closedBuilder.append("<div class=\"row\">\n");
                 }
                 String closingTime = homework.getClosingTime();
-                HomeworkDiv homeworkDiv = new HomeworkDiv(homework.getId(),
+                ManagerHomeworkDiv managerHomeworkDiv = new ManagerHomeworkDiv(homework.getId(),
                         homework.getTitle(),
                         "截止时间:" + closingTime.substring(0, closingTime.length() - 2),
                         homework.getTeac_HomeworkStatus()
@@ -59,12 +59,12 @@
 
                 switch (homework.getHomeworkStatus()) {
                     case CLOSED:
-                        closedBuilder.append(homeworkDiv.toTeaString());
+                        closedBuilder.append(managerHomeworkDiv.toTeaString());
                         closedNum++;
                         haveClosedHomework=true;
                         break;
                     case UNCLOSED:
-                        unclosedBuilder.append(homeworkDiv.toTeaString());
+                        unclosedBuilder.append(managerHomeworkDiv.toTeaString());
                         unclosedNum++;
                         break;
                 }

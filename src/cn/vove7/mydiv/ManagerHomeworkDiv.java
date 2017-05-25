@@ -3,14 +3,16 @@ package cn.vove7.mydiv;
 
 /**
  * Created by Vove on 2017/5/20.
+ * 做作业管理块
  */
-public class HomeworkDiv {
+public class ManagerHomeworkDiv {
    private String hwId;
    private String title;
    private String body;
    private String buttonValue;
 
-   public HomeworkDiv(String hwId, String title, String body, String buttonValue) {
+
+   public ManagerHomeworkDiv(String hwId, String title, String body, String buttonValue) {
       this.title = title;
       this.hwId = hwId;
       this.body = body;
