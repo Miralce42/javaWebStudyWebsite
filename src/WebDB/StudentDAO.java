@@ -153,4 +153,30 @@ public class StudentDAO {
       }
       return Comments;
    }
+
+   public ArrayList<InteractionTopic> selectSearchTopic(String condition){
+      String likeCondition = "%"+condition+"%";
+      String ssql = "select * from javawebcourseresources.interactiontopic" +
+              " where is_deleted = 0 and (" +
+              "title like ? or content like ? or " +
+              "topic_type like ?) order by topic_id desc";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{likeCondition,likeCondition,likeCondition});
+      ArrayList<InteractionTopic> Topics = new ArrayList<>();
+      try {
+         while (rs.next()){
+            InteractionTopic topic = new InteractionTopic();
+            topic.setTopicId(rs.getString("topic_id"));
+            topic.setUsername(rs.getString("user_id"));
+            topic.setTitle(rs.getString("title"));
+            topic.setContent(rs.getString("content"));
+            topic.setTopicType(rs.getString("topic_type"));
+            Timestamp date = rs.getTimestamp("create_date");
+            topic.setDate(date);
+            Topics.add(topic);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Topics;
+   }
 }

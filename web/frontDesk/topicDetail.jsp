@@ -71,7 +71,7 @@
                             <a onclick="location.href='javascript:history.go(-1);'" class="floatButton">返回</a>
                         </div>
                         <hr>
-                        <h2><i class="text-primary">标题：</i><%=topic.getTitle()%></h2>
+                        <h3><i class="text-primary">标题：</i><%=topic.getTitle()%></h3>
                         <p class="text-primary text-right"> by <STRONG><%=topicUserName%></STRONG>  /  <%=topic.getDate()%> </p>
                         <hr>
                         <div id="contentDetail">

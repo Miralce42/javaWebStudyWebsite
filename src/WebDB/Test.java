@@ -13,8 +13,9 @@ public class Test {
 	 */
 	public static void main(String[] args) {
 		StudentDAO studentDAO = new StudentDAO();
-		ArrayList<TopicComments> Comments = studentDAO.getAllComment("7");
-		TopicComments comment = Comments.get(0);
-		System.out.println(comment.getContent());
+		ArrayList<InteractionTopic> Topics = new ArrayList<>();
+		Topics = studentDAO.selectSearchTopic("JSP");
+		InteractionTopic topic = Topics.get(0);
+		System.out.println(topic.getTitle());
 	}
 }

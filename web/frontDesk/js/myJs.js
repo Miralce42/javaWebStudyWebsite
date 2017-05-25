@@ -94,3 +94,7 @@ function commentCheck() {
         document.form1.submit();
     }
 }
+
+function searchTopic() {
+    document.form1.submit();
+}

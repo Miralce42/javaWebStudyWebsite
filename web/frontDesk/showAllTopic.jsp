@@ -56,15 +56,18 @@
                 <tr>
                     <td width="60%"><h3 class="page-title"><br><%=showType%>类型话题</h3></td>
                     <td height="20">
-                        <form class="navbar-form navbar-left">
+                        <form name="form1" class="navbar-form navbar-left" action="showSearchTopic.jsp" method="post">
                             <div class="input-group">
-                                <span class="input-group-btn"> <input id="title"  type="text" value="" class="form-control" placeholder="搜索话题">&nbsp;</span>
-                                <a onclick="commentCheck()" class="floatButton">GO!</a>
+                                <span class="input-group-btn"> <input name="condition" id="condition"  type="text" value="" class="form-control" placeholder="搜索话题">&nbsp;</span>
+                                <a onclick="searchTopic()" class="floatButton">GO!</a>
                             </div>
                         </form>
                     </td>
                     <td height="20" align="right">
                          <a href="createTopic.jsp" class="floatButton">创建话题</a>
+                    </td>
+                    <td>
+                        <a onclick="location.href='javascript:history.go(-1);'" class="floatButton">话题主页面</a>
                     </td>
                 </tr>
                 </table>
