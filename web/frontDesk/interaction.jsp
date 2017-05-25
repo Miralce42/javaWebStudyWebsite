@@ -57,17 +57,20 @@
         StudentDAO studentDao = new StudentDAO();
         ArrayList<InteractionTopic> Topics = new ArrayList<InteractionTopic>();
         int number = studentDao.getAllTopic(Topics);
+        int count = 0;
     %>
     <!--Other-->
         <div  class="fh5co-narrow-content">
             <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他最新话题</h2>
             <hr>
             <%
+                count =0;
                 for(int i = 0; i < number; i++){
-                    if(i > 4) break;
+                    if(count > 3) break;
                     InteractionTopic topic = Topics.get(i);
                     String topicType = topic.getTopicType();
                     if("Other".equals(topicType)) {
+                        count++;
                         //截取话题内容
                         String shortContent = topic.getContent();
                         //去掉内容中的图片，用【图片】代替  ！important
@@ -123,11 +126,13 @@
             <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JSP相关最新话题</h2>
             <hr>
             <%
+                count = 0;
                 for(int i = 0; i < number; i++){
-                    if(i > 4) break;
+                    if(i > 3) break;
                     InteractionTopic topic = Topics.get(i);
                     String topicType = topic.getTopicType();
                     if("JSP".equals(topicType)) {
+                        count++;
                         //截取话题内容
                         String shortContent = topic.getContent();
                         //去掉内容中的图片，用【图片】代替  ！important
@@ -183,11 +188,13 @@
         <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JAVA相关最新话题</h2>
         <hr>
         <%
+            count = 0;
             for(int i = 0; i < number; i++){
-                if(i > 4) break;
+                if(i > 3) break;
                 InteractionTopic topic = Topics.get(i);
                 String topicType = topic.getTopicType();
                 if("JAVA".equals(topicType)) {
+                    count++;
                     //截取话题内容
                     String shortContent = topic.getContent();
                     //去掉内容中的图片，用【图片】代替  ！important
@@ -243,11 +250,13 @@
         <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">HTML相关最新话题</h2>
         <hr>
         <%
+            count = 0;
             for(int i = 0; i < number; i++){
-                if(i > 4) break;
+                if(i > 3) break;
                 InteractionTopic topic = Topics.get(i);
                 String topicType = topic.getTopicType();
                 if("HTML".equals(topicType)) {
+                    count++;
                     //截取话题内容
                     String shortContent = topic.getContent();
                     //去掉内容中的图片，用【图片】代替  ！important
