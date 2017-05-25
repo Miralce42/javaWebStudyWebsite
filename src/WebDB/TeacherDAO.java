@@ -25,7 +25,7 @@ public class TeacherDAO {
    }
 
    public ArrayList<StudentHomework> getHomework() {
-      String sql = "SELECT * FROM javawebcourseresources.homework";
+      String sql = "SELECT * FROM javawebcourseresources.homework ORDER BY id DESC ";
 
       ArrayList<StudentHomework> homeworkList = new ArrayList<StudentHomework>();
 

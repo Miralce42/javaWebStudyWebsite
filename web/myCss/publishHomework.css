@@ -41,9 +41,8 @@ input.ref-key{
 
 }
 .float-right{
-    height:20px;
+    height:70px;
     padding: 4px;
-    float: right;
     margin-right: 20px;
 }
 .completion_field{

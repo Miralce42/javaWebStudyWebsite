@@ -60,13 +60,15 @@
                 transform: none;
             }
         }
-        .left{
-            animation:fadeinLeft 0.5s;
-            padding-left:4px;
+
+        .left {
+            animation: fadeinLeft 0.3s;
+            padding-left: 4px;
         }
-        .right{
-            padding-left:264px;
-            animation:fadeinRight 0.5s;
+
+        .right {
+            padding-left: 264px;
+            animation: fadeinRight 0.3s;
         }
     </style>
 </head>
@@ -96,11 +98,11 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                <li><a href="homeworkManager.jsp"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
-                <li><a href="elements.html" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
-                <li><a href="charts.html" class=""><i class="lnr lnr-chart-bars"></i> <span>资源管理</span></a></li>
+                <li><a href="homeworkManager.jsp" class="active"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
+                <li><a href="theCoursewareManagement.jsp" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
+                <li><a href="theResourceManagement.jsp" class=""><i class="lnr lnr-chart-bars"></i> <span>教学资源管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
-                <li><a href="selectAllStudents.action" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
+                <li><a href="stuInfoManager.jsp" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
                 <li>
                     <a href="#subPages" data-toggle="collapse" class="collapsed"><i class="lnr lnr-file-empty"></i> <span>Pages</span> <i class="icon-submenu lnr lnr-chevron-left"></i></a>
                     <div id="subPages" class="collapse ">
@@ -111,7 +113,7 @@
                         </ul>
                     </div>
                 </li>
-                <li><a href="tables.html" class=""><i class="lnr lnr-dice"></i> <span>实践教学管理</span></a></li>
+                <li><a href="thePracticeTeaching.jsp" class=""><i class="lnr lnr-dice"></i> <span>实践教学管理</span></a></li>
             </ul>
         </nav>
     </div>
@@ -128,18 +130,27 @@
 
 <script type="text/javascript">
     $('.btn-toggle-fullwidth').click(function () {
-        var rightDiv=$('#fh5co-main');
-        if(rightDiv.hasClass('left')){
-            rightDiv.removeClass('left');
-            rightDiv.addClass('right');
-        }else {
-            rightDiv.removeClass('right');
-            rightDiv.addClass('left');
+        var rightDiv = $('#fh5co-main');
+        if (rightDiv.hasClass('left')) {
+            rightDiv.removeClass('left').addClass('right');
+        } else {
+            rightDiv.removeClass('right').addClass('left');
         }
-    })
+    });
+
+    //宽度变小时，右侧跟随左侧
+    $(window).on('resize', function () {
+            var rightDiv = $('#fh5co-main');
+        if($(window).innerWidth() < 1025) {
+            rightDiv.removeClass('right').addClass('left');
+        }else{
+            rightDiv.removeClass('left').addClass('right');
+        }
+    }
+    );
 </script>
 <script>
-    $(function() {
+    $(function () {
         var data, options;
 
         // headline charts
