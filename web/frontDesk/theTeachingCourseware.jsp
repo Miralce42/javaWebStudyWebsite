@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.dream.FileClasses.FileDAO" %>
+<%@ page import="java.sql.ResultSet" %><%--
   Created by Dreamer.
   User: Dreamer
   Date: 2017/5/24
@@ -8,16 +9,64 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>课件下载</title>
 </head>
 <body>
 <%@include file="theCourseware_Template.jsp"%>
 <div style="float: right;width: 65%">
-    54645
+    <h1 style="align-content: center;width: 60%;" align="center">教学课件</h1>
     <%
-    out.println(request.getParameter("section"));
-
+        String fileSection=null;
+        try{
+            fileSection=request.getParameter("section");//{"第一章","第二章","第三章","第四章","其他"};
+        }
+        catch (Exception E){
+            E.printStackTrace();
+        }
+        if(fileSection==null)
+            fileSection="第一章";
+        FileDAO fileDAO=new FileDAO();
+        String sql="select * from teachingfile where file_type=? and chapter=?";
+        String[] param={"教学课件资料",fileSection};
+        String[] imgurl={"FileImages/doc.jpg","FileImages/zip.jpg","FileImages/jpg.jpg"};//图标文件路径
+        String[] filesuffix={"doc","zip","jpg"};//文件后缀名数组
     %>
-</div>
+    <div name="firstdiv" style="margin-top: 10%">
+        <form name="firstsec" action="delete.servlet" method="get">
+            <input name="file_type" hidden="hidden" value="教学课件资料"/>
+            <input name="section" value="<%=fileSection%>" hidden="hidden"/>
+            <%
+                try{
+                ResultSet resultSet=fileDAO.getResultSet(sql,param);
+                if(!resultSet.next())
+                { %>
+                <label>暂无文件！</label>
+                <%
+                }//if
+                else
+                {
+                resultSet=fileDAO.getResultSet(sql,param);
+                while (resultSet.next())
+                {
+                String filename=resultSet.getString("file_name").trim();
+                String filetype=filename.substring(filename.indexOf(".")+1);
+                String url=null;
+                for (int a=0;a<filesuffix.length;a++) {
+                if(filetype.equals(filesuffix[a]))
+                url=imgurl[a];
+                }//根据文件类型动态获取图标
+            %>
+            <label><%=filename%></label><a href="/download.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>"><img src="../<%=url%>" title="<%=filename%>" alt="<%=filename%>"/>下载</a><br/>
+            <%
+                }//遍历数据库
+                }//else
+                }//try
+                catch (Exception e){e.printStackTrace();}
+                fileDAO.dbClose();
+            %>
+        </form>
+    </div><!---信息显示div-->
+
+</div><!---右侧框架-->
 </body>
 </html>
