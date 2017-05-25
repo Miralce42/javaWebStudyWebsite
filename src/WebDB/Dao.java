@@ -4,6 +4,8 @@ import beans.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 public class Dao {
 	private DB_Manager db_manager=new DB_Manager();
 		
@@ -59,5 +61,67 @@ public class Dao {
 		} else {
 			return 0;//修改失败
 		}
+	}
+
+	public ResultSet chooseSelectMethod(int method,String condition){
+		//0:查询全部学生，1:按班级查询，2:模糊查询
+		String ssql = null;
+		if(method == 0){
+			//查询全部
+			ssql = "select * from javawebcourseresources.users where user_type = 'student'";
+			return db_manager.executeQuery(ssql,null);
+		}
+		else if(method == 1){
+			//按专业班级查询
+			ssql = "select * from javawebcourseresources.users where user_type = 'student' and CONCAT(major,class) = ?";
+			return db_manager.executeQuery(ssql,new String[]{condition});
+		}
+		else if(method == 3){
+			ssql = "select * from javawebcourseresources.users where user_id = ?";
+			return db_manager.executeQuery(ssql,new String[]{condition});
+		}
+		else{//method==2
+			//万能模糊查询语句
+			String likeCondition = "%"+condition+"%";
+			ssql = "select * from javawebcourseresources.users" +
+					" where user_type = 'student' and (" +
+					"user_id like ? or name like ? or " +
+					"phone like ? or major like ? or " +
+					"class like ?)";
+			return db_manager.executeQuery(ssql,new String[]{likeCondition,likeCondition,likeCondition,likeCondition,likeCondition});
+		}
+	}
+
+	public int selectStudent(ArrayList<Users> Students,int method,String condition){
+		ResultSet rs = chooseSelectMethod(method,condition);
+		try {
+			while (rs.next()){
+                Users stu = new Users();
+                stu.setUsername(rs.getString("user_id"));
+                stu.setName(rs.getString("name"));
+				stu.setSex(rs.getString("sex"));
+				stu.setPhone(rs.getString("phone"));
+				stu.setMajor(rs.getString("major"));
+				stu.setClassNum(rs.getString("class"));
+				Students.add(stu);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return Students.size();
+	}
+
+	public int selectClassName(ArrayList<String> classNames){
+		String ssql = "SELECT CONCAT(major,class) from javawebcourseresources.users ORDER BY major;";
+		ResultSet rs = db_manager.executeQuery(ssql,null);
+		try {
+			while(rs.next()){
+				String className = rs.getString(1);
+				classNames.add(className);
+            }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return classNames.size();
 	}
 }

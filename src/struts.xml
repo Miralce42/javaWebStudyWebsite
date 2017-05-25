@@ -33,6 +33,27 @@
             <result name="success">/success.jsp</result>
             <result name="fail">/fail.jsp</result>
         </action><!--多文件-->
+        <action name="selectAllStudents" class="actions.Action" method="SelectAllStudents">
+            <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
+        </action>
+        <action name="selectStudentByClass" class="actions.Action" method="SelectStudentByClass">
+            <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
+        </action>
+        <action name="selectStudentBySearch" class="actions.Action" method="SelectStudentBySearch">
+            <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
+        </action>
+        <action name="updateStudentInfo" class="actions.Action" method="UpdateStudentInfo">
+            <result name="success" type="redirect">/backDesk/showOneStudent.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="deleteStudentInfo" class="actions.Action" method="DeleteStudentInfo">
+            <result name="success" type="chain">selectAllStudents</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="addStudentInfo" class="actions.Action" method="AddStudentInfo">
+            <result name="success" type="chain">selectAllStudents</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
     </package>
     <constant name="struts.multipart.maxSize" value="-1"/><!--上传文件不受限制-->
 </struts>

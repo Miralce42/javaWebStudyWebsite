@@ -48,7 +48,7 @@
     <!--[if lt IE 9]>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-    <script src="js/inputCheck.js"></script>
+    <script src="frontDesk/js/myJs.js"></script>
     <!--输入合法性检验-->
 
 </head>

@@ -31,7 +31,9 @@ public class LoginFilter implements Filter {
 
       String[] filterPage = new String[]{//过滤页面
               "/frontDesk/studentHomework.jsp",
-              "/backDesk/homeworkManager.jsp"
+              "/backDesk/homeworkManager.jsp",
+              "/backDesk/studentsHomeworkList.jsp",
+              "/backDesk/publishHomework.jsp"
       };
       boolean isFilter=false;
       for (String page : filterPage) {

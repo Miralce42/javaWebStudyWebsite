@@ -1,4 +1,5 @@
-<%--
+<%@ page import="beans.Users" %>
+<%@ page import="WebDB.TeacherDAO" %><%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/5/20
@@ -9,8 +10,15 @@
 <html>
 <head>
     <%
+        String moduleString = "重新编辑作业";
+
+        Users teacher = (Users) session.getAttribute("user");
+        if (teacher == null || "STUDENT".equals(teacher.getUser_type())) {
+            return;
+        }
+        TeacherDAO teacherDAO = new TeacherDAO(teacher);
+        String homeworkId = request.getParameter("homeworkId");
         //后台管理页面标题,自行修改
-        String moduleString="模板";
     %>
     <title><%=moduleString%></title>
 
@@ -18,8 +26,8 @@
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right">
-    11111111
     <!--右侧布局-->
+
 </div>
 </body>
 </html>

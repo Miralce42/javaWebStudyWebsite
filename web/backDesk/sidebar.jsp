@@ -60,13 +60,15 @@
                 transform: none;
             }
         }
-        .left{
-            animation:fadeinLeft 0.5s;
-            padding-left:4px;
+
+        .left {
+            animation: fadeinLeft 0.3s;
+            padding-left: 4px;
         }
-        .right{
-            padding-left:264px;
-            animation:fadeinRight 0.5s;
+
+        .right {
+            padding-left: 264px;
+            animation: fadeinRight 0.3s;
         }
     </style>
 </head>
@@ -128,18 +130,27 @@
 
 <script type="text/javascript">
     $('.btn-toggle-fullwidth').click(function () {
-        var rightDiv=$('#fh5co-main');
-        if(rightDiv.hasClass('left')){
-            rightDiv.removeClass('left');
-            rightDiv.addClass('right');
-        }else {
-            rightDiv.removeClass('right');
-            rightDiv.addClass('left');
+        var rightDiv = $('#fh5co-main');
+        if (rightDiv.hasClass('left')) {
+            rightDiv.removeClass('left').addClass('right');
+        } else {
+            rightDiv.removeClass('right').addClass('left');
         }
-    })
+    });
+
+    //宽度变小时，右侧跟随左侧
+    $(window).on('resize', function () {
+            var rightDiv = $('#fh5co-main');
+        if($(window).innerWidth() < 1025) {
+            rightDiv.removeClass('right').addClass('left');
+        }else{
+            rightDiv.removeClass('left').addClass('right');
+        }
+    }
+    );
 </script>
 <script>
-    $(function() {
+    $(function () {
         var data, options;
 
         // headline charts

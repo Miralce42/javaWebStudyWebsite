@@ -24,7 +24,7 @@
 <div id="fh5co-main" class="right">
     <!--右侧布局-->
     <div class="float-right">
-        <a class="floatButton" href="addHomework.jsp">发布新作业</a>
+        <a class="floatButton" href="publishHomework.jsp">发布新作业</a>
     </div>
     <div style="margin-top: 50px">
         <%
@@ -34,12 +34,14 @@
             }
             TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
+            //获取所有作业
             ArrayList<StudentHomework> homeworkList = teacherDAO.getHomework();
 
             StringBuilder unclosedBuilder = new StringBuilder();//未关闭
             StringBuilder closedBuilder = new StringBuilder();//已关闭
             //展示未关闭作业
             int unclosedNum = 1;
+            boolean haveClosedHomework=false;
             int closedNum = 1;
             for (StudentHomework homework : homeworkList) {
                 if (unclosedNum % 3  == 1) {
@@ -59,6 +61,7 @@
                     case CLOSED:
                         closedBuilder.append(homeworkDiv.toTeaString());
                         closedNum++;
+                        haveClosedHomework=true;
                         break;
                     case UNCLOSED:
                         unclosedBuilder.append(homeworkDiv.toTeaString());
@@ -77,7 +80,7 @@
             if(unclosedNum % 3 != 1){
                 unclosedBuilder.append("</div>");
             }
-            if(closedNum % 3 != 1){
+            if(haveClosedHomework && closedNum % 3 != 1){
                 closedBuilder.append("</div>");
             }
         %>

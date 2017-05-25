@@ -85,7 +85,7 @@ public class StudentDAO {
    }
 
    public int getAllTopic(ArrayList<InteractionTopic> Topics) {
-      String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0";
+      String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0 order by topic_id DESC";
       ResultSet rs = db_manager.executeQuery(ssql,null);
       try {
          while (rs.next()){
@@ -103,5 +103,25 @@ public class StudentDAO {
          e.printStackTrace();
       }
       return Topics.size();
+   }
+
+   public InteractionTopic getOneTopic(String topicId) {
+      String ssql = "select * from javawebcourseresources.interactiontopic where  is_deleted=0 and topic_id=?";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{topicId});
+      InteractionTopic topic = new InteractionTopic();
+      try {
+         while (rs.next()){
+            topic.setTopicId(rs.getString("topic_id"));
+            topic.setUsername(rs.getString("user_id"));
+            topic.setTopicType(rs.getString("topic_type"));
+            topic.setTitle(rs.getString("title"));
+            topic.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("create_date");
+            topic.setDate(date);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return topic;
    }
 }

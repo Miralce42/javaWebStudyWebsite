@@ -55,21 +55,24 @@
     <%
         StudentDAO stuDao = new StudentDAO();
         ArrayList<InteractionTopic> Topics = new ArrayList<InteractionTopic>();
-        int count = stuDao.getAllTopic(Topics);
+        int number = stuDao.getAllTopic(Topics);
     %>
 
-        <div class="fh5co-narrow-content">
-            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他话题</h2>
+        <div  class="fh5co-narrow-content">
+            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他最新话题</h2>
             <hr>
             <%
-                for(int i = 0 ; i < count ; i++){
+                for(int i = 0; i < number; i++){
+                    if(i > 4) break;
                     InteractionTopic topic = Topics.get(i);
                     String topicType = topic.getTopicType();
                     if("Other".equals(topicType)) {
                         //截取话题内容
                         String shortContent = topic.getContent();
-                        if(shortContent.length() > 20) {
-                            shortContent = shortContent.substring(0,20);
+                        //去掉内容中的图片，用【图片】代替  ！important
+                        shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
+                        if(shortContent.length() > 25) {
+                            shortContent = shortContent.substring(0,25);
                         }
                         String name = stuDao.getName(topic.getUsername());
             %>
@@ -77,24 +80,27 @@
                 <div class="col-md-3 col-sm-6 col-padding animate-box" data-animate-effect="fadeInLeft">
                     <div class="blog-entry">
                         <div class="desc">
-                            <h3><a href="#"><%=topic.getTitle()%></a></h3>
+                            <h2><a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>"><%=topic.getTitle()%></a></h2>
                             <h4>
                             <span><small>by <%=name%> </small> / <small> <%=topic.getDate()%> </small></span>
-                            <%=shortContent%>
+                                <div id="content">
+                                    <p><%=shortContent%></p>
+                                </div>
                             </h4>
                             <h7>最近评论：</h7>
                             <span><small>by Admin </small> / <small> Web Design </small> / <small> <i class="icon-comment"></i> 14</small></span>
                             <p>Design must be functional and functionality must be translated into visual aesthetics</p>
-                            <a href="#" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                            <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
                         </div>
                     </div>
                 </div>
+                <%
+                        }
+                    }
+                %>
             </div>
+
         </div>
-    <%
-            }
-        }
-    %>
     </div>
 </body>
 </html>
