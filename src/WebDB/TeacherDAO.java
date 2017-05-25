@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import beans.ChoiceHomework;
+import beans.CompletionHomework;
 import beans.HomeworkStudentStatus;
 import beans.StudentHomework;
 import beans.Users;
@@ -102,28 +104,86 @@ public class TeacherDAO {
    }
 
    public int updateStudentInfo(Users student){
-        String ssql = "update javawebcourseresources.users" +
-                " set name=?,sex=?,phone=?,major=?,class=? " +
-                "where user_id=?";
-        int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
-        return states;
-    }
+      String ssql = "update javawebcourseresources.users" +
+              " set name=?,sex=?,phone=?,major=?,class=? " +
+              "where user_id=?";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getName(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum(),student.getUsername()});
+      return states;
+   }
 
-    public int deleteStudentInfo(Users student){
-        String ssql = "delete from javawebcourseresources.users where user_id=?";
-        int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername()});
-        return states;
-    }
+   public int deleteStudentInfo(Users student){
+      String ssql = "delete from javawebcourseresources.users where user_id=?";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername()});
+      return states;
+   }
 
-    public int addStudentInfo(Users student){
-        String ssql = "insert into javawebcourseresources.users values(?,'student',?,?,?,?,?,?)";
-        int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername(),student.getName(),student.getUsername(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum()});
-        return states;
-    }
+   public int addStudentInfo(Users student){
+      String ssql = "insert into javawebcourseresources.users values(?,'student',?,?,?,?,?,?)";
+      int states = db_manager.executeUpdate(ssql,new String[]{student.getUsername(),student.getName(),student.getUsername(),student.getSex(),student.getPhone(),student.getMajor(),student.getClassNum()});
+      return states;
+   }
 
-   public boolean publishHomework(ArrayList choices,ArrayList completions){
 
-      return true;
+
+   public boolean publishHomework(String homeworkTitle
+           , ArrayList<ChoiceHomework> choices, ArrayList<CompletionHomework> completions) {
+      try {
+         db_manager.beginAffair();//开始事务
+
+         String sql = "insert into homework(title,create_time,closing_time,is_closing)" +
+                 " values(?,now(),now(),0)";
+         db_manager.executeUpdate(sql, new String[]{homeworkTitle});//
+
+         String homeworkId = getHomeworkId();//根据刚插入数据获取id
+
+         int questionIndex = 1;
+         for (ChoiceHomework choiceHomework : choices) {//插入选择题记录
+            String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer) " +
+                    "values(?,?,?,?)";
+            db_manager.executeUpdate(insertChoiceSql, new String[]{homeworkId
+                    , Integer.toString(questionIndex++)//*
+                    , choiceHomework.getQuestion()
+                    , choiceHomework.getRef_ky()
+            });
+
+            //插入选项记录
+            String choiceId = getChoiceId();
+            String insertChoice = "insert into choiceofquestion values(?,?,?)";//A
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "A", choiceHomework.getChoice_A()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "B", choiceHomework.getChoice_B()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "C", choiceHomework.getChoice_C()});
+            db_manager.executeUpdate(insertChoice, new String[]{choiceId, "D", choiceHomework.getChoice_D()});
+         }
+         for (CompletionHomework completionHomework : completions) {//插入填空记录
+            String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content) values(?,?)";
+            db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId, completionHomework.getCompletionContent()});
+         }
+         db_manager.Commit();//提交
+         return true;
+      } catch (Exception e) {
+         e.printStackTrace();
+         try {
+            db_manager.rollbackAffair();
+            return false;
+         } catch (SQLException e1) {
+            e1.printStackTrace();
+            return false;
+         }
+      }
+   }
+
+   private String getChoiceId() throws SQLException {
+      String getHwIdSql = "SELECT max(id) FROM hw_question_choice";
+      ResultSet resultSet = db_manager.executeQuery(getHwIdSql, null);
+      resultSet.next();
+      return resultSet.getString(1);
+   }
+
+   private String getHomeworkId() throws SQLException {
+      String getHwIdSql = "SELECT max(id) FROM homework";
+      ResultSet resultSet = db_manager.executeQuery(getHwIdSql, null);
+      resultSet.next();
+      return resultSet.getString(1);
    }
 
 }

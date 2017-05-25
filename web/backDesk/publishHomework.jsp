@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: 韩壮
+  User: Vove
   Date: 2017/5/20
   Time: 9:24
   To change this template use File | Settings | File Templates.
@@ -21,7 +21,6 @@
     %>
     <title><%=moduleString%>
     </title>
-
 </head>
 <body onload="addChoice()">
 <%@include file="sidebar.jsp"%><!--左侧布局-->
@@ -32,10 +31,14 @@
         </div>
         <form name="form" action="publishHomework.servlet" method="post">
             <!--右侧布局-->
-            <input class="homework-title" type="text" placeholder="作业标题">
+            <input class="homework-title" name="homeworkTitle" type="text" placeholder="作业标题">
+            <h2>选择题</h2>
             <div id="choices_field">
             </div>
             <a class="floatButton" onclick="addChoice()">添加选择题</a>
+            <br>
+            <br>
+            <h2>填空题</h2>
             <div class="completions_field" id="completions_field">
                 <div class="completion_field">
                 </div>
