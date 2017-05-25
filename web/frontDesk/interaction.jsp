@@ -28,31 +28,31 @@
             height: 40px;
             text-align: center;
         }
-        #title{
-            width: 99%;
+        #btn-pri3{
+            padding: 2px 10px !important;
+            font-size: small;
+            width: 120px;
+            height: 40px;
+            text-align: center;
+        }
+        .titlea{
+            color: #0b5b97;
         }
     </style>
 </head>
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
 <div id="fh5co-main">
-    <table width="100%" border="0" bgcolor="black">
+    <table width="100%">
         <tr>
-            <td height="20" align="left">
-                <form class="navbar-form navbar-left">
-                    <div class="input-group">
-                        <br>
-                        <input id="title"  type="text" value="" class="form-control" placeholder="搜索标题">&nbsp;
-                        <span class="input-group-btn"><button id="btn-pri1"  type="button" class="btn btn-pri">Go</button></span>
-                    </div>
-                </form>
+            <td width="20%" align="center">
+                <span class="input-group-btn"><a href="showAllTopic.jsp" class="floatButton"><button type="button" id="btn-pri3" class="btn btn-pri">查看全部话题</button></a></span>
             </td>
             <td height="20" align="right">
-                <span class="input-group-btn"><a href="createTopic.jsp"><button type="button" id="btn-pri2" class="btn btn-pri">创建留言</button></a></span>
+                <span class="input-group-btn"><a href="createTopic.jsp" class="floatButton"><button type="button" id="btn-pri2" class="btn btn-pri">创建留言</button></a></span>
             </td>
         </tr>
     </table>
-
     <%
         StudentDAO studentDao = new StudentDAO();
         ArrayList<InteractionTopic> Topics = new ArrayList<InteractionTopic>();
@@ -61,7 +61,7 @@
     %>
     <!--Other-->
         <div  class="fh5co-narrow-content">
-            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">其他最新话题</h2>
+            <a  href="showAllTopic.jsp?topicType=Other"><h2 class="fh5co-heading animate-box titlea" data-animate-effect="fadeInLeft">其他最新话题</h2></a>
             <hr>
             <%
                 count =0;
@@ -123,7 +123,7 @@
         </div>
     <!--JSP-->
         <div  class="fh5co-narrow-content">
-            <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JSP相关最新话题</h2>
+            <a href="showAllTopic.jsp?topicType=JSP"><h2 class="fh5co-heading animate-box titlea" data-animate-effect="fadeInLeft">JSP相关最新话题</h2></a>
             <hr>
             <%
                 count = 0;
@@ -181,11 +181,11 @@
                         }
                     }
                 %>
+                </div>
             </div>
-        </div>
     <!--JAVA-->
     <div  class="fh5co-narrow-content">
-        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">JAVA相关最新话题</h2>
+        <a href="showAllTopic.jsp?topicType=JAVA"><h2 class="fh5co-heading animate-box titlea" data-animate-effect="fadeInLeft">JAVA相关最新话题</h2></a>
         <hr>
         <%
             count = 0;
@@ -247,7 +247,7 @@
     </div>
     <!--HTML-->
     <div  class="fh5co-narrow-content">
-        <h2 class="fh5co-heading animate-box" data-animate-effect="fadeInLeft">HTML相关最新话题</h2>
+        <a href="showAllTopic.jsp?topicType=HTML"><h2 class="fh5co-heading animate-box titlea" data-animate-effect="fadeInLeft">HTML相关最新话题</h2></a>
         <hr>
         <%
             count = 0;
