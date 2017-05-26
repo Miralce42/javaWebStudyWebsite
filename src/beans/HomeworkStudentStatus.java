@@ -32,18 +32,16 @@ public class HomeworkStudentStatus {
          default:
             buttonStatusValue = "";
       }
-      return
-              "        <div class=\"col-md-4\">\n" +
-              "            <div class=\"panel\">\n" +
-              "                <div class=\"panel-heading\">\n" +
-              "                    <div class=\"page-title\">" + name  +"<div class='title-right'>"+ major+ classname +"</div>"+
-
-              "                    </div>" +
-              "                </div>\n" +
-              "                <div class=\"panel-buttonValue\">" + buttonStatusValue+
-              "                </div>\n" +
-              "            </div>\n" +
-              "        </div>\n";
+      return  " <div class=\"col-md-4\">\n" +
+              "     <div class=\"panel\">\n" +
+              "         <div class=\"panel-heading\">\n" +
+              "             <div class=\"page-title\">" + name  +"<div class='title-right'>"+ major+ classname +"</div>"+
+              "             </div>" +
+              "         </div>\n" +
+              "         <div class=\"panel-buttonValue\">" + buttonStatusValue+
+              "         </div>\n" +
+              "     </div>\n" +
+              " </div>\n";
    }
 
 

@@ -5,12 +5,23 @@ package beans;
  * 填空题封装
  */
 public class CompletionHomework {
+   private String id;
    private String completionContent;
    private String score;
+
+   public CompletionHomework(String id,String completionContent, String score) {
+      this.id=id;
+      this.completionContent = completionContent;
+      this.score = score;
+   }
 
    public CompletionHomework(String completionContent, String score) {
       this.completionContent = completionContent;
       this.score = score;
+   }
+
+   public String getId() {
+      return id;
    }
 
    public void setCompletionContent(String completionContent) {

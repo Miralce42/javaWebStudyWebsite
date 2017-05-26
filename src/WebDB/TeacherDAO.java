@@ -30,7 +30,7 @@ public class TeacherDAO {
    }
 
    public ArrayList<StudentHomework> getHomeworkList() {
-      String sql = "SELECT * FROM javawebcourseresources.homework ORDER BY id DESC ";
+      String sql = "SELECT * FROM javawebcourseresources.homework ORDER BY closing_time DESC ";
 
       ArrayList<StudentHomework> homeworkList = new ArrayList<StudentHomework>();
 
@@ -205,6 +205,7 @@ public class TeacherDAO {
 
    public Homework getHomeworkDetail(String homeworkId) {
       Homework homework = new Homework();
+      homework.setHomeworkId(homeworkId);
       ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();
       ArrayList<CompletionHomework> completionHomeworkList = new ArrayList<>();
       homework.setChoiceHomeworkList(choiceHomeworkList);
@@ -235,22 +236,23 @@ public class TeacherDAO {
                String getChoiceSql = "SELECT * FROM choiceofquestion where choice_id=? and choice_key=?";
                ResultSet choiceASet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "A"});
                choiceASet.next();
-               choiceHomework.setChoice_A(choiceASet.getString("choice_key"));
+               choiceHomework.setChoice_A(choiceASet.getString("content"));
                ResultSet choiceBSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "B"});
                choiceBSet.next();
-               choiceHomework.setChoice_B(choiceBSet.getString("choice_key"));
+               choiceHomework.setChoice_B(choiceBSet.getString("content"));
                ResultSet choiceCSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "C"});
                choiceCSet.next();
-               choiceHomework.setChoice_C(choiceCSet.getString("choice_key"));
+               choiceHomework.setChoice_C(choiceCSet.getString("content"));
                ResultSet choiceDSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "D"});
                choiceDSet.next();
-               choiceHomework.setChoice_D(choiceDSet.getString("choice_key"));
+               choiceHomework.setChoice_D(choiceDSet.getString("content"));
             }
             //获取填空集
             String getCompletionSql = "SELECT * FROM hw_question_completion where hw_id=?";
             ResultSet completionSet = db_manager.executeQuery(getCompletionSql, new String[]{homeworkId});
             while (completionSet.next()) {
                CompletionHomework completionHomework = new CompletionHomework(
+                       completionSet.getString("id"),
                        completionSet.getString("question_content"),
                        completionSet.getString("score"));
                completionHomeworkList.add(completionHomework);

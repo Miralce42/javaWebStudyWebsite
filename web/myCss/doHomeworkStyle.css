@@ -1,4 +1,18 @@
-.option{
-    padding: 20px;
+.choiceBump,.completionBump {
+    padding: 10px 50px 0;
+}
+
+.option {
+    margin: 10px;
     height: 40px;
+}
+
+input[type="radio"].radio {
+    display: inline;
+    margin: 5px 10px 0px;
+
+}
+
+.choice-question,.completion-question {
+    margin: 30px;
 }

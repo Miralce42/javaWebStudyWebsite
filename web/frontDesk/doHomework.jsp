@@ -1,9 +1,10 @@
 <%@ page import="beans.Users" %>
 <%@ page import="WebDB.StudentDAO" %>
 <%@ page import="beans.Homework" %>
-<%@ page import="WebDB.TeacherDAO" %><%--
+<%@ page import="WebDB.TeacherDAO" %>
+<%@ page import="cn.vove7.mydiv.DoHomeworkDiv" %><%--
   Created by IntelliJ IDEA.
-  User: 韩壮
+  User: Vove
   Date: 2017/5/16
   Time: 19:58
   To change this template use File | Settings | File Templates.
@@ -13,17 +14,18 @@
 <head>
     <title>做作业</title>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/publishHomework.js"></script>
+    <script type="text/javascript" src="js/commitHomework.js"></script>
+    <link type="text/css" rel="stylesheet" href="../myCss/doHomeworkStyle.css"/>
     <link type="text/css" rel="stylesheet" href="../myCss/publishHomework.css"/>
     <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
     <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css"/>
-    <link type="text/css" rel="stylesheet" href="../myCss/doHomeworkStyle.css"/>
     <%
         String homeworkId = request.getParameter("homeworkId");
         String homeworkTitle = request.getParameter("homeworkTitle");
         Users student = (Users) session.getAttribute("user");
         StudentDAO studentDAO = new StudentDAO(student);
         Homework thisHomework = new TeacherDAO(student).getHomeworkDetail(homeworkId);//使用TeacherDAO获取作业详情
+        DoHomeworkDiv doHomeworkDiv=new DoHomeworkDiv(student,thisHomework);
     %>
 </head>
 <body>
@@ -32,37 +34,29 @@
     <!--右侧布局-->
     <div class="container-field">
         <div align="center">
-            <h1><%=homeworkTitle%></h1>
+            <h2><%=homeworkTitle%>
+            </h2>
         </div>
-        <form method="post" action="commitHomework.servlet">
+        <form name="form" method="post" action="commitHomework.servlet">
             <h2>选择题</h2>
             <div id="choicesField">
-                <div class="choiceBump">
-                    <p>选择1</p>
-                    <div class="option">
-                        <input name="choice_1" type="radio">选项A
-                    </div>
-                    <div class="option">
-                        <input name="choice_1" type="radio">选项A
-                    </div>
-                    <div class="option">
-                        <input name="choice_1" type="radio">选项A
-                    </div>
-                    <div class="option">
-                        <input name="choice_1" type="radio">选项A
-                    </div>
-                </div>
+                <%=doHomeworkDiv.getChoicesValue()%>
             </div>
             <h2>填空题</h2>
             <div id="completionField">
-                <div class="completionBump">
-                    <p>填空11111111</p>
-                </div>
-                回答：<input class="completion_answer" id="completion_answer_1"
-                          name="completion_answer_1" type="text" placeholder=" ">
+                <%=doHomeworkDiv.getCompletionsValue()%>
             </div>
+           <div align="center" style="margin-top: 20px">
+              <a class="floatButton" onclick="saveHomework()">暂时保存</a>
+              <a class="floatButton" onclick="commitHomework()">提交作业</a>
+           </div>
+           <input type="hidden" id="action" name="action">
+           <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
         </form>
     </div>
 </div>
+<script>
+   setNum(<%=thisHomework.getChoiceHomeworkList().size()+1%>,<%=thisHomework.getCompletionHomeworkList().size()+1%>)
+</script>
 </body>
 </html>
