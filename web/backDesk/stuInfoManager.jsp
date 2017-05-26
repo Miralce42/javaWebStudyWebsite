@@ -28,16 +28,18 @@
     </style>
     <script type="text/javascript">
         function selectChange() {
+            document.getElementById("selectType").value="1";
             var sel = document.getElementById("className");
             var selectName = sel.options[sel.selectedIndex].value;
             if(selectName !== ""){
-                document.form1.action = "selectStudentByClass.action";
+                document.form1.action = "selectStudents.action";
                 document.form1.submit();
             }
         }
         function selectSearch() {
+            document.getElementById("selectType").value="2";
             var searchCondition = document.getElementById("searchCondition").value;
-            document.form1.action = "selectStudentBySearch.action";
+            document.form1.action = "selectStudents.action";
             document.form1.submit();
         }
         function showOneStudent(username) {
@@ -52,13 +54,10 @@
 <div id="fh5co-main" class="right">
     <div id="col-md-6" class="col-md-6">
         <%
-            System.out.println("1");
             Dao dao = new Dao();
             ArrayList<Users> Students = (ArrayList<Users>) session.getAttribute("Students");
-            System.out.println("2");
             ArrayList<String> classNames = new ArrayList<String>();
             int classNamesCount = dao.selectClassName(classNames);
-            System.out.println("3");
         %>
         <!-- TABLE HOVER -->
         <div class="panel">
@@ -67,6 +66,7 @@
             </div>
             <div class="panel-body">
                 <form name="form1" method="post">
+                    <<input type="hidden" name="selectType" id="selectType">
                     <table border="0" width="100%">
                         <tr>
                             <td class="td-text" align="right">
@@ -96,7 +96,7 @@
                                 <a href="addStudent.jsp"><span class="input-group-btn"><button class="btn btn-primary" type="button">添加学生</button></span></a>
                             </td>
                             <td  class="td-text" align="right">
-                                <a href="selectAllStudents.action"><button type="button" class="btn btn-primary"><i class="fa fa-refresh"></i>刷新</button></a>
+                                <a href="selectStudents.action?selectType=0"><button type="button" class="btn btn-primary"><i class="fa fa-refresh"></i>刷新</button></a>
                             </td>
                         </tr>
                     </table>
@@ -116,7 +116,6 @@
                     <tbody>
                     <%
                         for(int i = 0 ; i < Students.size() ;i++){
-                            System.out.println("i="+i);
                             Users allStu = Students.get(i);
 
                     %>

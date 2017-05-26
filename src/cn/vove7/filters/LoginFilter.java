@@ -42,7 +42,7 @@ public class LoginFilter implements Filter {
               "/backDesk/publishHomework.jsp",
               "/frontDesk/topicDetail.jsp",
               "/frontDesk/createTopic.jsp",
-              "/frontDesk/myInfo.jsp"
+              "/frontDesk/myInfo.jsp",
               "/backDesk/publishHomework.jsp",
               "/backDesk/Re-editHomework.jsp"
       };

@@ -26,7 +26,7 @@
     <!-- INPUTS -->
     <div class="panel">
         <div class="panel-body">
-            <a href="selectAllStudents.action"><button class="btn btn-primary" onclick="selectSearch()" type="button">返回</button></a>
+            <a href="selectStudents.action"><button class="btn btn-primary" onclick="selectSearch()" type="button">返回</button></a>
         </div>
         <form name="form1" method="post">
             <div id="panel-body" class="panel-body">
