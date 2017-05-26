@@ -5,12 +5,15 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
-import a.d.A;
 import beans.*;
 import beans.StudentHomework.HomeworkStatus;
+import beans.TopicComments;
+import beans.TeachingEvaluation;
+import beans.Users;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class StudentDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -124,6 +127,21 @@ public class StudentDAO {
         return topic;
     }
 
+   public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
+      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,evaluation_content,star2,star3,star4) value(?,?,?,?,?,?)";
+      int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(), teachingEvaluation.getStar1(),teachingEvaluation.getStar2(),teachingEvaluation.getStar3(),teachingEvaluation.getStar4(),teachingEvaluation.getContent()});
+      if (rs == 1) {
+         return true;
+      }
+      return false;
+   }
+
+   public int createComment(TopicComments comment){
+      String ssql = "insert into javawebcourseresources.topiccomments(" +
+              "topic_id,user_id,content,is_deleted) " +
+              "values(?,?,?,0)";
+      return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
+   }
     public int createComment(TopicComments comment) {
         String ssql = "insert into javawebcourseresources.topiccomments(" +
                 "topic_id,user_id,content,is_deleted) " +

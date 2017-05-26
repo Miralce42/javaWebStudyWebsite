@@ -16,6 +16,14 @@
         <servlet-name>PublishHomeworkServlet</servlet-name>
         <servlet-class>servlets.PublishHomeworkServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadEvaluteServlet</servlet-name>
+        <servlet-class>servlets.UploadEvaluteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UploadEvaluteServlet</servlet-name>
+        <url-pattern>/frontDesk/uploadEvalute.servlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>PublishHomeworkServlet</servlet-name>
         <url-pattern>/backDesk/publishHomework.servlet</url-pattern>

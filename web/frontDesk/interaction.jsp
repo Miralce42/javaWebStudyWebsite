@@ -1,7 +1,8 @@
 <%@ page import="WebDB.StudentDAO" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="beans.InteractionTopic" %>
-<%@ page import="beans.TopicComments" %><%--
+<%@ page import="beans.TopicComments" %>
+<%@ page import="beans.deleteHTMLTag" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/20
@@ -72,11 +73,11 @@
                     if("Other".equals(topicType)) {
                         count++;
                         //截取话题内容
-                        String shortContent = topic.getContent();
-                        //去掉内容中的图片，用【图片】代替  ！important
-                        shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
-                        if(shortContent.length() > 25) {
-                            shortContent = shortContent.substring(0,25);
+                        String Content = topic.getContent();
+                        //去掉内容中的所有标签，只显示内容
+                        String shortContent = deleteHTMLTag.delHTMLTag(Content);
+                        if(shortContent.length() > 20) {
+                            shortContent = shortContent.substring(0,20);
                         }
                         String name = studentDao.getName(topic.getUsername());
             %>
@@ -93,11 +94,14 @@
                             </h4>
                             <%
                                 ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
-                                String commentUserName,shortCommentContent,date;
+                                //CommentContent原评论内容
+                                //shortCommentContent去标签的，截取25字的内容
+                                String commentUserName,CommentContent,date,shortCommentContent;
                                 if(Comments.size()>0) {
                                     TopicComments comment = Comments.get(Comments.size()-1);
                                     commentUserName = studentDao.getName(comment.getUsername());
-                                    shortCommentContent = comment.getContent();
+                                    CommentContent = comment.getContent();
+                                    shortCommentContent = deleteHTMLTag.delHTMLTag(CommentContent);
                                     date = comment.getDate();
                                     if (shortCommentContent.length() > 25) {
                                         shortCommentContent = shortCommentContent.substring(0, 25);
@@ -111,7 +115,7 @@
                             <h7>最近评论：</h7>
                             <span><small>by <%=commentUserName%> </small>/ <small> <%=date%></small></span>
                             <p><%=shortCommentContent%></p>
-                            <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
+                            <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">了解更多<i class="icon-arrow-right3"></i></a>
                         </div>
                     </div>
                 </div>
@@ -134,11 +138,11 @@
                     if("JSP".equals(topicType)) {
                         count++;
                         //截取话题内容
-                        String shortContent = topic.getContent();
-                        //去掉内容中的图片，用【图片】代替  ！important
-                        shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
-                        if(shortContent.length() > 25) {
-                            shortContent = shortContent.substring(0,25);
+                        String Content = topic.getContent();
+                        //去掉内容中的所有标签，只显示内容
+                        String shortContent = deleteHTMLTag.delHTMLTag(Content);
+                        if(shortContent.length() > 20) {
+                            shortContent = shortContent.substring(0,20);
                         }
                         String name = studentDao.getName(topic.getUsername());
             %>
@@ -155,11 +159,14 @@
                             </h4>
                             <%
                                 ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
-                                String commentUserName,shortCommentContent,date;
+                                //CommentContent原评论内容
+                                //shortCommentContent去标签的，截取25字的内容
+                                String commentUserName,CommentContent,date,shortCommentContent;
                                 if(Comments.size()>0) {
                                     TopicComments comment = Comments.get(Comments.size()-1);
                                     commentUserName = studentDao.getName(comment.getUsername());
-                                    shortCommentContent = comment.getContent();
+                                    CommentContent = comment.getContent();
+                                    shortCommentContent = deleteHTMLTag.delHTMLTag(CommentContent);
                                     date = comment.getDate();
                                     if (shortCommentContent.length() > 25) {
                                         shortCommentContent = shortCommentContent.substring(0, 25);
@@ -196,11 +203,11 @@
                 if("JAVA".equals(topicType)) {
                     count++;
                     //截取话题内容
-                    String shortContent = topic.getContent();
-                    //去掉内容中的图片，用【图片】代替  ！important
-                    shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
-                    if(shortContent.length() > 25) {
-                        shortContent = shortContent.substring(0,25);
+                    String Content = topic.getContent();
+                    //去掉内容中的所有标签，只显示内容
+                    String shortContent = deleteHTMLTag.delHTMLTag(Content);
+                    if(shortContent.length() > 20) {
+                        shortContent = shortContent.substring(0,20);
                     }
                     String name = studentDao.getName(topic.getUsername());
         %>
@@ -217,11 +224,14 @@
                         </h4>
                         <%
                             ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
-                            String commentUserName,shortCommentContent,date;
+                            //CommentContent原评论内容
+                            //shortCommentContent去标签的，截取25字的内容
+                            String commentUserName,CommentContent,date,shortCommentContent;
                             if(Comments.size()>0) {
                                 TopicComments comment = Comments.get(Comments.size()-1);
                                 commentUserName = studentDao.getName(comment.getUsername());
-                                shortCommentContent = comment.getContent();
+                                CommentContent = comment.getContent();
+                                shortCommentContent = deleteHTMLTag.delHTMLTag(CommentContent);
                                 date = comment.getDate();
                                 if (shortCommentContent.length() > 25) {
                                     shortCommentContent = shortCommentContent.substring(0, 25);
@@ -258,11 +268,11 @@
                 if("HTML".equals(topicType)) {
                     count++;
                     //截取话题内容
-                    String shortContent = topic.getContent();
-                    //去掉内容中的图片，用【图片】代替  ！important
-                    shortContent =  shortContent.replaceAll("<img.*>.*</img>",  "<i>【图片】</i>").replaceAll("<img.*/>", "<i>【图片】</i>");
-                    if(shortContent.length() > 25) {
-                        shortContent = shortContent.substring(0,25);
+                    String Content = topic.getContent();
+                    //去掉内容中的所有标签，只显示内容
+                    String shortContent = deleteHTMLTag.delHTMLTag(Content);
+                    if(shortContent.length() > 20) {
+                        shortContent = shortContent.substring(0,20);
                     }
                     String name = studentDao.getName(topic.getUsername());
         %>
@@ -279,11 +289,14 @@
                         </h4>
                         <%
                             ArrayList<TopicComments> Comments = studentDao.getAllComment(topic.getTopicId());
-                            String commentUserName,shortCommentContent,date;
+                            //CommentContent原评论内容
+                            //shortCommentContent去标签的，截取25字的内容
+                            String commentUserName,CommentContent,date,shortCommentContent;
                             if(Comments.size()>0) {
                                 TopicComments comment = Comments.get(Comments.size()-1);
                                 commentUserName = studentDao.getName(comment.getUsername());
-                                shortCommentContent = comment.getContent();
+                                CommentContent = comment.getContent();
+                                shortCommentContent = deleteHTMLTag.delHTMLTag(CommentContent);
                                 date = comment.getDate();
                                 if (shortCommentContent.length() > 25) {
                                     shortCommentContent = shortCommentContent.substring(0, 25);

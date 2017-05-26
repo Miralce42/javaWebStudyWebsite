@@ -75,6 +75,9 @@
                       autocomplete="off">
             </div>
             <div class="form-group">
+               <p>稍后登录? <a href="frontDesk/index.jsp">主页面</a>
+            </div>
+            <div class="form-group">
                <input type="button" onclick="loginCheck()" value="登录" class="btn btn-primary">
             </div>
          </form>

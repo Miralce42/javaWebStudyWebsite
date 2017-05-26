@@ -22,7 +22,8 @@ public class Action extends ActionSupport {
     private TopicComments comment = new TopicComments();
     private StudentDAO stuDao = new StudentDAO();
     private TeacherDAO teacherDAO = new TeacherDAO();
-    private Dao dao = new Dao();;
+    private Dao dao = new Dao();
+
     private HttpServletRequest request = ServletActionContext.getRequest();
     private HttpServletResponse response = ServletActionContext.getResponse();
     private HttpSession session = request.getSession();
@@ -83,14 +84,7 @@ public class Action extends ActionSupport {
         }
     }
 
-    public String SelectAllStudents(){
-        ArrayList<Users> Students = new ArrayList<Users>();
-        dao.selectStudent(Students,0,null);
-        session.setAttribute("Students",Students);
-        return SUCCESS;
-    }
-
-    public String SelectStudentByClass(){
+    public String SelectStudents(){
         ArrayList<Users> Students = new ArrayList<Users>();
         try {
             request.setCharacterEncoding("UTF-8");
@@ -98,24 +92,19 @@ public class Action extends ActionSupport {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String className = request.getParameter("className");
-        System.out.println("className=" + className);
-        dao.selectStudent(Students, 1, className);
-        session.setAttribute("Students",Students);
-        return SUCCESS;
-    }
-
-    public String SelectStudentBySearch(){
-        ArrayList<Users> Students = new ArrayList<Users>();
-        try {
-            request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        String selectType = (String) request.getParameter("selectType");
+        if("1".equals(selectType)){
+            String className = request.getParameter("className");
+            System.out.println("className="+className);
+            dao.selectStudent(Students, 1, className);
         }
-        String searchCondition = request.getParameter("searchCondition");
-        System.out.println("searchCondition=" + searchCondition);
-        dao.selectStudent(Students, 2, searchCondition);
+        else if("2".equals(selectType)){
+            String searchCondition = request.getParameter("searchCondition");
+            dao.selectStudent(Students, 2, searchCondition);
+        }
+        else {
+            dao.selectStudent(Students, 0, null);
+        }
         session.setAttribute("Students",Students);
         return SUCCESS;
     }

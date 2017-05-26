@@ -25,13 +25,7 @@
             <result name="success" type="redirect">/frontDesk/interaction.jsp</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
-        <action name="selectAllStudents" class="actions.Action" method="SelectAllStudents">
-            <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
-        </action>
-        <action name="selectStudentByClass" class="actions.Action" method="SelectStudentByClass">
-            <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
-        </action>
-        <action name="selectStudentBySearch" class="actions.Action" method="SelectStudentBySearch">
+        <action name="selectStudents" class="actions.Action" method="SelectStudents">
             <result name="success" type="redirect">/backDesk/stuInfoManager.jsp</result>
         </action>
         <action name="updateStudentInfo" class="actions.Action" method="UpdateStudentInfo">
@@ -39,11 +33,11 @@
             <result name="error" type="redirect">/login.jsp</result>
         </action>
         <action name="deleteStudentInfo" class="actions.Action" method="DeleteStudentInfo">
-            <result name="success" type="chain">selectAllStudents</result>
+            <result name="success" type="chain">selectStudents</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
         <action name="addStudentInfo" class="actions.Action" method="AddStudentInfo">
-            <result name="success" type="chain">selectAllStudents</result>
+            <result name="success" type="chain">selectStudents</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
         <action name="createComment" class="actions.Action" method="CreateComment">

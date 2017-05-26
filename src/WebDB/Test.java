@@ -3,6 +3,7 @@ package WebDB;
 import beans.InteractionTopic;
 import beans.TopicComments;
 import beans.Users;
+import beans.deleteHTMLTag;
 
 import java.util.ArrayList;
 
@@ -12,10 +13,8 @@ public class Test {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		StudentDAO studentDAO = new StudentDAO();
-		ArrayList<InteractionTopic> Topics = new ArrayList<>();
-		Topics = studentDAO.selectSearchTopic("JSP");
-		InteractionTopic topic = Topics.get(0);
-		System.out.println(topic.getTitle());
+		String htmlStr = "<<h3 style=\"color:#aaaaaa;font-style:italic;\">不会出BUG的内容</h3>\n";
+		String str = deleteHTMLTag.delHTMLTag(htmlStr);
+		System.out.println(str);
 	}
 }
