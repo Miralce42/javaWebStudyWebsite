@@ -138,7 +138,20 @@
                     <img class="img-responsive" src="../frontDesk_assets/images/2.jpg" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
                 </div>
                 <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
-                    <h2 class="fh5co-heading">简介</h2>
+                    <h2 class="fh5co-heading">课程简介</h2>
+                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
+                    <p>Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fh5co-narrow-content">
+            <div class="row row-bottom-padded-md">
+                <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                    <img class="img-responsive" src="../frontDesk_assets/images/2.jpg" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
+                </div>
+                <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
+                    <h2 class="fh5co-heading">教学队伍</h2>
                     <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
                     <p>Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
                 </div>
