@@ -25,9 +25,7 @@
     <h3>我的作业</h3>
         <%
         Users student =(Users)session.getAttribute("user");
-        if(student ==null){//过滤器
-           return;
-        }
+
         StudentDAO studentDAO=new StudentDAO(student);
 
         ArrayList<StudentHomework> homeworkList=studentDAO.getUnfinishedHomework();

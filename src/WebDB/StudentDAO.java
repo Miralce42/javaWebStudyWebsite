@@ -142,13 +142,6 @@ public class StudentDAO {
               "values(?,?,?,0)";
       return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
    }
-    public int createComment(TopicComments comment) {
-        String ssql = "insert into javawebcourseresources.topiccomments(" +
-                "topic_id,user_id,content,is_deleted) " +
-                "values(?,?,?,0)";
-        return db_manager.executeUpdate(ssql, new String[]{comment.getTopicId(), comment.getUsername(), comment.getContent()});
-    }
-
     public ArrayList<TopicComments> getAllComment(String topic_id) {
         String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
         ArrayList<TopicComments> Comments = new ArrayList<>();

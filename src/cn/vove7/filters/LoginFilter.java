@@ -73,9 +73,6 @@ public class LoginFilter implements Filter {
          response.sendRedirect(contextPath + "/login.jsp");
          return;
       }
-      else {
-         chain.doFilter(req, resp);
-      }
       //已登录
 
       boolean isTeaFilter = false;
