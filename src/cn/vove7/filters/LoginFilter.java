@@ -33,7 +33,10 @@ public class LoginFilter implements Filter {
               "/frontDesk/studentHomework.jsp",
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
-              "/backDesk/publishHomework.jsp"
+              "/backDesk/publishHomework.jsp",
+              "/frontDesk/topicDetail.jsp",
+              "/frontDesk/createTopic.jsp",
+              "/frontDesk/myInfo.jsp"
       };
       boolean isFilter=false;
       for (String page : filterPage) {
@@ -51,7 +54,9 @@ public class LoginFilter implements Filter {
          System.out.println("过滤");
          response.sendRedirect(contextPath + "/login.jsp");
       }
-      chain.doFilter(req, resp);
+      else {
+         chain.doFilter(req, resp);
+      }
    }
 
    public void init(FilterConfig config) throws ServletException {
