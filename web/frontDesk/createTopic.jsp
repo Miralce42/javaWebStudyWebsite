@@ -55,7 +55,7 @@
                                                     <input name="topicType" value="HTML" type="radio">
                                                     <span><i></i>HTML</span>
                                                 </label><label class="fancy-radio">
-                                                <input name="topicType" value="HTML" type="radio">
+                                                <input name="topicType" value="JAVA" type="radio">
                                                 <span><i></i>JAVA</span>
                                             </label>
                                                 <hr />

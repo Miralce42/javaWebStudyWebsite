@@ -1,5 +1,5 @@
 
-.homework-title,.choice-title,.ref-key,input.choice {
+.homework-title,.choice-title,.ref-key,input.choice,.score,.completion_answer {
     margin-left: 2px;
     -moz-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0px 1px 2px 0 rgba(0, 0, 0, 0.1);
@@ -19,8 +19,11 @@
     border: 1px solid #ccc;
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+.completion_answer{
+    width: 95%;
+}
 input.ref-key{
-    width: 30px;
+    width: 100px;
 }
 .homework-title{
     margin-top: 8px;
@@ -41,9 +44,8 @@ input.ref-key{
 
 }
 .float-right{
-    height:20px;
+    height:70px;
     padding: 4px;
-    float: right;
     margin-right: 20px;
 }
 .completion_field{

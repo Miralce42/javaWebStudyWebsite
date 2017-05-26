@@ -1,6 +1,7 @@
 package actions;
 
 import beans.InteractionTopic;
+import beans.TopicComments;
 import beans.Users;
 import WebDB.*;
 import com.opensymphony.xwork2.ActionSupport;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class Action extends ActionSupport {
     private Users user = new Users();
     private InteractionTopic topic = new InteractionTopic();
+    private TopicComments comment = new TopicComments();
     private StudentDAO stuDao = new StudentDAO();
     private TeacherDAO teacherDAO = new TeacherDAO();
     private Dao dao = new Dao();;
@@ -150,6 +152,72 @@ public class Action extends ActionSupport {
             System.out.println("添加学生过程中出错");
             return ERROR;
         }
+    }
+
+    public String CreateComment(){
+        String content = request.getParameter("comment.content");
+        Users user = (Users)session.getAttribute("user");
+        String topicId = (String)session.getAttribute("topicId");
+        comment.setUsername(user.getUsername());
+        comment.setTopicId(topicId);
+        comment.setContent(content);
+        int state = stuDao.createComment(comment);
+        if (state ==1){
+            return SUCCESS;
+        }
+        else{
+            System.out.println("添加评论过程中出错");
+            return ERROR;
+        }
+    }
+
+    public String TopicDelete(){
+        String topicId = request.getParameter("topicId");
+        InteractionTopic topic = stuDao.getOneTopic(topicId);
+        String topicUser = topic.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(topicUser.equals(thisUser)) {
+            int state = stuDao.deleteTopic(topicId);
+            System.out.println("state="+state);
+            if (state == 1){
+                return SUCCESS;
+            }
+        }
+        return ERROR;
+    }
+
+    public String CommentDelete(){
+        String commentId = request.getParameter("commentId");
+        TopicComments comment = stuDao.getOneComment(commentId);
+        String commentUser = comment.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(commentUser.equals(thisUser)) {
+            int state = stuDao.deleteComment(commentId);
+            if (state == 1){
+                session.setAttribute("topicId",comment.getTopicId());
+                return SUCCESS;
+            }
+        }
+        return ERROR;
+    }
+
+    public String UpdateTopic(){
+        String topicId = request.getParameter("topicId");
+        InteractionTopic topic = stuDao.getOneTopic(topicId);
+        topic.setContent(request.getParameter("topic.content"));
+        String topicUser = topic.getUsername();
+        Users User = (Users)session.getAttribute("user");
+        String thisUser = User.getUsername();
+        if(topicUser.equals(thisUser)) {
+            int state = stuDao.updateTopic(topic);
+            if (state == 1){
+                session.setAttribute("topicId",comment.getTopicId());
+                return SUCCESS;
+            }
+        }
+        return ERROR;
     }
 
     public void setUser(Users user) {

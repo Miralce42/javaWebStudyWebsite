@@ -46,5 +46,30 @@
             <result name="success" type="chain">selectAllStudents</result>
             <result name="error" type="redirect">/login.jsp</result>
         </action>
+        <action name="createComment" class="actions.Action" method="CreateComment">
+            <result name="success">/frontDesk/topicDetail.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="topicDelete" class="actions.Action" method="TopicDelete">
+            <result name="success">/frontDesk/showAllTopic.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="commentDelete" class="actions.Action" method="CommentDelete">
+            <result name="success">/frontDesk/topicDetail.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="updateTopic" class="actions.Action" method="UpdateTopic">
+            <result name="success">/frontDesk/topicDetail.jsp</result>
+            <result name="error" type="redirect">/login.jsp</result>
+        </action>
+        <action name="uploadaction" class="com.dream.Fileupload.UploadAction">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action><!--单文件-->
+        <action name="multifile" class="com.dream.Fileupload.MultiUploadAction">
+            <result name="success">/success.jsp</result>
+            <result name="fail">/fail.jsp</result>
+        </action><!--多文件-->
     </package>
+    <constant name="struts.multipart.maxSize" value="-1"/><!--上传文件不受限制-->
 </struts>

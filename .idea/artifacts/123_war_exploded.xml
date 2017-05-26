@@ -11,6 +11,8 @@
           <element id="library" level="project" name="Struts 2" />
           <element id="library" level="project" name="sqljdbc4" />
           <element id="library" level="project" name="mysql_jdbc_java-5.1.41-bin" />
+          <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/123_war_exploded/WEB-INF/lib/mysql-connector-java-5.1.41-bin.jar" />
+          <element id="file-copy" path="$PROJECT_DIR$/out/artifacts/123_war_exploded/WEB-INF/lib/mysql_jdbc_java-5.1.41-bin.jar" />
         </element>
       </element>
     </root>

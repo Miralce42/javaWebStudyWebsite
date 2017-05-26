@@ -1,5 +1,8 @@
 <%@ page import="WebDB.StudentDAO" %>
-<%@ page import="beans.InteractionTopic" %><%--
+<%@ page import="beans.InteractionTopic" %>
+<%@ page import="beans.TopicComments" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="beans.Users" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/23
@@ -30,40 +33,92 @@
             padding-left: 20%;
             padding-right: 20%;
         }
+        p {
+            margin-bottom: 0.1em;
+        }
+        #shr {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        #topicDeleteBtn {
+            display: none;
+        }
+        .commentDeleteBtn{
+            display: none;
+        }
     </style>
     <script src="js/myJs.js"></script>
     <!--输入合法性检验-->
 </head>
+
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
 <div id="fh5co-main">
     <%
         String topicId = request.getParameter("topicId");
+        if(topicId != null) {
+            session.setAttribute("topicId", topicId);
+        }
+        else{
+            topicId = (String)session.getAttribute("topicId");
+        }
         StudentDAO studentDAO = new StudentDAO();
         InteractionTopic topic = studentDAO.getOneTopic(topicId);
-        String name = studentDAO.getName(topic.getUsername());
-      //  String content = topic.getContent();
-      //  content =  content.replaceAll("<img.*>.*</img>",  "<img.*>.*</img><br>").replaceAll("<img.*/>", "<img.*/><br>");
+        ArrayList<TopicComments> Comments = studentDAO.getAllComment(topicId);
+        String topicUserId = topic.getUsername();
+        String topicUserName = studentDAO.getName(topicUserId);
+        Users thisUser = (Users)session.getAttribute("user");
+        String thisUserId = thisUser.getUsername();
+        //  String content = topic.getContent();
+        //  content =  content.replaceAll("<img.*>.*</img>",  "<img.*>.*</img><br>").replaceAll("<img.*/>", "<img.*/><br>");
     %>
     <div class="main">
         <!-- MAIN CONTENT -->
         <div class="main-content">
             <div class="container-fluid">
                 <div class="panel panel-headline">
-                    <div class="panel-body">
-                        <h2><%=topic.getTitle()%></h2>
-                        <p class="text-primary text-right"> by <%=name%>  /  <%=topic.getDate()%> </p>
+                    <div class="panel-body"  onmousemove="showTopicDiv(<%=topicUserId%>,<%=thisUserId%>)">
+                        <div align="right">
+                            <a onclick="location.href='javascript:history.go(-1);'" class="floatButton">返回</a>
+                        </div>
                         <hr>
+                        <h3><i class="text-primary">标题：</i><%=topic.getTitle()%></h3>
+                        <table width="100%">
+                            <tr>
+                                <td align="left">
+                                    <div id="topicDeleteBtn">
+                                        <a id="topicDelete" onclick="deleteTopic()" href="topicDelete.action?topicId=<%=topic.getTopicId()%>">删除</a>|
+                                        <a id="topicUpdate" href="changeTopic.jsp?topicId=<%=topic.getTopicId()%>">修改</a>
+                                    </div>
+                                </td>
+                                <td align="right">
+                                <p class="text-primary text-right"> by <STRONG><%=topicUserName%></STRONG>  /  <%=topic.getDate()%> </p>
+                                </td>
+                            </tr>
+                        </table>
+                         <hr>
                         <div id="contentDetail">
-                            <p class="lead"><h4><%=topic.getContent()%></h4></p>
+                            <p class="lead"><h4><i class="text-primary">内容：</i><hr><%=topic.getContent()%></h4></p>
                         </div>
                         <hr>
-                        <div class="well">
-                            <p class="text-left"><code>.text-left</code> Left aligned text.</p>
-                            <hr>
-                            <p class="text-center"><code>.text-center</code> Center aligned text.</p>
-                            <p class="text-right"><code>.text-right</code> Right aligned text.</p>
+                        <%
+                            for (int i = 0;i < Comments.size();i++) {
+                                TopicComments comment = Comments.get(i);
+                                String commentUserId = comment.getUsername();
+                        %>
+                        <!--下面那句话废了我一半的脑细胞，所以不要乱动-->
+                        <div class="well" onmousemove="showCommentDiv(<%=commentUserId%>,<%=thisUserId%>,<%=i%>)">
+                            <span class="text-left"><strong><%=studentDAO.getName(comment.getUsername())%></strong></span>
+                            <span class="text-right"><%=comment.getDate()%></span>
+                            <div name="commentDeleteBtn" class="commentDeleteBtn">
+                                <a id="commentDelete" onclick="deleteComment()" href="commentDelete.action?commentId=<%=comment.getCommentId()%>">删除</a>
+                            </div>
+                            <hr id="shr">
+                            <%=comment.getContent()%>
                         </div>
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
             </div>
@@ -75,12 +130,12 @@
                 <h3 class="panel-title">编写评论</h3>
             </div>
             <hr />
-            <form name="form1" action="CrtTopic.action"  method="post">
+            <form name="form1" action="createComment.action"  method="post">
                 <div class="panel-body">
-                    <textarea style="width: 80%" title="编辑器" name="topic.content" id="content" class="ckeditor"></textarea>
+                    <textarea style="width: 80%" title="编辑器" name="comment.content" id="comment" class="ckeditor"></textarea>
                     <hr>
                     <div align="right">
-                    <a onclick="topicCheck()" class="floatButton">发布</a>
+                        <a onclick="commentCheck()" class="floatButton">发布评论</a>
                     </div>
                 </div>
             </form>

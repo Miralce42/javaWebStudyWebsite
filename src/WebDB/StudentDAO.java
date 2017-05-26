@@ -5,9 +5,13 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import beans.ChoiceHomework;
+import beans.CompletionHomework;
+import beans.Homework;
 import beans.InteractionTopic;
 import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;
+import beans.TopicComments;
 import beans.TeachingEvaluation;
 import beans.Users;
 
@@ -16,11 +20,10 @@ import beans.Users;
  *
  */
 public class StudentDAO {
-   private DB_Manager db_manager = new DB_Manager();
+   private DB_Manager db_manager=new DB_Manager();
    private Users student;
 
-   public StudentDAO() {
-   }
+   public StudentDAO(){}
 
    public StudentDAO(Users student) {
       this.student = student;
@@ -30,27 +33,27 @@ public class StudentDAO {
       return student;
    }
 
-   public ArrayList<StudentHomework> getUnfinishedHomework() {
-      String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0";
+   public ArrayList<StudentHomework> getUnfinishedHomework(){
+      String sql="SELECT * FROM javawebcourseresources.homework where is_closing=0";
 
-      ArrayList<StudentHomework> homeworkList = new ArrayList<StudentHomework>();
-      ResultSet resultSet = db_manager.executeQuery(sql, null);
+      ArrayList<StudentHomework> homeworkList=new ArrayList<StudentHomework>();
+      ResultSet resultSet=db_manager.executeQuery(sql,null);
       try {
-         while (resultSet.next()) {
-            String id = resultSet.getString("id");
-            String title = resultSet.getString("title");
-            String createTime = resultSet.getString("create_time");
-            String closingTime = resultSet.getString("closing_time");
+         while (resultSet.next()){
+            String id=resultSet.getString("id");
+            String title=resultSet.getString("title");
+            String createTime=resultSet.getString("create_time");
+            String closingTime=resultSet.getString("closing_time");
 
-            StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
+            StudentHomework studentHomework=new StudentHomework(id,title,createTime,closingTime);
 
-            String sql_GetStatus = "SELECT * FROM javawebcourseresources.homework_status where hw_id=? and user_id=?";
-            ResultSet statusSet = db_manager.executeQuery(sql_GetStatus, new String[]{id, student.getUsername()});
+            String sql_GetStatus="SELECT * FROM javawebcourseresources.homework_status where hw_id=? and user_id=?";
+            ResultSet statusSet=db_manager.executeQuery(sql_GetStatus,new String[]{id,student.getUsername()});
 
-            if (statusSet.next()) {//存在保存/完成记录
-               HomeworkStatus homeworkStatus = HomeworkStatus.valueOf(statusSet.getString("status"));
+            if(statusSet.next()){//存在保存/完成记录
+               HomeworkStatus homeworkStatus=HomeworkStatus.valueOf(statusSet.getString("status"));
                studentHomework.setHomeworkStatus(homeworkStatus);
-            } else {//未做无记录
+            }else {//未做无记录
                studentHomework.setHomeworkStatus(HomeworkStatus.UNFINISHED);
             }
 
@@ -64,20 +67,20 @@ public class StudentDAO {
 
    }
 
-   public int createTopic(InteractionTopic topic) {
+   public int createTopic(InteractionTopic topic){
       String ssql = "insert into javawebcourseresources.interactiontopic(" +
               "user_id,title,content,topic_type,is_deleted) " +
               "values(?,?,?,?,0)";
       String topicType = topic.getTopicType().toString();//字符转换
       //executeUpdate成功返回1
-      return db_manager.executeUpdate(ssql, new String[]{topic.getUsername(), topic.getTitle(), topic.getContent(), topicType});
+      return db_manager.executeUpdate(ssql,new String[]{topic.getUsername(),topic.getTitle(),topic.getContent(),topicType});
    }
 
-   public String getName(String username) {
+   public String getName(String username){
       String ssql = "select name from javawebcourseresources.users where user_id = ?";
-      ResultSet rs = db_manager.executeQuery(ssql, new String[]{username});
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{username});
       try {
-         if (rs.next()) {
+         if(rs.next()){
             return rs.getString("name");
          }
       } catch (SQLException e) {
@@ -88,9 +91,9 @@ public class StudentDAO {
 
    public int getAllTopic(ArrayList<InteractionTopic> Topics) {
       String ssql = "select * from javawebcourseresources.interactiontopic where is_deleted = 0 order by topic_id DESC";
-      ResultSet rs = db_manager.executeQuery(ssql, null);
+      ResultSet rs = db_manager.executeQuery(ssql,null);
       try {
-         while (rs.next()) {
+         while (rs.next()){
             InteractionTopic topic = new InteractionTopic();
             topic.setTopicId(rs.getString("topic_id"));
             topic.setUsername(rs.getString("user_id"));
@@ -109,10 +112,10 @@ public class StudentDAO {
 
    public InteractionTopic getOneTopic(String topicId) {
       String ssql = "select * from javawebcourseresources.interactiontopic where  is_deleted=0 and topic_id=?";
-      ResultSet rs = db_manager.executeQuery(ssql, new String[]{topicId});
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{topicId});
       InteractionTopic topic = new InteractionTopic();
       try {
-         while (rs.next()) {
+         while (rs.next()){
             topic.setTopicId(rs.getString("topic_id"));
             topic.setUsername(rs.getString("user_id"));
             topic.setTopicType(rs.getString("topic_type"));
@@ -134,5 +137,93 @@ public class StudentDAO {
          return true;
       }
       return false;
+   }
+
+   public int createComment(TopicComments comment){
+      String ssql = "insert into javawebcourseresources.topiccomments(" +
+              "topic_id,user_id,content,is_deleted) " +
+              "values(?,?,?,0)";
+      return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
+   }
+
+   public ArrayList<TopicComments> getAllComment(String topic_id){
+      String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
+      ArrayList<TopicComments> Comments = new ArrayList<>();
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{topic_id});
+      try {
+         while (rs.next()){
+            TopicComments comment = new TopicComments();
+            comment.setCommentId(rs.getString("id"));
+            comment.setTopicId(rs.getString("topic_id"));
+            comment.setUsername(rs.getString("user_id"));
+            comment.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("comment_date");
+            comment.setDate(date);
+            Comments.add(comment);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Comments;
+   }
+
+   public ArrayList<InteractionTopic> selectSearchTopic(String condition){
+      String likeCondition = "%"+condition+"%";
+      String ssql = "select * from javawebcourseresources.interactiontopic" +
+              " where is_deleted = 0 and (" +
+              "title like ? or content like ? or " +
+              "topic_type like ?) order by topic_id desc";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{likeCondition,likeCondition,likeCondition});
+      ArrayList<InteractionTopic> Topics = new ArrayList<>();
+      try {
+         while (rs.next()){
+            InteractionTopic topic = new InteractionTopic();
+            topic.setTopicId(rs.getString("topic_id"));
+            topic.setUsername(rs.getString("user_id"));
+            topic.setTitle(rs.getString("title"));
+            topic.setContent(rs.getString("content"));
+            topic.setTopicType(rs.getString("topic_type"));
+            Timestamp date = rs.getTimestamp("create_date");
+            topic.setDate(date);
+            Topics.add(topic);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return Topics;
+   }
+
+   public int deleteTopic(String topicId){
+      String ssql = "update javawebcourseresources.interactiontopic set is_deleted=1 where topic_id=?";
+      return db_manager.executeUpdate(ssql,new String[]{topicId});
+   }
+
+   public TopicComments getOneComment(String commentId) {
+      String ssql = "select * from javawebcourseresources.topiccomments where  is_deleted=0 and id=?";
+      ResultSet rs = db_manager.executeQuery(ssql,new String[]{commentId});
+      TopicComments comment = new TopicComments();
+      try {
+         while (rs.next()){
+            comment.setCommentId(rs.getString("id"));
+            comment.setUsername(rs.getString("user_id"));
+            comment.setTopicId(rs.getString("topic_id"));
+            comment.setContent(rs.getString("content"));
+            Timestamp date = rs.getTimestamp("comment_date");
+            comment.setDate(date);
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      }
+      return comment;
+   }
+
+   public int deleteComment(String commentId){
+      String ssql = "update javawebcourseresources.topiccomments set is_deleted=1 where id=?";
+      return db_manager.executeUpdate(ssql,new String[]{commentId});
+   }
+
+   public int updateTopic(InteractionTopic topic){
+      String ssql = "update javawebcourseresources.interactiontopic set content=? where topic_id=?";
+      return db_manager.executeUpdate(ssql,new String[]{topic.getContent(),topic.getTopicId()});
    }
 }
