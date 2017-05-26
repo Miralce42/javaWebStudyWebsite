@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Users;
+
 /**
  * Created by Vove on 2017/4/13.
  * <p>
@@ -28,34 +30,69 @@ public class LoginFilter implements Filter {
       String contextPath = request.getContextPath();//工程
       String uri = request.getRequestURI();//当前uri
       System.out.println("Login Filter:" + uri);
+      Users user = (Users) session.getAttribute("user");
 
-      String[] filterPage = new String[]{//过滤页面
-              "/frontDesk/studentHomework.jsp",
+      boolean isFilter = false;
+      String[] filterPage = new String[]{//需要过滤未登录页面，学生
+              "/frontDesk/studentHomework.jsp"
+      };
+      String[] filterStudentPage = new String[]{//后台过滤页面,限制教师访问
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
               "/backDesk/publishHomework.jsp",
               "/frontDesk/topicDetail.jsp",
               "/frontDesk/createTopic.jsp",
               "/frontDesk/myInfo.jsp"
+              "/backDesk/publishHomework.jsp",
+              "/backDesk/Re-editHomework.jsp"
       };
-      boolean isFilter=false;
+
       for (String page : filterPage) {
          if (uri.equals(contextPath + page)) {
-            isFilter=true;
+            isFilter = true;
             break;
          }
       }
-      if(!isFilter){
+      if (!isFilter) {
+         for (String page : filterStudentPage) {//判断后台页面登陆
+            if (uri.equals(contextPath + page)) {
+               isFilter = true;
+               break;
+            }
+         }
+      }
+      if (!isFilter) {
+         chain.doFilter(req, resp);
+         return;
+      }
+      //判断过滤
+      if (user == null) {
+         System.out.println("登陆过滤");
+         response.sendRedirect(contextPath + "/login.jsp");
+         return;
+      }
+      else {
+         chain.doFilter(req, resp);
+      }
+      //已登录
+
+      boolean isTeaFilter = false;
+      for (String page : filterStudentPage) {
+         if (uri.equals(contextPath + page)) {
+            isTeaFilter = true;
+            break;
+         }
+      }
+      if (!isTeaFilter) {
          chain.doFilter(req, resp);
          return;
       }
 
-      if (session.getAttribute("user") == null) {
-         System.out.println("过滤");
-         response.sendRedirect(contextPath + "/login.jsp");
-      }
-      else {
-         chain.doFilter(req, resp);
+      if (!"TEACHER".equals(user.getUser_type())) {
+         System.out.println("教师过滤");
+         response.sendRedirect(contextPath + "/frontDesk/index.jsp");//学生主页
+      } else {
+         chain.doFilter(req, resp);//进入访问页面
       }
    }
 

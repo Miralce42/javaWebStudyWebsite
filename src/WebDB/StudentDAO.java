@@ -5,6 +5,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 
+import beans.ChoiceHomework;
+import beans.CompletionHomework;
+import beans.Homework;
 import beans.InteractionTopic;
 import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;

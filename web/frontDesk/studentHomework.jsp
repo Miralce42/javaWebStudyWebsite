@@ -2,7 +2,8 @@
 <%@ page import="beans.Users" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="beans.StudentHomework" %>
-<%@ page import="cn.vove7.mydiv.HomeworkDiv" %><%--
+<%@ page import="cn.vove7.mydiv.ManagerHomeworkDiv" %>
+<%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/5/16
@@ -37,13 +38,13 @@
            }
            String closingTime=homework.getClosingTime();
 
-           HomeworkDiv homeworkDiv=new HomeworkDiv(homework.getId(),
+           ManagerHomeworkDiv managerHomeworkDiv=new ManagerHomeworkDiv(homework.getId(),
                    homework.getTitle(),
                    "截止时间:"+closingTime.substring(0,closingTime.length()-2),
                    homework.getStu_Status()
            );
 
-           out.println(homeworkDiv.toStuString());//divContent
+           out.println(managerHomeworkDiv.toStuString());//divContent
 
            if(i%3==0){
               out.print("</div>");
