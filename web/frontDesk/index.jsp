@@ -72,7 +72,7 @@
                 <li><a href="studentHomework.jsp">我的作业</a></li>
                 <li><a href="thePracticeTeaching.jsp">实践教学</a></li>
                 <li><a href="myInfo.jsp">我的信息</a></li>
-                <li><a href="about.html">课程评价</a></li>
+                <li><a href="evaluate.jsp">课程评价</a></li>
                 <li><a href="contact.html">联系</a></li>
             </ul>
         </nav>
