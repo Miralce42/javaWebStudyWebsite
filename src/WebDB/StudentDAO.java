@@ -131,7 +131,7 @@ public class StudentDAO {
    }
 
    public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
-      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content) value(?,?,?,?,?.?)";
+      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,evaluation_content,star2,star3,star4) value(?,?,?,?,?,?)";
       int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(), teachingEvaluation.getStar1(),teachingEvaluation.getStar2(),teachingEvaluation.getStar3(),teachingEvaluation.getStar4(),teachingEvaluation.getContent()});
       if (rs == 1) {
          return true;
