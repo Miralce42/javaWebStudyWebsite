@@ -35,7 +35,7 @@
 
    <script type="text/javascript" src="../laydate/laydate.js"></script>
    <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
-   <script type="text/javascript" src="js/publishHomework.js"></script>
+   <script type="text/javascript" src="js/checkHomeworkInfo.js"></script>
    <link type="text/css" rel="stylesheet" href="../myCss/publishHomework.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css"/>
@@ -69,6 +69,11 @@
          </div>
       </form>
    </div>
+   <script>
+       choiceNum=<%=thisHomework.getChoiceHomeworkList().size()+1%>;
+       completionNum=<%=thisHomework.getCompletionHomeworkList().size()+1%>;
+       operationNum=<%=thisHomework.getOperationHomeworkList().size()+1%>;
+   </script>
 </div>
 </body>
 </html>

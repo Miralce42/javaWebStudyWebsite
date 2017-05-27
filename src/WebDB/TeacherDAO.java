@@ -147,13 +147,13 @@ public class TeacherDAO {
 
             int questionIndex = 1;
             for (ChoiceHomework choiceHomework : newHomework.getChoiceHomeworkList()) {//插入选择题记录
-                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer，score) " +
-                        "values(?,?,?,?,?)";
-                if (db_manager.executeUpdate(insertChoiceSql, new String[]{homeworkId
-                        , Integer.toString(questionIndex++)//*
-                        , choiceHomework.getQuestion()
-                        , choiceHomework.getRef_ky()
-                        ,choiceHomework.getScore()
+                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer,score) values(?,?,?,?,?)";
+                if (db_manager.executeUpdate(insertChoiceSql, new String[]{
+                        homeworkId,
+                        Integer.toString(questionIndex++),//*
+                        choiceHomework.getQuestion(),
+                        choiceHomework.getRef_ky(),
+                        choiceHomework.getScore()
                 }) != 1) {
                     db_manager.rollbackAffair();//因db_manager逻辑，发生exception
                     return false;

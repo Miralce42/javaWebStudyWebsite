@@ -13,6 +13,7 @@
 
     <script type="text/javascript" src="../laydate/laydate.js"></script>
     <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+    <script type="text/javascript" src="js/checkHomeworkInfo.js"></script>
     <script type="text/javascript" src="js/publishHomework.js"></script>
     <link type="text/css" rel="stylesheet" href="../myCss/publishHomework.css"/>
     <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
@@ -38,7 +39,7 @@
             <input type="hidden" name="action" value="publish">
             <div class="float-right">
                 <input class="homework-title" name="homeworkTitle" type="text" placeholder="作业标题">
-                <a class="floatButton" onclick="document.form.submit()">发布</a>
+                <a class="floatButton" onclick="checkHomework()">发布</a>
             </div>
             <div align="right" style="padding-right: 12%">
                 开始时间:<input CLASS="score" type="text" name="beginTime" id="beginTime" value="<%=nowTime%>" title="选择开始时间"
