@@ -1,6 +1,8 @@
 package cn.vove7.mydiv;
 
 
+import com.intellij.codeInsight.navigation.BackgroundUpdaterTask;
+
 /**
  * Created by Vove on 2017/5/20.
  * 做作业管理块
@@ -11,7 +13,6 @@ public class ManagerHomeworkDiv {
    private String body;
    private String buttonValue;
 
-
    public ManagerHomeworkDiv(String hwId, String title, String body, String buttonValue) {
       this.title = title;
       this.hwId = hwId;
@@ -19,7 +20,9 @@ public class ManagerHomeworkDiv {
       this.buttonValue = buttonValue;
    }
 
+
    public String toStuString() {
+   String url= buttonValue.equals("查看")?"browserHomework.jsp":"doHomework.jsp";
       return
               "        <div class=\"col-md-4\">\n" +
               "            <div class=\"panel\">\n" +
@@ -32,7 +35,7 @@ public class ManagerHomeworkDiv {
                       + body +
               "                </div>\n" +
               "                <div class=\"panel-buttonValue\">\n" +
-              "                  <a href=doHomework.jsp?homeworkId="+hwId+ "&homeworkTitle="+title+" class='floatButton'>  " + buttonValue + "</a>\n" +
+              "                  <a href="+url+"?homeworkId="+hwId+ "&homeworkTitle="+title+" class='floatButton'>  " + buttonValue + "</a>\n" +
               "                </div>\n" +
               "            </div>\n" +
               "        </div>\n";

@@ -3,7 +3,6 @@ package servlets;
 import WebDB.StudentDAO;
 import beans.Answer;
 import beans.HomeworkAnswer;
-import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;
 import beans.Users;
 
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Vove on 2017/5/25.
- * 提交作业
+ * 学生提交作业
  */
 public class CommitHomeworkServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -26,7 +26,7 @@ public class StudentHomework {
       this.homeworkStatus = homeworkStatus;
    }
 
-   public String getTeac_HomeworkStatus() {//教师获取作业状态
+   public String statusToValue_tea() {//教师获取作业状态
       switch (homeworkStatus) {
          case UNCLOSED:
             return "重新编辑";
@@ -37,10 +37,10 @@ public class StudentHomework {
       }
    }
 
-   public String getStu_Status() {//学生过去作业状态
+   public String statusToValue_stu() {//学生过去作业状态
       switch (homeworkStatus) {
          case SAVED:
-            return "重新编辑";
+            return "继续编辑";
          case FINISHED:
             return "查看";
          case UNFINISHED:

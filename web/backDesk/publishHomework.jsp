@@ -35,6 +35,7 @@
     <!--右侧布局-->
     <div class="container-field">
         <form name="form" action="publishHomework.servlet" method="post">
+            <input type="hidden" name="action" value="publish">
             <div class="float-right">
                 <input class="homework-title" name="homeworkTitle" type="text" placeholder="作业标题">
                 <a class="floatButton" onclick="document.form.submit()">发布</a>
@@ -55,6 +56,10 @@
             <div class="completions_field" id="completions_field">
             </div>
             <a class="floatButton" onclick="addCompletion()">添加填空题</a>
+            <h2>操作题</h2>
+            <div class="operations_field" id="operations_field">
+            </div>
+            <a class="floatButton" onclick="addOperation()">添加操作题</a>
         </form>
     </div>
 </div>
