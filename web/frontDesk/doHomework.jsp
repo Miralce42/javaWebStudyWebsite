@@ -41,7 +41,7 @@
         <form name="form" method="post" action="commitHomework.servlet">
             <%
                 if(thisHomework.getChoiceHomeworkList().size()>0){
-                    out.println("<h3>选择题</h3>");
+                    out.println("<h4>选择题</h4>");
                 }
             %>
             <div id="choicesField">
@@ -49,15 +49,17 @@
             </div>
             <%
                 if(thisHomework.getCompletionHomeworkList().size()>0){
-                    out.println("<h3>填空题</h3>");
+                    out.println("<h4>填空题</h4>");
                 }
             %>
             <div class="completionsField">
                 <%=doHomeworkDiv.getCompletionsValue()%>
             </div>
+            <br>
+            <br>
             <%
                 if(thisHomework.getOperationHomeworkList().size()>0){
-                    out.println("<h3>操作题</h3>");
+                    out.println("<h4>操作题</h4>");
                 }
             %>
             <div class="operationsField">

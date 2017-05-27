@@ -66,25 +66,25 @@ public class DoHomeworkDiv {
                     break;
             }
         }
-        str = " <div class=\"choiceBump\"><p class=\"question_index\">\n" + "题目" + index + "</p>" +
-                "     <div class=\"choice-question\">" +
+        str = " <div class=\"choiceBump\">" + index +
+                "     、<div class=\"choice-question\">" +
                 "<input type=\"hidden\" name=\"choiceId_" + index + "\" value=\"" + choiceHomework.getId() + "\">" +
-                ":" + choiceHomework.getQuestion() + "\n" +
+                    choiceHomework.getQuestion() + "\n" +
                 "     </div>\n" +
-                "     <ul style=\"list-style-type:none\">\n" +
-                "         <li class=\"option\">\n" +
+                
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\"  " + check_A + " type=\"radio\" value=\"A\">" + choiceHomework.getChoice_A() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_B + " type=\"radio\" value=\"B\">" + choiceHomework.getChoice_B() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_C + " type=\"radio\" value=\"C\">" + choiceHomework.getChoice_C() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_D + " type=\"radio\" value=\"D\">" + choiceHomework.getChoice_D() + "\n" +
-                "         </li>\n" +
-                "     </ul>\n" +
+                "         </div>\n" +
+               
                 " </div>";
         return str;
     }
@@ -95,11 +95,11 @@ public class DoHomeworkDiv {
         if (savedAnswer == null) {
             savedAnswer = "";
         }
-        str = ":<div class=\"completionBump\">" +
+        str = "<div class=\"completionBump\">" +
                 "<input type=\"hidden\" name=\"completionId_" + index + "\" value=\"" + completionHomework.getId() + "\">" +
-                "<p class=\"question_index\">题目" + index + "</p><div class=\"completion-question\">"
+                 + index + "、<div class=\"completion-question\">"
                 + completionHomework.getCompletionContent() + "</div>" +
-                " 回答：<input class=\"completion_answer\" id=\"completion_answer_" + index + "\"\n" +
+                " 回答(多空以#号分开)：<input class=\"completion_answer\" id=\"completion_answer_" + index + "\"\n" +
                 "            name=\"completion_answer_" + index + "\" type=\"text\" value=\"" + savedAnswer + "\">\n" +
                 "</div>";
         return str;
@@ -112,7 +112,7 @@ public class DoHomeworkDiv {
         }
         return "<div class=\"operation_field\">" +
                 "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+index+"\">"+
-                "<p class=\"question_index\">题目" + index + ":</p>"+
+                "" + index + "、"+
                 "<div class=\"operationQuestion\">"+operationQuestion+"</div>"+
                 "<textarea class=\"ckeditor\" name=\"operation_content_" + index + "\" " +
                 "id=\"operation_content_" + index + "\">" + savedAnswer + "</textarea>" +

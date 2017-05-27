@@ -1,10 +1,10 @@
 .choiceBump,.completionBump {
-    padding: 10px 50px 0;
+    padding: 0 40px 0;
 }
 
 .option {
     margin: 10px;
-    height: 40px;
+    height: 30px;
 }
 
 input[type="radio"].radio {

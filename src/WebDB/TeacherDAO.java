@@ -1,7 +1,6 @@
 package WebDB;
 
 import beans.*;
-import com.sun.org.apache.regexp.internal.RE;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
