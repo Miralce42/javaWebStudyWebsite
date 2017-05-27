@@ -282,6 +282,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
+
     public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
@@ -300,7 +301,6 @@ public class TeacherDAO {
                         .setBeginTime(homeworkResultSet.getString("create_time"))
                         .setEndTime(homeworkResultSet.getString("closing_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
-
 
                 //获取选择题集
                 ResultSet choiceSet = db_manager.executeQuery(getChiocesSql, new String[]{homeworkId});
@@ -359,5 +359,46 @@ public class TeacherDAO {
             return null;
         }
     }
+    public double[] getAvgStar() {
+        String ssql ="SELECT AVG(star1) s1,AVG(star2) s2,AVG(star3) s3,AVG(star4) s4 FROM teaching_evaluation";
+        ResultSet resultSet = db_manager.executeQuery(ssql,null);
+        try {
+            resultSet.next();
+            double[] b=new double[4];
+            b[0]=resultSet.getDouble("s1");
+            b[1]=resultSet.getDouble("s2");
+            b[2]=resultSet.getDouble("s3");
+            b[3]=resultSet.getDouble("s4");
+            return b;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return  null;
+        }
+
+    }
+    public ArrayList<TeachingEvaluation> getStudentEvaluation() {
+        String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
+        ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<TeachingEvaluation>();
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{});
+        try {
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String major = resultSet.getString("major");
+                String evaluation_content = resultSet.getString("evaluation_content");
+                String evaluate_date = resultSet.getString("evaluate_date");
+
+                TeachingEvaluation teachingEvaluation = new TeachingEvaluation(name,evaluation_content , major, evaluate_date);
+                StudentEvaluationSaved.add(teachingEvaluation);
+
+            }
+            return StudentEvaluationSaved;
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return  null;
+        }
+
+    }
+
 }
 
