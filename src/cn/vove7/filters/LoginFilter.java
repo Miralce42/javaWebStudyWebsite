@@ -35,7 +35,8 @@ public class LoginFilter implements Filter {
       boolean isFilter = false;
       String[] filterPage = new String[]{//需要过滤未登录页面，学生
               "/frontDesk/studentHomework.jsp",
-              "/frontDesk/evaluate.jsp"
+              "/frontDesk/evaluate.jsp",
+              "/frontDesk/doHomework.jsp"
       };
       String[] filterStudentPage = new String[]{//后台过滤页面,限制教师访问
               "/backDesk/homeworkManager.jsp",
