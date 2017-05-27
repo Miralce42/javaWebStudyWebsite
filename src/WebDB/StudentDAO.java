@@ -128,7 +128,7 @@ public class StudentDAO {
     }
 
    public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
-      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content) value(?,?,?,?,?,?)";
+      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content,evaluate_date) value(?,?,?,?,?,?,now())";
       int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(),
               teachingEvaluation.getStar1()
               ,teachingEvaluation.getStar2()
@@ -147,12 +147,6 @@ public class StudentDAO {
               "values(?,?,?,0)";
       return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
    }
-    public int createComment(TopicComments comment) {
-        String ssql = "insert into javawebcourseresources.topiccomments(" +
-                "topic_id,user_id,content,is_deleted) " +
-                "values(?,?,?,0)";
-        return db_manager.executeUpdate(ssql, new String[]{comment.getTopicId(), comment.getUsername(), comment.getContent()});
-    }
 
     public ArrayList<TopicComments> getAllComment(String topic_id) {
         String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
