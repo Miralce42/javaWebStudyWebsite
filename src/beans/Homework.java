@@ -7,73 +7,85 @@ import java.util.ArrayList;
  * 作业类封装
  */
 public class Homework {
-   private String homeworkId;
-   private String homeworkTitle;
-   private String beginTime;
-   private String endTime;
-   private ArrayList<ChoiceHomework> choiceHomeworkList;
-   private ArrayList<CompletionHomework> completionHomeworkList;
+    private String homeworkId;
+    private String homeworkTitle;
+    private String beginTime;
+    private String endTime;
+    private ArrayList<ChoiceHomework> choiceHomeworkList;//选择题
+    private ArrayList<CompletionHomework> completionHomeworkList;//填空题
+    private ArrayList<OperationHomework> operationHomeworkList;//操作题，使用填空类
 
-   public Homework() {}
+    public Homework() {
+    }
 
-   public Homework(String homeworkTitle, String beginTime,
-                   String endTime, ArrayList<ChoiceHomework> choiceHomeworkList,
-                   ArrayList<CompletionHomework> completionHomeworkList) {
-      this.homeworkTitle = homeworkTitle;
-      this.beginTime = beginTime;
-      this.endTime = endTime;
-      this.choiceHomeworkList = choiceHomeworkList;
-      this.completionHomeworkList = completionHomeworkList;
-   }
+    public Homework(String homeworkTitle, String beginTime,
+                    String endTime, ArrayList<ChoiceHomework> choiceHomeworkList,
+                    ArrayList<CompletionHomework> completionHomeworkList,
+                    ArrayList<OperationHomework> operationHomeworkList) {
+        this.homeworkTitle = homeworkTitle;
+        this.beginTime = beginTime;
+        this.endTime = endTime;
+        this.choiceHomeworkList = choiceHomeworkList;
+        this.operationHomeworkList = operationHomeworkList;
+        this.completionHomeworkList = completionHomeworkList;
+    }
 
-   public String getHomeworkId() {
-      return homeworkId;
-   }
+    public ArrayList<OperationHomework> getOperationHomeworkList() {
+        return operationHomeworkList;
+    }
 
-   public Homework setHomeworkTitle(String homeworkTitle) {
-      this.homeworkTitle = homeworkTitle;
-      return this;
-   }
+    public void setOperationHomeworkList(ArrayList<OperationHomework> operationHomeworkList) {
+        this.operationHomeworkList = operationHomeworkList;
+    }
 
-   public Homework setBeginTime(String beginTime) {
-      this.beginTime = beginTime;
-      return this;
-   }
+    public String getHomeworkId() {
+        return homeworkId;
+    }
 
-   public Homework setEndTime(String endTime) {
-      this.endTime = endTime;
-      return this;
-   }
+    public Homework setHomeworkTitle(String homeworkTitle) {
+        this.homeworkTitle = homeworkTitle;
+        return this;
+    }
 
-   public void setChoiceHomeworkList(ArrayList<ChoiceHomework> choiceHomeworkList) {
-      this.choiceHomeworkList = choiceHomeworkList;
-   }
+    public Homework setBeginTime(String beginTime) {
+        this.beginTime = beginTime;
+        return this;
+    }
 
-   public void setCompletionHomeworkList(ArrayList<CompletionHomework> completionHomeworkList) {
-      this.completionHomeworkList = completionHomeworkList;
-   }
+    public Homework setEndTime(String endTime) {
+        this.endTime = endTime;
+        return this;
+    }
 
-   public void setHomeworkId(String homeworkId) {
-      this.homeworkId = homeworkId;
-   }
+    public void setChoiceHomeworkList(ArrayList<ChoiceHomework> choiceHomeworkList) {
+        this.choiceHomeworkList = choiceHomeworkList;
+    }
 
-   public String getHomeworkTitle() {
-      return homeworkTitle;
-   }
+    public void setCompletionHomeworkList(ArrayList<CompletionHomework> completionHomeworkList) {
+        this.completionHomeworkList = completionHomeworkList;
+    }
 
-   public String getBeginTime() {
-      return beginTime;
-   }
+    public void setHomeworkId(String homeworkId) {
+        this.homeworkId = homeworkId;
+    }
 
-   public String getEndTime() {
-      return endTime;
-   }
+    public String getHomeworkTitle() {
+        return homeworkTitle;
+    }
 
-   public ArrayList<ChoiceHomework> getChoiceHomeworkList() {
-      return choiceHomeworkList;
-   }
+    public String getBeginTime() {
+        return beginTime;
+    }
 
-   public ArrayList<CompletionHomework> getCompletionHomeworkList() {
-      return completionHomeworkList;
-   }
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public ArrayList<ChoiceHomework> getChoiceHomeworkList() {
+        return choiceHomeworkList;
+    }
+
+    public ArrayList<CompletionHomework> getCompletionHomeworkList() {
+        return completionHomeworkList;
+    }
 }

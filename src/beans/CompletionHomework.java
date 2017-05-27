@@ -7,18 +7,28 @@ package beans;
 public class CompletionHomework {
    private String id;
    private String completionContent;
+   private String refKey;
    private String score;
 
-   public CompletionHomework(String id,String completionContent, String score) {
-      this.id=id;
+   public void setId(String id) {
+      this.id = id;
+   }
+
+   public String getRefKey() {
+      return refKey;
+   }
+
+   public void setRefKey(String refKey) {
+      this.refKey = refKey;
+   }
+
+   public CompletionHomework(String id, String completionContent, String refKey, String score) {
+      this.id = id;
       this.completionContent = completionContent;
+      this.refKey = refKey;
       this.score = score;
    }
 
-   public CompletionHomework(String completionContent, String score) {
-      this.completionContent = completionContent;
-      this.score = score;
-   }
 
    public String getId() {
       return id;

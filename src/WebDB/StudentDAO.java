@@ -30,22 +30,22 @@ public class StudentDAO {
         return student;
     }
 
-    public ArrayList<StudentHomework> getUnfinishedHomework() {
-        String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 ORDER BY closing_time DESC";
-
-        ArrayList<StudentHomework> homeworkList = new ArrayList<StudentHomework>();
+    public ArrayList<StudentHomework> getHomeworkList() {
+        String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()<closing_time and now()>create_time ORDER BY closing_time DESC";
+        //未结束
+        ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, null);
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                String homeworkId = resultSet.getString("id");
                 String title = resultSet.getString("title");
                 String createTime = resultSet.getString("create_time");
                 String closingTime = resultSet.getString("closing_time");
 
-                StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
+                StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
 
                 String sql_GetStatus = "SELECT * FROM javawebcourseresources.homework_status where hw_id=? and user_id=?";
-                ResultSet statusSet = db_manager.executeQuery(sql_GetStatus, new String[]{id, student.getUsername()});
+                ResultSet statusSet = db_manager.executeQuery(sql_GetStatus, new String[]{homeworkId, student.getUsername()});
 
                 if (statusSet.next()) {//存在保存/完成记录
                     HomeworkStatus homeworkStatus = HomeworkStatus.valueOf(statusSet.getString("status"));
@@ -240,17 +240,21 @@ public class StudentDAO {
         ResultSet resultSet = db_manager.executeQuery(sql, new String[]{completionId, student.getUsername()});
         return getAnswer(resultSet);
     }
+    public String getOperationAnswer(String operationId){
+        String sql="SELECT * FROM answersheet_operation where question_id=? and user_id=?";
+        return getAnswer(db_manager.executeQuery(sql,new String[]{operationId,student.getUsername()}));
+    }
 
     private String getAnswer(ResultSet resultSet) {
         try {
             if (resultSet.next()) {//已保存
                 return resultSet.getString("answer");
             } else {//无记录
-                return "NULL";
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "NULL";
+            return null;
         }
     }
 
@@ -276,10 +280,11 @@ public class StudentDAO {
             return false;
         }
     }
-    private boolean isExistCommitRecord(String homeworkId,String userId){
-        String sql="SELECT status FROM homework_status where hw_id=? and user_id=?";
+
+    private boolean isExistCommitRecord(String homeworkId, String userId) {
+        String sql = "SELECT status FROM homework_status where hw_id=? and user_id=?";
         try {
-            return db_manager.executeQuery(sql,new String[]{homeworkId,userId}).next();
+            return db_manager.executeQuery(sql, new String[]{homeworkId, userId}).next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;//
@@ -290,7 +295,7 @@ public class StudentDAO {
         String status = String.valueOf(homeworkAnswer.getHomeworkStatus());//状态
         String sql;
         //判断是否存在上传记录
-        if (isExistCommitRecord(homeworkAnswer.getHomeworkId(),homeworkAnswer.getUserId())) {//update
+        if (isExistCommitRecord(homeworkAnswer.getHomeworkId(), homeworkAnswer.getUserId())) {//update
             sql = "update homework_status set status=? where hw_id=? and user_id=?";
         } else {//insert
             sql = "insert into homework_status(status,hw_id,user_id) values(?,?,?)";

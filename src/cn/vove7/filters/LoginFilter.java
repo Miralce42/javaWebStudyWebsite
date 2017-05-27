@@ -41,10 +41,6 @@ public class LoginFilter implements Filter {
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
               "/backDesk/publishHomework.jsp",
-              "/frontDesk/topicDetail.jsp",
-              "/frontDesk/createTopic.jsp",
-              "/frontDesk/myInfo.jsp",
-              "/backDesk/publishHomework.jsp",
               "/backDesk/Re-editHomework.jsp"
       };
 

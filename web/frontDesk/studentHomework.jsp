@@ -25,12 +25,10 @@
     <h3>我的作业</h3>
         <%
         Users student =(Users)session.getAttribute("user");
-        if(student ==null){//过滤器
-           return;
-        }
+
         StudentDAO studentDAO=new StudentDAO(student);
 
-        ArrayList<StudentHomework> homeworkList=studentDAO.getUnfinishedHomework();
+        ArrayList<StudentHomework> homeworkList=studentDAO.getHomeworkList();
         int i=1;
         for(StudentHomework homework:homeworkList){
            if(i%3==1){
@@ -41,7 +39,7 @@
            ManagerHomeworkDiv managerHomeworkDiv=new ManagerHomeworkDiv(homework.getId(),
                    homework.getTitle(),
                    "截止时间:"+closingTime.substring(0,closingTime.length()-2),
-                   homework.getStu_Status()
+                   homework.statusToValue_stu()
            );
 
            out.println(managerHomeworkDiv.toStuString());//divContent

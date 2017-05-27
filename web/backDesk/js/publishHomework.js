@@ -2,25 +2,27 @@
  * Created by Vove on 2017/5/22.
  * 控制新建作业选择填空
  */
-var choiceBum = 1;
-var completionBum = 1;
+var choiceNum = 1;
+var completionNum = 1;
+var operationNum = 1;
 var allChoiceValue = [];
 var allCompletionValue = [];
+var allOperationValue = [];
 function setChoiceBum(num) {
-    choiceBum=num;
+    choiceNum=num;
 }
 function setCompletionBum(num) {
-    completionBum=num;
+    completionNum=num;
 }
 function addChoice() {
     allChoiceValue.splice(0, allChoiceValue.length);//清空
-    for (var i = 1; i < choiceBum; i++) {
+    for (var i = 1; i < choiceNum; i++) {
         allChoiceValue.push(getChoiceValue(i, i));//保存原有内容
     }
-    allChoiceValue.push(getChoiceValue(choiceBum, choiceBum));//添加新题
+    allChoiceValue.push(getChoiceValue(choiceNum, choiceNum));//添加新题
     document.getElementById("choices_field").innerHTML = allChoiceValue.toString();
-    choiceBum++;
-    for (i = 1; i < choiceBum; i++) {
+    choiceNum++;
+    for (i = 1; i < choiceNum; i++) {
         CKEDITOR.replace("choice-title_" + i);
     }
 
@@ -29,50 +31,82 @@ function addChoice() {
 }
 function addCompletion() {
     allCompletionValue.splice(0, allCompletionValue.length);//清空
-    for (var i = 1; i < completionBum; i++) {
+    for (var i = 1; i < completionNum; i++) {
         allCompletionValue.push(getCompletionValue(i, i));//保存原有内容
     }
-    allCompletionValue.push(getCompletionValue(completionBum, completionBum));
-    completionBum++;
+    allCompletionValue.push(getCompletionValue(completionNum, completionNum));
+    completionNum++;
     document.getElementById("completions_field").innerHTML = allCompletionValue.toString();
-    for (i = 1; i < completionBum; i++) {
+    for (i = 1; i < completionNum; i++) {
         CKEDITOR.replace("question_content_" + i);
     }
+}
+function addOperation() {
+    allOperationValue.splice(0, allOperationValue.length);//清空
+    for (var i = 1; i < operationNum; i++) {
+        allOperationValue.push(getOperationValue(i, i));//保存原有内容
+    }
+    allOperationValue.push(getOperationValue(operationNum, operationNum));
+    operationNum++;
+    document.getElementById("operations_field").innerHTML = allOperationValue.toString();
+    for (i = 1; i < operationNum; i++) {
+        CKEDITOR.replace("operation_content_" + i);
+    }
+
 }
 function deleteChoice(index) {
     allChoiceValue.splice(0, allChoiceValue.length);
     var num = 1;
-    for (var i = 1; i < choiceBum; i++) {//
+    for (var i = 1; i < choiceNum; i++) {//
         if (index !== i) {
             allChoiceValue.push(getChoiceValue(i, num));//保存原有内容
             num++;
         }
     }
-    if (choiceBum > 1)
-        choiceBum--;
+    if (choiceNum > 1)
+        choiceNum--;
 
     document.getElementById("choices_field").innerHTML = allChoiceValue.toString();
-    for (i = 1; i < choiceBum; i++) {
+    for (i = 1; i < choiceNum; i++) {
         CKEDITOR.replace("choice-title_" + i);
     }
 }
 function deleteCompletion(index) {
     allCompletionValue.splice(0, allCompletionValue.length);
     var num = 1;
-    for (var i = 1; i < completionBum; i++) {//
+    for (var i = 1; i < completionNum; i++) {//
         if (index !== i) {
             allCompletionValue.push(getCompletionValue(i, num));//保存原有内容
             num++;
         }
     }
-    if (completionBum > 1) {
-        completionBum--;
+    if (completionNum > 1) {
+        completionNum--;
     }
     document.getElementById("completions_field").innerHTML = allCompletionValue.toString();
 
-    for (i = 1; i < completionBum; i++) {
+    for (i = 1; i < completionNum; i++) {
         CKEDITOR.replace("question_content_" + i);
     }
+}
+function deleteOperation(index) {
+    allOperationValue.splice(0, allOperationValue.length);
+    var num = 1;
+    for (var i = 1; i < operationNum; i++) {//
+        if (index !== i) {
+            allOperationValue.push(getOperationValue(i, num));//保存原有内容
+            num++;
+        }
+    }
+    if (operationNum > 1) {
+        operationNum--;
+    }
+    document.getElementById("operations_field").innerHTML = allOperationValue.toString();
+
+    for (i = 1; i < operationNum; i++) {
+        CKEDITOR.replace("operation_content_" + i);
+    }
+
 }
 
 function getChoiceValue(index, num) {
@@ -82,7 +116,7 @@ function getChoiceValue(index, num) {
     var choiceQuestion, score;//题，分
     var s_A, s_B, s_C, s_D, ref_key;//选项，参考
     var ref_keyStringValue;
-    if (index >= choiceBum) {
+    if (index >= choiceNum) {
         choiceQuestion = '';
         score = '';
         s_A = '';
@@ -128,23 +162,48 @@ function getChoiceValue(index, num) {
 function getCompletionValue(index, num) {
     var id = 'question_content_' + index;
     var textContent;
+    var refKey;
     var score;
-    if (index >= completionBum) {
+    if (index >= completionNum) {
         textContent = '';
         score='';
+        refKey='';
     } else {
         textContent = CKEDITOR.instances[id].getData();
         score = document.getElementById('comp_score_' + index).value;
+        refKey = document.getElementById('completion_refKey_' + index).value;
     }
 
     var completionFieldString;
     completionFieldString = '<div class="completion_field">' +
-        '<div class="title">问题' + num + ':</div><div align="right" style="margin-bottom: 10px;">' +
+        '<div class="title">题目' + num + ':</div><div align="right" style="margin-bottom: 10px;">' +
         '分数：<input class="score" id="comp_score_'+num+'" name="comp_score_'+num+'" type="text" value="' + score + '"><a class="floatButton" onclick="deleteCompletion(' + num + ')">删除</a></div>' +
         '<textarea class="ckeditor" name="question_content_' + num + '" ' +
-        'id="question_content_' + num + '">' + textContent + '</textarea>' +
-        '</div>';
+        'id="question_content_' + num + '">' + textContent + '</textarea><br><p>参考答案(多空以#号分开):</p>' +
+        '<input id="completion_refKey_'+num+'" name="completion_refKey_'+num+'" class="choice" type="text" value="'+refKey+'"></div>';
     return completionFieldString;
+}
+function getOperationValue(index, num) {
+    var id = 'operation_content_' + index;
+    var textContent;
+    var score;
+    if (index >= operationNum) {
+        textContent = '';
+        score='';
+    } else {
+        textContent = CKEDITOR.instances[id].getData();
+        score = document.getElementById('operation_score_' + index).value;
+    }
+
+    var operationFieldString;
+    operationFieldString = '<div class="operation_field">' +
+        '<div class="title">题目' + num + ':</div><div align="right" style="margin-bottom: 10px;">' +
+        '分数：<input class="score" id="operation_score_'+num+'" name="operation_score_'+num+'" type="text" value="' + score + '">' +
+        '<a class="floatButton" onclick="deleteOperation(' + num + ')">删除</a></div>' +
+        '<textarea class="ckeditor" name="operation_content_' + num + '" ' +
+        'id="operation_content_' + num + '">' + textContent + '</textarea>' +
+        '</div>';
+    return operationFieldString;
 }
 
 function getRefKeyString(index,character) {

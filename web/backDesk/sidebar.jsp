@@ -28,11 +28,10 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../backDesk_assets/img/apple-icon.png">
     <link rel="icon" type="image/png" sizes="96x96" href="../backDesk_assets/img/favicon.png">
     <style type="text/css" rel="stylesheet">
-        #fh5co-main {
+        #fh5co-main{
             padding-top: 86px;
             padding-right: 4px;
         }
-
         @-webkit-keyframes fadeinLeft {
             from {
                 opacity: 0.5;
@@ -47,7 +46,6 @@
                 transform: none;
             }
         }
-
         @-webkit-keyframes fadeinRight {
             from {
                 opacity: 0.5;
@@ -147,12 +145,12 @@
     //宽度变小时，右侧跟随左侧
     $(window).on('resize', function () {
             var rightDiv = $('#fh5co-main');
-            if ($(window).innerWidth() < 1025) {
-                rightDiv.removeClass('right').addClass('left');
-            } else {
-                rightDiv.removeClass('left').addClass('right');
-            }
+        if($(window).innerWidth() < 1025) {
+            rightDiv.removeClass('right').addClass('left');
+        }else{
+            rightDiv.removeClass('left').addClass('right');
         }
+    }
     );
 </script>
 <script>
@@ -247,7 +245,7 @@
         // real-time pie chart
         var sysLoad = $('#system-load').easyPieChart({
             size: 130,
-            barColor: function (percent) {
+            barColor: function(percent) {
                 return "rgb(" + Math.round(200 * percent / 100) + ", " + Math.round(200 * (1.1 - percent / 100)) + ", 0)";
             },
             trackColor: 'rgba(245, 245, 245, 0.8)',
@@ -259,7 +257,7 @@
 
         var updateInterval = 3000; // in milliseconds
 
-        setInterval(function () {
+        setInterval(function() {
             var randomVal;
             randomVal = getRandomInt(0, 100);
 
