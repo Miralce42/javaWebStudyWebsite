@@ -101,6 +101,8 @@
                 <li><a href="homeworkManager.jsp"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
                 <li><a href="theCoursewareManagement.jsp" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
                 <li><a href="theResourceManagement.jsp" class=""><i class="lnr lnr-chart-bars"></i> <span>教学资源管理</span></a></li>
+                <li><a href="CourseEvaluation.jsp" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
+                <li><a href="selectAllStudents.action" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
                 <li><a href="panels.html" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>
                 <li><a href="selectStudents.action" class=""><i class="lnr lnr-alarm"></i> <span>学生信息管理</span></a></li>
                 <li>
