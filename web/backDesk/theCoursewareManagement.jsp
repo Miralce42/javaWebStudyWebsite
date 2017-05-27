@@ -22,13 +22,10 @@
                 document.forms[0].submit();
         }
         function  mulitSubmitCheck() {
-            var i=0;
-            for(i;i<4;i++) {
-               if(document.forms[1].file[i].value!="") {
+               if(document.forms[1].file.value!="") {
                    document.forms[1].submit();
                    return;
                }
-            }
             alert("未选择文件，请选择文件！");
 
         }
@@ -89,17 +86,19 @@
     String[] param={"教学课件资料",fileSection[i]};
     String[] style={"left","right"};
    %>
-        <div name="firstdiv" style="float: <%=style[i%2]%>;width: 50%; ">
-        <form name="firstsec" action="delete.servlet" method="get">
+        <div  style="float: <%=style[i%2]%>;width: 50%; ">
+        <form  action="delete.servlet" method="get">
             <h2 style="align-content: center" align="center"><%=fileSection[i]%></h2><br/>
+
             <%
                 try{
                 ResultSet resultSet=fileDAO.getResultSet(sql,param);
+                resultSet=fileDAO.getResultSet(sql,param);
                 if(!resultSet.next())
                 {
-                    %>
-            <label>暂无文件！</label>
-                <%
+            %>
+               <label>暂无文件！</label>
+            <%
                 }
                   else
                 {
@@ -113,13 +112,16 @@
                 }//while
                 }//else
                 }//try
-                catch (Exception e){e.printStackTrace();}
-                fileDAO.dbClose();
+                catch (Exception e){e.printStackTrace();
+                    fileDAO.dbClose();
+                }
+
             %>
         </form>
         </div><!-- 章节-->
         <%
       }//for
+       fileDAO.dbClose();
         %>
     </div><!--编辑-->
 </div><!--右侧布局-->

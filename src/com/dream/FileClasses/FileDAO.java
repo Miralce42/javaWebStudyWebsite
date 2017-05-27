@@ -4,7 +4,7 @@ import WebDB.DB_Manager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
+/*
  * Created by Dreamer on 2017/5/22.
  */
 public class FileDAO {
@@ -49,15 +49,23 @@ public class FileDAO {
 
     public boolean deleteFile(FileClasses fileClasses){
         boolean result=false;
-        String[] temps=new String[]{fileClasses.getFileType(),fileClasses.getSection(),fileClasses.getFileName()};
+        String[] temps=new String[]{fileClasses.getFileType(),fileClasses.getSection(),fileClasses.getFileName()+"%"};
+        System.out.println(fileClasses.getFileType());
+        System.out.println(fileClasses.getSection());
+        System.out.println(fileClasses.getFileName());
         try {
              int num=0;
-             num=DB.executeUpdate("delete from teachingfile where file_type=? and chapter=? and file_name=?", temps);
+           // System.out.println("here");
+             /*DB.executeQuery("update set sql_safe_updates=0;",null);
+             System.out.println("here");*/
+             num=DB.executeUpdate("delete from teachingfile where file_type=? and chapter=? and file_name like ?;", temps);//text字段影响用like
+           // System.out.println("here");
              if(num!=0)result=true;
          }
          catch (Exception e) {
              e.printStackTrace();
          }
+        System.out.println(result);
          return result;
     }
     public void dbClose() {
