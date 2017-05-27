@@ -13,6 +13,7 @@ import beans.Users;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class StudentDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -55,19 +56,6 @@ public class StudentDAO {
 
                 homeworkList.add(studentHomework);
             }
-            //获取已关闭
-            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()>closing_time ORDER BY closing_time DESC";
-            ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
-            while (finishedSet.next()) {
-                String homeworkId = finishedSet.getString("id");
-                String title = finishedSet.getString("title");
-                String createTime = finishedSet.getString("create_time");
-                String closingTime = finishedSet.getString("closing_time");
-                StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(HomeworkStatus.FINISHED);//设为完成
-                homeworkList.add(studentHomework);
-            }
-
             return homeworkList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -139,21 +127,26 @@ public class StudentDAO {
         return topic;
     }
 
-    public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
-        String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,evaluation_content,star2,star3,star4) value(?,?,?,?,?,?)";
-        int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(), teachingEvaluation.getStar1(), teachingEvaluation.getStar2(), teachingEvaluation.getStar3(), teachingEvaluation.getStar4(), teachingEvaluation.getContent()});
-        if (rs == 1) {
-            return true;
-        }
-        return false;
-    }
+   public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
+      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content,evaluate_date) value(?,?,?,?,?,?,now())";
+      int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(),
+              teachingEvaluation.getStar1()
+              ,teachingEvaluation.getStar2()
+              ,teachingEvaluation.getStar3()
+              ,teachingEvaluation.getStar4()
+              ,teachingEvaluation.getContent()});
+      if (rs == 1) {
+         return true;
+      }
+      return false;
+   }
 
-    public int createComment(TopicComments comment) {
-        String ssql = "insert into javawebcourseresources.topiccomments(" +
-                "topic_id,user_id,content,is_deleted) " +
-                "values(?,?,?,0)";
-        return db_manager.executeUpdate(ssql, new String[]{comment.getTopicId(), comment.getUsername(), comment.getContent()});
-    }
+   public int createComment(TopicComments comment){
+      String ssql = "insert into javawebcourseresources.topiccomments(" +
+              "topic_id,user_id,content,is_deleted) " +
+              "values(?,?,?,0)";
+      return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
+   }
 
     public ArrayList<TopicComments> getAllComment(String topic_id) {
         String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
@@ -312,26 +305,25 @@ public class StudentDAO {
     }
 
     private boolean insertIntoHomeworkAnswer(HomeworkAnswer homeworkAnswer) {
-        String userId = homeworkAnswer.getUserId();
+        String userId=homeworkAnswer.getUserId();
         //放入选择
         for (Answer choiceAnswer : homeworkAnswer.getChoiceAnswers()) {
             String insertChoiceAnswerSql;
-            if (isExistAnswer("answersheet_choice", choiceAnswer.getQuestionId(), userId)) {
-                insertChoiceAnswerSql = "update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
-            } else {
-                insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,hw_id) values(?,?,?,?)";
+            if(isExistAnswer("answersheet_choice",choiceAnswer.getQuestionId(),userId)){
+                insertChoiceAnswerSql="update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
+            }else {
+                insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,,hw_id) values(?,?,?,?)";
             }
-            String answer = choiceAnswer.getAnswer();
-            if (answer != null && db_manager.executeUpdate(insertChoiceAnswerSql, new String[]{
-                    answer, choiceAnswer.getQuestionId(),
+            if (db_manager.executeUpdate(insertChoiceAnswerSql, new String[]{
+                    choiceAnswer.getAnswer(), choiceAnswer.getQuestionId(),
                     userId, homeworkAnswer.getHomeworkId()
             }) != 1) return false;
         }
         for (Answer completionAnswer : homeworkAnswer.getCompletionAnswers()) {
             String insertCompleionAnswerSql;
-            if (isExistAnswer("answersheet_completion", completionAnswer.getQuestionId(), userId)) {
-                insertCompleionAnswerSql = "update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
-            } else {
+            if(isExistAnswer("answersheet_completion",completionAnswer.getQuestionId(),userId)){
+                insertCompleionAnswerSql="update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
+            }else {
                 insertCompleionAnswerSql = "insert into answersheet_completion(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertCompleionAnswerSql, new String[]{
@@ -341,11 +333,10 @@ public class StudentDAO {
         }
         return true;
     }
-
-    private boolean isExistAnswer(String tabltName, String questionId, String userId) {
-        String sql = "SELECT answer FROM " + tabltName + " where question_id=? and user_id=?";
+    private boolean isExistAnswer(String tabltName,String questionId,String userId){
+        String sql="SELECT answer FROM "+tabltName+" where question_id=? and user_id=?";
         try {
-            return db_manager.executeQuery(sql, new String[]{questionId, userId}).next();
+            return db_manager.executeQuery(sql,new String[]{questionId,userId}).next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

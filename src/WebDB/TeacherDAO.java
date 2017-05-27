@@ -282,7 +282,6 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-
     public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
@@ -301,6 +300,7 @@ public class TeacherDAO {
                         .setBeginTime(homeworkResultSet.getString("create_time"))
                         .setEndTime(homeworkResultSet.getString("closing_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
+
 
                 //获取选择题集
                 ResultSet choiceSet = db_manager.executeQuery(getChiocesSql, new String[]{homeworkId});
