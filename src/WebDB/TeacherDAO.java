@@ -17,7 +17,6 @@ public class TeacherDAO {
     public TeacherDAO() {
     }
 
-   ;
 
     public TeacherDAO(Users teacher) {
         this.teacher = teacher;
@@ -60,19 +59,19 @@ public class TeacherDAO {
         }
     }
 
-   //保存和完成状态
-   public ArrayList<HomeworkStudentStatus> getHomeworkFinishedAndSavedStudentList(String homeworkId) {
-      String sql = "SELECT users.user_id,name,status,major,class FROM homework_status,users where hw_id=? " +
-              "and user_type='STUDENT' and users.user_id=homework_status.user_id";
-      ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = new ArrayList<HomeworkStudentStatus>();
-      ResultSet resultSet = db_manager.executeQuery(sql, new String[]{homeworkId});
-      try {
-         while (resultSet.next()) {
-            String userId = resultSet.getString("user_id");
-            String status = resultSet.getString("status");
-            String name = resultSet.getString("name");
-            String major = resultSet.getString("major");
-            String classname = resultSet.getString("class");
+    //保存和完成状态
+    public ArrayList<HomeworkStudentStatus> getHomeworkFinishedAndSavedStudentList(String homeworkId) {
+        String sql = "SELECT users.user_id,name,status,major,class FROM homework_status,users where hw_id=? " +
+                "and user_type='STUDENT' and users.user_id=homework_status.user_id";
+        ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = new ArrayList<HomeworkStudentStatus>();
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{homeworkId});
+        try {
+            while (resultSet.next()) {
+                String userId = resultSet.getString("user_id");
+                String status = resultSet.getString("status");
+                String name = resultSet.getString("name");
+                String major = resultSet.getString("major");
+                String classname = resultSet.getString("class");
 
 
                 //存在记录，存在状态
@@ -283,6 +282,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
+
     public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
@@ -302,94 +302,6 @@ public class TeacherDAO {
                         .setEndTime(homeworkResultSet.getString("closing_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
 
-
-            //获取选择题集
-            ResultSet choiceSet = db_manager.executeQuery(getChiocesSql, new String[]{homeworkId});
-            while (choiceSet.next()) {//先存放choice,防止结果集丢失
-               ChoiceHomework choiceHomework = new ChoiceHomework();
-               choiceHomework.setId(choiceSet.getString("id"))
-                       .setQuestion(choiceSet.getString("question_content"))
-                       .setRef_ky(choiceSet.getString("reference_answer"))
-                       .setScore(choiceSet.getString("score"));
-               choiceHomeworkList.add(choiceHomework);
-            }
-            //获取选项
-            for (ChoiceHomework choiceHomework : choiceHomeworkList) {
-               String getChoiceSql = "SELECT * FROM choiceofquestion where choice_id=? and choice_key=?";
-               ResultSet choiceASet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "A"});
-               choiceASet.next();
-               choiceHomework.setChoice_A(choiceASet.getString("content"));
-               ResultSet choiceBSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "B"});
-               choiceBSet.next();
-               choiceHomework.setChoice_B(choiceBSet.getString("content"));
-               ResultSet choiceCSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "C"});
-               choiceCSet.next();
-               choiceHomework.setChoice_C(choiceCSet.getString("content"));
-               ResultSet choiceDSet = db_manager.executeQuery(getChoiceSql, new String[]{choiceHomework.getId(), "D"});
-               choiceDSet.next();
-               choiceHomework.setChoice_D(choiceDSet.getString("content"));
-            }
-            //获取填空集
-            String getCompletionSql = "SELECT * FROM hw_question_completion where hw_id=?";
-            ResultSet completionSet = db_manager.executeQuery(getCompletionSql, new String[]{homeworkId});
-            while (completionSet.next()) {
-               CompletionHomework completionHomework = new CompletionHomework(
-                       completionSet.getString("id"),
-                       completionSet.getString("question_content"),
-                       completionSet.getString("score"));
-               completionHomeworkList.add(completionHomework);
-            }
-
-            return homework;
-         } else {
-            return null;
-         }
-      } catch (SQLException e) {
-         e.printStackTrace();
-         return null;
-      }
-   }
-
-   public double[] getAvgStar() {
-      String ssql ="SELECT AVG(star1) s1,AVG(star2) s2,AVG(star3) s3,AVG(star4) s4 FROM teaching_evaluation";
-      ResultSet resultSet = db_manager.executeQuery(ssql,null);
-      try {
-         resultSet.next();
-         double[] b=new double[4];
-         b[0]=resultSet.getDouble("s1");
-         b[1]=resultSet.getDouble("s2");
-         b[2]=resultSet.getDouble("s3");
-         b[3]=resultSet.getDouble("s4");
-         return b;
-      } catch (SQLException e) {
-         e.printStackTrace();
-         return  null;
-      }
-
-   }
-   public ArrayList<TeachingEvaluation> getStudentEvaluation() {
-      String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
-      ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<TeachingEvaluation>();
-      ResultSet resultSet = db_manager.executeQuery(sql, new String[]{});
-      try {
-         while (resultSet.next()) {
-            String name = resultSet.getString("name");
-            String major = resultSet.getString("major");
-            String evaluation_content = resultSet.getString("evaluation_content");
-            String evaluate_date = resultSet.getString("evaluate_date");
-
-            TeachingEvaluation teachingEvaluation = new TeachingEvaluation(name,evaluation_content , major, evaluate_date);
-            StudentEvaluationSaved.add(teachingEvaluation);
-
-         }
-         return StudentEvaluationSaved;
-      } catch (SQLException e) {
-
-         e.printStackTrace();
-         return  null;
-      }
-   }
-   }
                 //获取选择题集
                 ResultSet choiceSet = db_manager.executeQuery(getChiocesSql, new String[]{homeworkId});
                 while (choiceSet.next()) {//先存放choice,防止结果集丢失
@@ -447,5 +359,46 @@ public class TeacherDAO {
             return null;
         }
     }
+    public double[] getAvgStar() {
+        String ssql ="SELECT AVG(star1) s1,AVG(star2) s2,AVG(star3) s3,AVG(star4) s4 FROM teaching_evaluation";
+        ResultSet resultSet = db_manager.executeQuery(ssql,null);
+        try {
+            resultSet.next();
+            double[] b=new double[4];
+            b[0]=resultSet.getDouble("s1");
+            b[1]=resultSet.getDouble("s2");
+            b[2]=resultSet.getDouble("s3");
+            b[3]=resultSet.getDouble("s4");
+            return b;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return  null;
+        }
+
+    }
+    public ArrayList<TeachingEvaluation> getStudentEvaluation() {
+        String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
+        ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<TeachingEvaluation>();
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{});
+        try {
+            while (resultSet.next()) {
+                String name = resultSet.getString("name");
+                String major = resultSet.getString("major");
+                String evaluation_content = resultSet.getString("evaluation_content");
+                String evaluate_date = resultSet.getString("evaluate_date");
+
+                TeachingEvaluation teachingEvaluation = new TeachingEvaluation(name,evaluation_content , major, evaluate_date);
+                StudentEvaluationSaved.add(teachingEvaluation);
+
+            }
+            return StudentEvaluationSaved;
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+            return  null;
+        }
+
+    }
+    
 }
 
