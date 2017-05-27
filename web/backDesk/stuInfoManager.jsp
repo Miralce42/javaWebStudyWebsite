@@ -66,7 +66,7 @@
             </div>
             <div class="panel-body">
                 <form name="form1" method="post">
-                    <<input type="hidden" name="selectType" id="selectType">
+                    <input type="hidden" name="selectType" id="selectType">
                     <table border="0" width="100%">
                         <tr>
                             <td class="td-text" align="right">
