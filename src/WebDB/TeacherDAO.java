@@ -231,6 +231,19 @@ public class TeacherDAO {
                     db_manager.rollbackAffair();
                     return false;
                 }
+                //update选项
+                String updateOptionSql="update choiceofquestion set content=? where choice_id=? and choice_key=?";
+                if(db_manager.executeUpdate(updateOptionSql,new String[]{
+                        choiceHomework.getChoice_A(),choiceHomework.getId(),"A"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_B(),choiceHomework.getId(),"B"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_C(),choiceHomework.getId(),"C"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_D(),choiceHomework.getId(),"D"})!=1) {
+                    db_manager.rollbackAffair();
+                    return false;
+                }
             }
             //update填空
             String updateCompletionSql="update hw_question_completion set question_content=?,refer_key=?,score=? where id=?";
