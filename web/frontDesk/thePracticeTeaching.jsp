@@ -12,9 +12,11 @@
 </head>
 <body>
 <%@include file="aside.jsp"%><!--左侧布局-->
-<div id="fh5co-main">
-    实践教学
-    <!--右侧布局-->
+<div id="fh5co-main"><!--右侧布局-->
+    <%
+        String[] file_section={"实验文件","链接"};
+        String  file_type="实践教学资料";
+    %>
 </div>
 </body>
 </html>
