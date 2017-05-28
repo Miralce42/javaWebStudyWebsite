@@ -18,8 +18,9 @@ function commitHomework() {
         return;
     }
     $('#action').attr("value","commit");
-    document.form.submit();
-
+    if(confirm("确认提交?")) {
+        document.form.submit();
+    }
 }
 function checkHomework() {
     for(var i=1;i<choiceNum;i++){

@@ -61,7 +61,7 @@ public class StudentDAO {
             ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
             while (finishedSet.next()) {
                 String homeworkId = finishedSet.getString("id");
-                String title = finishedSet.getString("title");
+                String title = finishedSet.getString("title")+"<div align=right>（已关闭）</div>";//显示已关闭
                 String createTime = finishedSet.getString("create_time");
                 String closingTime = finishedSet.getString("closing_time");
                 StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
@@ -263,7 +263,7 @@ public class StudentDAO {
             if (resultSet.next()) {//已保存
                 return resultSet.getString("answer");
             } else {//无记录
-                return null;
+                return "";
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -396,6 +396,30 @@ public class StudentDAO {
                 return HomeworkStatus.valueOf(resultSet.getString("status"));
             }else {
                 return HomeworkStatus.UNFINISHED;//无记录,未开始
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public String getChoiceAnswerScore(String choiceId){
+        return getAnswerScore("answersheet_choice",choiceId);
+    }
+    public String getCompletionAnswerScore(String completionId){
+        return getAnswerScore("answersheet_completion",completionId);
+    }
+    public String getOperationAnswerScore(String operationId){
+        return getAnswerScore("answersheet_operation",operationId);
+    }
+    private String getAnswerScore(String tableName,String questionId){
+        String sql="select score from "+tableName+" where user_id=? and question_id=?";
+        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername(),questionId});
+        try {
+            if(resultSet.next()){
+                return resultSet.getString("score");
+//                return resultSet.getDouble("score");
+            }else {
+                return null;//未批改
             }
         } catch (SQLException e) {
             e.printStackTrace();

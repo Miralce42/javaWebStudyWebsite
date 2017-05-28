@@ -87,7 +87,7 @@ public class ManagerHomeworkDiv {
                       + body +
               "                </div>\n" +
               "                <div class=\"panel-buttonValue\">\n" +
-              "                  <a href="+url+"?homeworkId="+hwId+ "&homeworkTitle="+title+" class='floatButton'>  " + buttonValue + "</a>\n" +
+              "                  <a href="+url+"?homeworkId="+hwId+ " class='floatButton'>  " + buttonValue + "</a>\n" +
               "                </div>\n" +
               "            </div>\n" +
               "        </div>\n";
@@ -106,7 +106,7 @@ public class ManagerHomeworkDiv {
               "                </div>\n" +
               "                <div class=\"panel-buttonValue\">\n" +
                       "             <a href=Re-editHomework.jsp?homeworkId="+hwId+ " class='floatButton'>"+"重新编辑"+"</a>"+
-              "                  <a href=studentsHomeworkList.jsp?homeworkId="+hwId+ "&homeworkTitle="+title+" class='floatButton'> 批改作业</a>\n" +
+              "                  <a href=studentsHomeworkList.jsp?homeworkId="+hwId+ " class='floatButton'> 批改作业</a>\n" +
               "                </div>\n" +
               "            </div>\n" +
               "        </div>\n";

@@ -1,10 +1,16 @@
-.choiceBump,.completionBump {
+.choiceBump,.completionBump,.operation_field {
     padding: 0 40px 0;
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #303030;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+    /*自动换行*/
 }
 
 .option {
     margin: 10px;
     height: 30px;
+    padding-left: 10px;
 }
 
 input[type="radio"].radio {
@@ -14,6 +20,7 @@ input[type="radio"].radio {
 
 .choice-question,.completion-question {
     margin: 10px;
+    font-size: 1.2em;
 }
 .operationQuestion{
     margin: 20px;
