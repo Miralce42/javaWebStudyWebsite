@@ -43,6 +43,14 @@
         <filter-name>struts2</filter-name>
         <filter-class>org.apache.struts2.dispatcher.ng.filter.StrutsPrepareAndExecuteFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>DohHomeworkFilter</filter-name>
+        <filter-class>cn.vove7.filters.DohHomeworkFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>DohHomeworkFilter</filter-name>
+        <url-pattern>/frontDesk/doHomework.jsp</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>struts2</filter-name>
         <url-pattern>/*</url-pattern>

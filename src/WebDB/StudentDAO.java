@@ -374,4 +374,32 @@ public class StudentDAO {
     private void correctHomework() {//批改作业
 
     }
+    public String getHomeworkTitle(String homeworkId){
+        String sql="select title from homework where id=?";
+        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{homeworkId});
+        try {
+            if(resultSet.next()){
+                return resultSet.getString("title");
+            }else {
+                return null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    public HomeworkStatus getStudentHomeworkStatus(String homeworkId){
+        String sql="select status from homework_status where user_id=? and hw_id=?";
+        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername(),homeworkId});
+        try {
+            if(resultSet.next()){
+                return HomeworkStatus.valueOf(resultSet.getString("status"));
+            }else {
+                return HomeworkStatus.UNFINISHED;//无记录,未开始
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }
