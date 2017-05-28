@@ -8,12 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>查看作业</title>
-
     <%
       String homeworkId=request.getParameter("homeworkId");
-
+      String homeworkTitle=request.getParameter("homeworkTitle");
     %>
+    <title><%=homeworkTitle%></title>
   </head>
   <body>
   <%@include file="aside.jsp"%><!--左侧布局-->

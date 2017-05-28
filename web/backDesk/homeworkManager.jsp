@@ -34,52 +34,12 @@
             //获取所有作业
             ArrayList<StudentHomework> homeworkList = teacherDAO.getHomeworkList();
 
-            StringBuilder unclosedBuilder = new StringBuilder();//未关闭
-            StringBuilder closedBuilder = new StringBuilder();//已关闭
+            StringBuilder unclosedBuilder =new StringBuilder();//未关闭
+            StringBuilder closedBuilder =new StringBuilder();//已关闭
             //展示未关闭作业
-            int unclosedNum = 1;
-            boolean haveClosedHomework = false;
-            int closedNum = 1;
-            for (StudentHomework homework : homeworkList) {
-                if (unclosedNum % 3 == 1) {
-                    unclosedBuilder.append("<div class=\"row\">\n");//行div
-                }
-                if (closedNum % 3 == 1) {
-                    closedBuilder.append("<div class=\"row\">\n");
-                }
-                String closingTime = homework.getClosingTime();
-                ManagerHomeworkDiv managerHomeworkDiv = new ManagerHomeworkDiv(homework.getId(),
-                        homework.getTitle(),
-                        "截止时间:" + closingTime.substring(0, closingTime.length() - 2),
-                        homework.getTeac_HomeworkStatus()
-                );
 
-                switch (homework.getHomeworkStatus()) {
-                    case CLOSED:
-                        closedBuilder.append(managerHomeworkDiv.toTeaString());
-                        closedNum++;
-                        haveClosedHomework = true;
-                        break;
-                    case UNCLOSED:
-                        unclosedBuilder.append(managerHomeworkDiv.toTeaString());
-                        unclosedNum++;
-                        break;
-                }
+            ManagerHomeworkDiv.buildDiv(homeworkList,unclosedBuilder,closedBuilder);
 
-                if (unclosedNum % 3 == 1) {
-                    unclosedBuilder.append("</div>");
-                }
-                if (closedNum % 3 == 1) {
-                    closedBuilder.append("</div>");
-                }
-            }
-            //结尾
-            if (unclosedNum % 3 != 1) {
-                unclosedBuilder.append("</div>");
-            }
-            if (haveClosedHomework && closedNum % 3 != 1) {
-                closedBuilder.append("</div>");
-            }
         %>
 
         <p>未结束</p>

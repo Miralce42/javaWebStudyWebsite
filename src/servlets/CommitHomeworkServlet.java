@@ -3,7 +3,6 @@ package servlets;
 import WebDB.StudentDAO;
 import beans.Answer;
 import beans.HomeworkAnswer;
-import beans.StudentHomework;
 import beans.StudentHomework.HomeworkStatus;
 import beans.Users;
 
@@ -18,7 +17,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Created by Vove on 2017/5/25.
- * 提交作业
+ * 学生提交作业
  */
 public class CommitHomeworkServlet extends HttpServlet {
    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -29,6 +28,7 @@ public class CommitHomeworkServlet extends HttpServlet {
       HomeworkStatus homeworkStatus=action.equals("save")? HomeworkStatus.SAVED: HomeworkStatus.FINISHED;
       ArrayList<Answer> choiceAnswers=new ArrayList<>();
       ArrayList<Answer> completionAnswers=new ArrayList<>();
+      ArrayList<Answer> operationAnswers=new ArrayList<>();
       String choiceId;
       //获取选择
       for (int i = 1; (choiceId = request.getParameter("choiceId_" + i)) != null; i++) {
@@ -43,9 +43,16 @@ public class CommitHomeworkServlet extends HttpServlet {
                  request.getParameter("completion_answer_"+i));
          completionAnswers.add(completionAnswer);
       }
-      HomeworkAnswer homeworkAnswer=new HomeworkAnswer(student.getUsername()
-              ,homeworkId,homeworkStatus,
-              choiceAnswers,completionAnswers);
+      String operationId;
+      for(int i=1;(operationId=request.getParameter("operation_id_"+i))!=null;i++){
+         String operationContent=request.getParameter("operation_content_"+i);
+         operationAnswers.add(new Answer(operationId,operationContent));
+      }
+      HomeworkAnswer homeworkAnswer=new HomeworkAnswer(student.getUsername(),
+              homeworkId,homeworkStatus,
+              choiceAnswers,completionAnswers,
+              operationAnswers
+      );
 
       StudentDAO studentDAO=new StudentDAO(student);
 

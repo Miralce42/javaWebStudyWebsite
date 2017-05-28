@@ -11,8 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static org.bouncycastle.crypto.tls.ContentType.alert;
-
 /**
  * Created by mac on 2017/5/26.
  */

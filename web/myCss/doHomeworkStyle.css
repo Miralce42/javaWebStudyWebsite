@@ -1,18 +1,33 @@
 .choiceBump,.completionBump {
-    padding: 10px 50px 0;
+    padding: 0 40px 0;
 }
 
 .option {
     margin: 10px;
-    height: 40px;
+    height: 30px;
 }
 
 input[type="radio"].radio {
     display: inline;
     margin: 5px 10px 0px;
-
 }
 
 .choice-question,.completion-question {
-    margin: 30px;
+    margin: 10px;
+}
+.operationQuestion{
+    margin: 20px;
+    font-family: "Microsoft YaHei UI";
+}
+.question_index{
+    font-size: 1.2em;
+    font-weight: bold;
+}
+img{
+    max-width: 40%;
+    max-height: 500px;
+    display: block;
+    height: initial;
+    min-height: 200px;
+    vertical-align: middle;
 }

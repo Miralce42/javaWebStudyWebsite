@@ -14,6 +14,7 @@
 <head>
     <title>做作业</title>
     <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="js/commitHomework.js"></script>
     <link type="text/css" rel="stylesheet" href="../myCss/doHomeworkStyle.css"/>
     <link type="text/css" rel="stylesheet" href="../myCss/publishHomework.css"/>
@@ -38,13 +39,31 @@
             </h2>
         </div>
         <form name="form" method="post" action="commitHomework.servlet">
-            <h2>选择题</h2>
+            <%
+                if(thisHomework.getChoiceHomeworkList().size()>0){
+                    out.println("<h4>选择题</h4>");
+                }
+            %>
             <div id="choicesField">
                 <%=doHomeworkDiv.getChoicesValue()%>
             </div>
-            <h2>填空题</h2>
-            <div id="completionField">
+            <%
+                if(thisHomework.getCompletionHomeworkList().size()>0){
+                    out.println("<h4>填空题</h4>");
+                }
+            %>
+            <div class="completionsField">
                 <%=doHomeworkDiv.getCompletionsValue()%>
+            </div>
+            <br>
+            <br>
+            <%
+                if(thisHomework.getOperationHomeworkList().size()>0){
+                    out.println("<h4>操作题</h4>");
+                }
+            %>
+            <div class="operationsField">
+                <%=doHomeworkDiv.getOpeartionValue()%>
             </div>
            <div align="center" style="margin-top: 20px">
               <a class="floatButton" onclick="saveHomework()">暂时保存</a>

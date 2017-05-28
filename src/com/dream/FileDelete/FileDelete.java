@@ -25,7 +25,7 @@ public class FileDelete extends HttpServlet {
       if(deleteFiles(filename)) {//删除磁盘文件
           response.setContentType("text/html; charset=GBK");
           PrintWriter out = response.getWriter();
-          out.println("删除成功"+"<a href='theCoursewareManagement.jsp'>返回</a>");
+          out.println("删除成功"+"<a href='backDesk/theCoursewareManagement.jsp'>返回</a>");
       }
 
 

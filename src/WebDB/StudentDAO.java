@@ -30,22 +30,22 @@ public class StudentDAO {
         return student;
     }
 
-    public ArrayList<StudentHomework> getUnfinishedHomework() {
-        String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 ORDER BY closing_time DESC";
-
-        ArrayList<StudentHomework> homeworkList = new ArrayList<StudentHomework>();
+    public ArrayList<StudentHomework> getHomeworkList() {
+        String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()<closing_time and now()>create_time ORDER BY closing_time DESC";
+        //未结束
+        ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, null);
         try {
             while (resultSet.next()) {
-                String id = resultSet.getString("id");
+                String homeworkId = resultSet.getString("id");
                 String title = resultSet.getString("title");
                 String createTime = resultSet.getString("create_time");
                 String closingTime = resultSet.getString("closing_time");
 
-                StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
+                StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
 
                 String sql_GetStatus = "SELECT * FROM javawebcourseresources.homework_status where hw_id=? and user_id=?";
-                ResultSet statusSet = db_manager.executeQuery(sql_GetStatus, new String[]{id, student.getUsername()});
+                ResultSet statusSet = db_manager.executeQuery(sql_GetStatus, new String[]{homeworkId, student.getUsername()});
 
                 if (statusSet.next()) {//存在保存/完成记录
                     HomeworkStatus homeworkStatus = HomeworkStatus.valueOf(statusSet.getString("status"));
@@ -56,6 +56,19 @@ public class StudentDAO {
 
                 homeworkList.add(studentHomework);
             }
+            //获取已关闭
+            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()>closing_time ORDER BY closing_time DESC";
+            ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
+            while (finishedSet.next()) {
+                String homeworkId = finishedSet.getString("id");
+                String title = finishedSet.getString("title");
+                String createTime = finishedSet.getString("create_time");
+                String closingTime = finishedSet.getString("closing_time");
+                StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
+                studentHomework.setHomeworkStatus(HomeworkStatus.FINISHED);//设为完成
+                homeworkList.add(studentHomework);
+            }
+
             return homeworkList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -128,8 +141,13 @@ public class StudentDAO {
     }
 
    public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
-      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,evaluation_content,star2,star3,star4) value(?,?,?,?,?,?)";
-      int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(), teachingEvaluation.getStar1(),teachingEvaluation.getStar2(),teachingEvaluation.getStar3(),teachingEvaluation.getStar4(),teachingEvaluation.getContent()});
+      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content,evaluate_date) value(?,?,?,?,?,?,now())";
+      int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(),
+              teachingEvaluation.getStar1()
+              ,teachingEvaluation.getStar2()
+              ,teachingEvaluation.getStar3()
+              ,teachingEvaluation.getStar4()
+              ,teachingEvaluation.getContent()});
       if (rs == 1) {
          return true;
       }
@@ -142,6 +160,7 @@ public class StudentDAO {
               "values(?,?,?,0)";
       return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
    }
+
     public ArrayList<TopicComments> getAllComment(String topic_id) {
         String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
         ArrayList<TopicComments> Comments = new ArrayList<>();
@@ -234,17 +253,21 @@ public class StudentDAO {
         ResultSet resultSet = db_manager.executeQuery(sql, new String[]{completionId, student.getUsername()});
         return getAnswer(resultSet);
     }
+    public String getOperationAnswer(String operationId){
+        String sql="SELECT * FROM answersheet_operation where question_id=? and user_id=?";
+        return getAnswer(db_manager.executeQuery(sql,new String[]{operationId,student.getUsername()}));
+    }
 
     private String getAnswer(ResultSet resultSet) {
         try {
             if (resultSet.next()) {//已保存
                 return resultSet.getString("answer");
             } else {//无记录
-                return "NULL";
+                return null;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return "NULL";
+            return null;
         }
     }
 
@@ -270,10 +293,11 @@ public class StudentDAO {
             return false;
         }
     }
-    private boolean isExistCommitRecord(String homeworkId,String userId){
-        String sql="SELECT status FROM homework_status where hw_id=? and user_id=?";
+
+    private boolean isExistCommitRecord(String homeworkId, String userId) {
+        String sql = "SELECT status FROM homework_status where hw_id=? and user_id=?";
         try {
-            return db_manager.executeQuery(sql,new String[]{homeworkId,userId}).next();
+            return db_manager.executeQuery(sql, new String[]{homeworkId, userId}).next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;//
@@ -284,7 +308,7 @@ public class StudentDAO {
         String status = String.valueOf(homeworkAnswer.getHomeworkStatus());//状态
         String sql;
         //判断是否存在上传记录
-        if (isExistCommitRecord(homeworkAnswer.getHomeworkId(),homeworkAnswer.getUserId())) {//update
+        if (isExistCommitRecord(homeworkAnswer.getHomeworkId(), homeworkAnswer.getUserId())) {//update
             sql = "update homework_status set status=? where hw_id=? and user_id=?";
         } else {//insert
             sql = "insert into homework_status(status,hw_id,user_id) values(?,?,?)";
@@ -301,13 +325,14 @@ public class StudentDAO {
             if(isExistAnswer("answersheet_choice",choiceAnswer.getQuestionId(),userId)){
                 insertChoiceAnswerSql="update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
             }else {
-                insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,,hw_id) values(?,?,?,?)";
+                insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertChoiceAnswerSql, new String[]{
                     choiceAnswer.getAnswer(), choiceAnswer.getQuestionId(),
                     userId, homeworkAnswer.getHomeworkId()
             }) != 1) return false;
         }
+        //填空
         for (Answer completionAnswer : homeworkAnswer.getCompletionAnswers()) {
             String insertCompleionAnswerSql;
             if(isExistAnswer("answersheet_completion",completionAnswer.getQuestionId(),userId)){
@@ -320,9 +345,23 @@ public class StudentDAO {
                     userId, homeworkAnswer.getHomeworkId()
             }) != 1) return false;
         }
+        //操作题
+        for(Answer operationAnswer:homeworkAnswer.getOperationAnswer()){
+            String insertOperationSql;
+            if(isExistAnswer("answersheet_operation",operationAnswer.getQuestionId(),userId)){
+                insertOperationSql="update answersheet_operation set answer=? where question_id=? and user_id=? and hw_id=?";
+            }
+            else {
+                insertOperationSql="insert into answersheet_operation(answer,question_id,user_id,hw_id) values(?,?,?,?)";
+            }
+            if(db_manager.executeUpdate(insertOperationSql,new String[]{
+                    operationAnswer.getAnswer(),operationAnswer.getQuestionId(),
+                    userId,homeworkAnswer.getHomeworkId()
+            })!=1) return false;
+        }
         return true;
     }
-    private boolean isExistAnswer(String tabltName,String questionId,String userId){
+    private boolean isExistAnswer(String tabltName,String questionId,String userId){//提交作业检查记录
         String sql="SELECT answer FROM "+tabltName+" where question_id=? and user_id=?";
         try {
             return db_manager.executeQuery(sql,new String[]{questionId,userId}).next();

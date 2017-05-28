@@ -16,7 +16,7 @@ import beans.Users;
 
 /**
  * Created by Vove on 2017/4/13.
- * <p>
+ *
  * 登陆过滤器
  */
 public class LoginFilter implements Filter {
@@ -35,16 +35,12 @@ public class LoginFilter implements Filter {
       boolean isFilter = false;
       String[] filterPage = new String[]{//需要过滤未登录页面，学生
               "/frontDesk/studentHomework.jsp",
-              "/frontDesk/myInfo.jsp",
-              "/frontDesk/topicDetail.jsp",
-              "/frontDesk/createTopic.jsp",
-              "/frontDesk/myInfo.jsp",
+              "/frontDesk/evaluate.jsp",
               "/frontDesk/doHomework.jsp"
       };
       String[] filterStudentPage = new String[]{//后台过滤页面,限制教师访问
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
-              "/backDesk/publishHomework.jsp",
               "/backDesk/publishHomework.jsp",
               "/backDesk/Re-editHomework.jsp"
       };
