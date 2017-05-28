@@ -56,6 +56,19 @@ public class StudentDAO {
 
                 homeworkList.add(studentHomework);
             }
+            //获取已关闭
+            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()>closing_time ORDER BY closing_time DESC";
+            ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
+            while (finishedSet.next()) {
+                String homeworkId = finishedSet.getString("id");
+                String title = finishedSet.getString("title");
+                String createTime = finishedSet.getString("create_time");
+                String closingTime = finishedSet.getString("closing_time");
+                StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
+                studentHomework.setHomeworkStatus(HomeworkStatus.FINISHED);//设为完成
+                homeworkList.add(studentHomework);
+            }
+
             return homeworkList;
         } catch (SQLException e) {
             e.printStackTrace();

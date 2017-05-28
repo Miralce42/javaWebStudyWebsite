@@ -173,10 +173,11 @@ public class TeacherDAO {
             }
             //插入填空记录
             for (CompletionHomework completionHomework : newHomework.getCompletionHomeworkList()) {
-                String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content,score) values(?,?,?)";
-                if (db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId
-                        , completionHomework.getCompletionContent()
-                        , completionHomework.getScore()}) != 1) {
+                String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content,refer_key,score) values(?,?,?,?)";
+                if (db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId,
+                        completionHomework.getCompletionContent(),
+                        completionHomework.getRefKey(),
+                        completionHomework.getScore()}) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
