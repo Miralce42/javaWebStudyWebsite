@@ -1,4 +1,5 @@
-<%--
+<%@ page import="beans.Users" %>
+<%@ page import="WebDB.StudentDAO" %><%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/5/16
@@ -11,6 +12,10 @@
     <%
       String homeworkId=request.getParameter("homeworkId");
       String homeworkTitle=request.getParameter("homeworkTitle");
+      Users student=(Users)session.getAttribute("user");
+      if(homeworkTitle==null){
+          homeworkTitle=new StudentDAO().getHomeworkTitle(homeworkId);
+      }
     %>
     <title><%=homeworkTitle%></title>
   </head>
