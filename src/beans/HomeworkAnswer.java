@@ -13,6 +13,8 @@ public class HomeworkAnswer {
     private HomeworkStatus homeworkStatus;//
     private ArrayList<Answer> choiceAnswers;//选择题
     private ArrayList<Answer> completionAnswers;//填空题
+    private ArrayList<Answer> operationAnswer;//操作题
+
 
     public HomeworkAnswer(String userId, String homeworkId, HomeworkStatus homeworkStatus) {
         this.userId = userId;
@@ -20,12 +22,20 @@ public class HomeworkAnswer {
         this.homeworkStatus = homeworkStatus;
     }
 
-    public HomeworkAnswer(String userId, String homeworkId, HomeworkStatus homeworkStatus, ArrayList<Answer> choiceAnswers, ArrayList<Answer> completionAnswers) {
+    public HomeworkAnswer(String userId, String homeworkId, HomeworkStatus homeworkStatus,
+                          ArrayList<Answer> choiceAnswers,
+                          ArrayList<Answer> completionAnswers,
+                          ArrayList<Answer> operationAnswer) {
         this.userId = userId;
         this.homeworkId = homeworkId;
         this.homeworkStatus = homeworkStatus;
         this.choiceAnswers = choiceAnswers;
         this.completionAnswers = completionAnswers;
+        this.operationAnswer=operationAnswer;
+    }
+
+    public ArrayList<Answer> getOperationAnswer() {
+        return operationAnswer;
     }
 
     public String getUserId() {

@@ -111,7 +111,7 @@ public class DoHomeworkDiv {
             savedAnswer="";
         }
         return "<div class=\"operation_field\">" +
-                "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+index+"\">"+
+                "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+operationHomework.getId()+"\">"+
                 "" + index + "、"+
                 "<div class=\"operationQuestion\">"+operationQuestion+"</div>"+
                 "<textarea class=\"ckeditor\" name=\"operation_content_" + index + "\" " +

@@ -61,7 +61,7 @@
     <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
     <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
 
-        <h3 id="fh5co-logo"><a href="myInfo.jsp">Java Web</a></h3>
+        <h3 id="fh5co-logo"><a href="index.jsp">Java Web</a></h3>
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li><a href="index.jsp">主页</a></li>

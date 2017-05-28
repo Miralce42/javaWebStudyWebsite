@@ -41,13 +41,13 @@ function ChgPwCheck() {
 function phoneNumCheck() {
     var phoneNum = document.getElementById("user.phone").value;
     if(phoneNum.length !== 11){
-        alert("你家手机号不是11位吗！？")
+        alert("手机号需11位！")
     }
     else if(!/^[0-9]*$/.test(phoneNum)){
-        alert("你家手机号不全是数字吗！？");
+        alert("手机号需全是数字！");
     }
     else if( phoneNum.charAt(0) !== '1'){
-        alert("你家手机号第一位不是1吗！？")
+        alert("手机号第一位需为1！")
     }
     else{
         document.form1.submit();

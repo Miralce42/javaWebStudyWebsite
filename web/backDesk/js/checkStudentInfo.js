@@ -21,7 +21,7 @@ function addCheck() {
         alert("手机号码必须全为数字！");
     }
     else if (phone.charAt(0) !== '1') {
-        alert("你家手机号第一位不是1吗！？")
+        alert("手机号第一位应为1！")
     }
     else {
         document.form1.action = "addStudentInfo.action";
@@ -62,7 +62,7 @@ function updateCheck(usernameOld) {
         alert("手机号码必须全为数字！");
     }
     else if (phone.charAt(0) !== '1') {
-        alert("你家手机号第一位不是1吗！？")
+        alert("手机号第一位应为1！")
     }
     else {
         document.form1.action = "updateStudentInfo.action";
