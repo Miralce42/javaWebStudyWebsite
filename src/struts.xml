@@ -64,6 +64,10 @@
             <result name="success">/success.jsp?tag=uploadsuccess</result>
             <result name="fail">/fail.jsp</result>
         </action><!--课件多文件-->
+        <action name="multipracticefile" class="com.dream.Fileupload.MultiUploadAction">
+            <result name="success">/success.jsp?tag=puploadsuccess</result>
+            <result name="fail">/fail.jsp</result>
+        </action><!--实践教学多文件-->
         <action name="practicedbinsert" class="com.dream.FileClasses.PracticeAction" method="execute">
             <result name="success">/success.jsp?tag=pinsertsuccess</result>
             <result name="error">/fail.jsp</result>
@@ -80,7 +84,7 @@
             <result name="success">/success.jsp?tag=sdeletesuccess</result>
             <result name="error">/fail.jsp</result>
         </action><!--教学资源管理文件删除数据库action-->
-        <action name="multipracticefile" class="com.dream.Fileupload.MultiUploadAction">
+        <action name="multiresourcefile" class="com.dream.Fileupload.MultiUploadAction">
             <result name="success">/success.jsp?tag=suploadsuccess</result>
             <result name="fail">/fail.jsp</result>
         </action><!--教学资源多文件-->

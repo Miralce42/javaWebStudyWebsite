@@ -40,7 +40,7 @@
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right"><!--右侧布局-->
     <div><!--文件上传-->
-        <form action="multipracticefile.action" method="post" enctype="multipart/form-data" >
+        <form action="multiresourcefile.action" method="post" enctype="multipart/form-data" >
             <label>上传资料</label><br/>
             <input type="text" name="file_type" id="file_type" value="教学资源管理" hidden="hidden"/>
               文件类型：
@@ -78,16 +78,28 @@
             try {
                 ResultSet resultSet = fileDAO.getResultSet("select * from teachingfile where file_type=? and chapter=? order by upload_date", param);
                 out.println("<form><table border=2><tr>");
-                while (resultSet.next())
-                {
-                    if(temp%3==0)
-                        out.println("</tr><tr>");
-                    out.println("<td>"+resultSet.getString("file_name")+"</td>");
-                    out.println("<td> <a href='resourcedbdelete.action?info=教学资源管理/");
-                    out.println(filetype[i]+"/"+resultSet.getString("file_name")+"'>删除"+"</a></td>");
-                    temp++;
+                if(filetype[i].equals("链接")) {
+                    while (resultSet.next()) {
+                        if (temp % 3 == 0)
+                            out.println("</tr><tr>");
+                        out.println("<td>" + resultSet.getString("file_name") + "</td>");
+                        out.println("<td> <a href='resourcedbdelete.action?info=教学资源管理/");
+                        out.println(filetype[i] + "/" + resultSet.getString("file_name") + "'>删除" + "</a></td>");
+                        temp++;
+                    }
+                    out.println("</tr></table></form>");
                 }
-                out.println("</tr></table></form>");
+                else {
+                    while (resultSet.next()) {
+                        if (temp % 3 == 0)
+                            out.println("</tr><tr>");
+                        out.println("<td>" + resultSet.getString("file_name") + "</td>");
+                        out.println("<td> <a href='/delete.servlet?filename=教学资源管理/");
+                        out.println(filetype[i] + "/" + resultSet.getString("file_name") + "'>删除" + "</a></td>");
+                        temp++;
+                    }
+                    out.println("</tr></table></form>");
+                }
             }//try
             catch(Exception a){
                 a.printStackTrace();

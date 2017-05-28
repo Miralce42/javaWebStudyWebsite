@@ -63,6 +63,10 @@
         <servlet-name>DeleteFile</servlet-name>
         <servlet-class>com.dream.FileDelete.FileDelete</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteFile</servlet-name>
+        <url-pattern>/delete.servlet</url-pattern>
+    </servlet-mapping>
     <servlet>
         <servlet-name>CommitHomework</servlet-name>
         <servlet-class>servlets.CommitHomeworkServlet</servlet-class>
@@ -71,8 +75,5 @@
         <servlet-name>CommitHomework</servlet-name>
         <url-pattern>/frontDesk/commitHomework.servlet</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>DeleteFile</servlet-name>
-        <url-pattern>/delete.servlet</url-pattern>
-    </servlet-mapping>
+
 </web-app>

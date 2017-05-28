@@ -20,12 +20,21 @@ public class FileDelete extends HttpServlet {
         // TODO Auto-generated method stub
        String filename=request.getParameter("filename");
      //  System.out.println(filename);
+        String[] list=filename.split("/");
      FileClasses fileClasses=setFileClasses(filename);
        new FileDAO().deleteFile(fileClasses);//删除数据库数据记录
       if(deleteFiles(filename)) {//删除磁盘文件
           response.setContentType("text/html; charset=GBK");
           PrintWriter out = response.getWriter();
-          out.println("删除成功"+"<a href='backDesk/theCoursewareManagement.jsp'>返回</a>");
+          out.println("<html><head><script type='text/javascript'> alert('删除成功');</script></head></html>");//+"<a href='backDesk/theCoursewareManagement.jsp'>返回</a>");
+          if(list[0].equals("实践教学资料"))
+              response.sendRedirect("backDesk/thePracticeTeachingManagement.jsp");
+          else
+              if(list[0].equals("教学资源管理"))
+               response.sendRedirect("backDesk/theResourceManagement.jsp");
+              else
+                  if(list[0].equals("教学课件资料"))
+                      response.sendRedirect("backDesk/theCoursewareManagement.jsp");
       }
 
 

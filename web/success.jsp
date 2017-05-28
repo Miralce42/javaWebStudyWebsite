@@ -10,23 +10,27 @@
 <html>
 <head>
 <script type="text/javascript">
-    function link1() {
+    function linkCoursewareUpload() {
         alert("上传完成！");
         setTimeout("location='theCoursewareManagement.jsp'",1);
     }
-    function link2() {
+    function linkCoursewareDelete() {
+        alert("删除完成！");
+        setTimeout("location='theCoursewareManagement.jsp'",1);
+    }
+    function linkPracticeInsert() {
         alert("上传完成！");
         setTimeout("location='thePracticeTeachingManagement.jsp'",1);
     }
-    function link3() {
+    function linkPracticeDelete() {
         alert("删除完成！");
         setTimeout("location='thePracticeTeachingManagement.jsp'",1);
     }
-    function link4() {
+    function linkResourceDelete() {
         alert("删除完成！");
         setTimeout("location='theResourceManagement.jsp'",1);
     }
-    function link5() {
+    function linkResourceUpload() {
         alert("上传完成！");
         setTimeout("location='theResourceManagement.jsp'",1);
     }
@@ -36,19 +40,20 @@
 
 <%
   String tag= request.getParameter("tag");
+  System.out.println(tag);
 if(tag.equals("uploadsuccess"))
 {
 %>
 <script type="text/javascript">
-    window.link1();
+    window.linkCoursewareUpload();
 </script>
 <%
     }
-    if (tag.equals("pinsertsuccess"))
+    if (tag.equals("pinsertsuccess")||tag.equals("puploadsuccess"))
     {
 %>
 <script type="text/javascript">
-    window.link2();
+    window.linkPracticeInsert();
 </script>
 <%
     }
@@ -56,7 +61,7 @@ if(tag.equals("uploadsuccess"))
     {
 %>
 <script type="text/javascript">
-    window.link3();
+    window.linkPracticeDelete();
 </script>
 <%
 }
@@ -64,7 +69,7 @@ if(tag.equals("uploadsuccess"))
     {
 %>
 <script type="text/javascript">
-    window.link4();
+    window.linkResourceDelete();
 </script>
 <%
     }
@@ -73,7 +78,7 @@ if(tag.equals("uploadsuccess"))
     {
 %>
 <script type="text/javascript">
-    window.link5();
+    window.linkResourceUpload();
 </script>
 <%
     }
