@@ -255,7 +255,7 @@
                 %>
             </div>
         </div>
-    <!--HTML-->
+    <!--JAVA-->
         <div  class="fh5co-narrow-content">
             <a href="showAllTopic.jsp?topicType=HTML"><h2 class="fh5co-heading animate-box titlea" data-animate-effect="fadeInLeft">HTML相关最新话题</h2></a>
             <hr>
@@ -313,14 +313,13 @@
                             <a href="topicDetail.jsp?topicId=<%=topic.getTopicId()%>" class="lead">Read More <i class="icon-arrow-right3"></i></a>
                         </div>
                     </div>
-                </div
+                </div>
                 <%
                         }
                     }
                 %>
             </div>
         </div>
-    <!---->
 </div>
 </body>
 </html>
