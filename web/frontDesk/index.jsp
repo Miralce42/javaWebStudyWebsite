@@ -1,4 +1,4 @@
-<%--
+<%@ page import="beans.Users" %><%--
   Created by IntelliJ IDEA.
   User: 韩壮
   Date: 2017/5/20
@@ -56,16 +56,30 @@
     <!--[if lt IE 9]>
     <script src="../frontDesk_assets/js/respond.min.js"></script>
     <![endif]-->
-
+    <style type="text/css">
+        #login{
+            color: #228896;
+        }
+    </style>
 </head>
 <body>
 <div id="fh5co-page">
     <aside id="fh5co-aside" role="complementary" class="border js-fullheight">
-        <h3 id="fh5co-logo"><a href="myInfo.jsp">Java Web</a></h3>
+        <h3 id="fh5co-logo" style="margin-bottom: 0.3em;"><a href="myInfo.jsp">Java Web</a></h3>
+        <%
+            Users user = (Users) session.getAttribute("user");
+            if(user == null){
+                out.println("<h6 align=\"center\"><a id=\"login\" href=\"../login.jsp\">登录</a></h6>");
+            }
+            else{
+                out.println("<h6 align=\"center\">欢迎登录，<a id=\"login\" href=\"myInfo.jsp\">");
+                out.println(user.getName());
+                out.println("<br><br></a><a id=\"login\" href=\"logout.action\">注销</a></h6>");
+            }
+        %>
         <nav id="fh5co-main-menu" role="navigation">
             <ul>
                 <li><a href="index.jsp">主页</a></li>
-                <li><a href="../login.jsp">登录</a></li>
                 <li><a href="theTeachingCourseware.jsp">教学课件</a></li>
                 <li><a href="theTeachingResource.jsp">教学资源</a></li>
                 <li><a href="interaction.jsp">课程互动</a></li>
@@ -94,7 +108,7 @@
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
                                         <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
-                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href=""> <i class="icon-monitor"></i>下载资源</a> <a class="btn btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
+                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingCourseware.jsp"> <i class="icon-monitor" href="../login.jsp"></i>下载资源</a> <a class="btn btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +121,7 @@
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
                                         <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
-                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href=""> <i class="icon-monitor"></i>下载资源</a> <a class="btn btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
+                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingCourseware.jsp"> <i class="icon-monitor"></i>下载资源</a> <a class="btn btn-primary btn-learn" href="../login.jsp">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>
                             </div>
@@ -120,7 +134,7 @@
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
                                         <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
-                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href=""> <i class="icon-monitor"></i>下载资源</a> <a class="btn btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
+                                        <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingCourseware.jsp"> <i class="icon-monitor" href="../login.jsp"></i>下载资源</a> <a class="btn btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>
                             </div>

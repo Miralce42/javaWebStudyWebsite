@@ -3,7 +3,8 @@
 <%@ page import="beans.HomeworkStudentStatus" %>
 <%@ page import="WebDB.TeacherDAO" %>
 <%@ page import="static beans.StudentHomework.HomeworkStatus.FINISHED" %>
-<%@ page import="static beans.StudentHomework.HomeworkStatus.SAVED" %><%--
+<%@ page import="static beans.StudentHomework.HomeworkStatus.SAVED" %>
+<%@ page import="WebDB.StudentDAO" %><%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/5/20
@@ -26,11 +27,11 @@
     %>
     <%
         String homeworkId = request.getParameter("homeworkId");
-        String homeworkTitle = request.getParameter("homeworkTitle");
+        String homeworkTitle =new StudentDAO().getHomeworkTitle(homeworkId);
     %>
-    <title><%=homeworkTitle%>详情</title>
+    <title>学生作业详情</title>
     <%
-        String moduleString = homeworkTitle + "详情";
+        String moduleString ="学生作业详情--"+ homeworkTitle ;
     %>
 </head>
 <body>

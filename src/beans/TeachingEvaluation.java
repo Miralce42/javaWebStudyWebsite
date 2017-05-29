@@ -46,5 +46,3 @@ public class TeachingEvaluation {
         this.content = content;
     }
 }
-
-

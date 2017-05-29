@@ -36,6 +36,7 @@
            }
            String closingTime=homework.getClosingTime();
 
+           //一个作业块
            ManagerHomeworkDiv managerHomeworkDiv=new ManagerHomeworkDiv(homework.getId(),
                    homework.getTitle(),
                    "截止时间:"+closingTime.substring(0,closingTime.length()-2),

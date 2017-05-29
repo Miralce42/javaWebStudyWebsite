@@ -9,11 +9,11 @@ import beans.*;
  * 学生做作业布局
  */
 public class DoHomeworkDiv {
-    private Users student;
     private Homework homework;
+    private StudentDAO studentDAO;
 
     public DoHomeworkDiv(Users student, Homework homework) {
-        this.student = student;
+        studentDAO=new StudentDAO(student);
         this.homework = homework;
     }
 
@@ -49,8 +49,8 @@ public class DoHomeworkDiv {
                 check_B = "",
                 check_C = "",
                 check_D = "";
-        String savedKey = new StudentDAO(student).getChoiceAnswer(choiceHomework.getId());
-        if (savedKey != null) {
+        String savedKey = studentDAO.getChoiceAnswer(choiceHomework.getId());
+        if (savedKey!=null&&!savedKey.equals("")) {
             switch (ChoiceOption.valueOf(savedKey)) {
                 case A:
                     check_A = "checked";
@@ -66,54 +66,50 @@ public class DoHomeworkDiv {
                     break;
             }
         }
-        str = " <div class=\"choiceBump\"><p class=\"question_index\">\n" + "题目" + index + "</p>" +
-                "     <div class=\"choice-question\">" +
+        str = " <div class=\"choiceBump\">"+
                 "<input type=\"hidden\" name=\"choiceId_" + index + "\" value=\"" + choiceHomework.getId() + "\">" +
-                ":" + choiceHomework.getQuestion() + "\n" +
+                "    <div class=\"choice-question\">" +"<div style=\"float: left\">"+index+"、</div>"+
+                    choiceHomework.getQuestion() + "\n" +
                 "     </div>\n" +
-                "     <ul style=\"list-style-type:none\">\n" +
-                "         <li class=\"option\">\n" +
+                
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\"  " + check_A + " type=\"radio\" value=\"A\">" + choiceHomework.getChoice_A() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_B + " type=\"radio\" value=\"B\">" + choiceHomework.getChoice_B() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_C + " type=\"radio\" value=\"C\">" + choiceHomework.getChoice_C() + "\n" +
-                "         </li>\n" +
-                "         <li class=\"option\">\n" +
+                "         </div>\n" +
+                "         <div class=\"option\">\n" +
                 "             <input class=\"radio\" name=\"choice_" + index + "\" " + check_D + " type=\"radio\" value=\"D\">" + choiceHomework.getChoice_D() + "\n" +
-                "         </li>\n" +
-                "     </ul>\n" +
+                "         </div>\n" +
+               
                 " </div>";
         return str;
     }
 
     private String buildCompletionValue(int index, CompletionHomework completionHomework) {
         String str;
-        String savedAnswer = new StudentDAO(student).getCompletionAnswer(completionHomework.getId());
-        if (savedAnswer == null) {
-            savedAnswer = "";
-        }
-        str = ":<div class=\"completionBump\">" +
+        String savedAnswer = studentDAO.getCompletionAnswer(completionHomework.getId());
+
+        str = "<div class=\"completionBump\">" +
                 "<input type=\"hidden\" name=\"completionId_" + index + "\" value=\"" + completionHomework.getId() + "\">" +
-                "<p class=\"question_index\">题目" + index + "</p><div class=\"completion-question\">"
-                + completionHomework.getCompletionContent() + "</div>" +
-                " 回答：<input class=\"completion_answer\" id=\"completion_answer_" + index + "\"\n" +
+                "<div class=\"completion-question\">"+"<div style=\"float: left\">"+index+"、</div>"
+                    + completionHomework.getCompletionContent() + "</div>" +
+                " 回答(多空以#号分开)：<input class=\"completion_answer\" id=\"completion_answer_" + index + "\"\n" +
                 "            name=\"completion_answer_" + index + "\" type=\"text\" value=\"" + savedAnswer + "\">\n" +
                 "</div>";
         return str;
     }
     private String buildOperationValue(int index,OperationHomework operationHomework){
-        String savedAnswer=new StudentDAO(student).getOperationAnswer(operationHomework.getId());
+        String savedAnswer=studentDAO.getOperationAnswer(operationHomework.getId());
         String operationQuestion=operationHomework.getQuestionContent();
-        if (savedAnswer==null){
-            savedAnswer="";
-        }
+
         return "<div class=\"operation_field\">" +
-                "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+index+"\">"+
-                "<p class=\"question_index\">题目" + index + ":</p>"+
-                "<div class=\"operationQuestion\">"+operationQuestion+"</div>"+
+                "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+operationHomework.getId()+"\">"+
+                "<div class=\"operationQuestion\">"+"<div style=\"float: left\">"+index+"、</div>"
+                +operationQuestion+"</div>"+
                 "<textarea class=\"ckeditor\" name=\"operation_content_" + index + "\" " +
                 "id=\"operation_content_" + index + "\">" + savedAnswer + "</textarea>" +
                 "</div>";

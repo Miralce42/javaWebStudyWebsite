@@ -61,7 +61,7 @@ public class ReeditHomeworkDiv {
    public String getHead() {
       return  "<div class=\"float-right\">\n" +
               "    <input class=\"homework-title\" name=\"homeworkTitle\" type=\"text\" value=\"" + homework.getHomeworkTitle() + "\" placeholder=\"作业标题\">\n" +
-              "    <a class=\"floatButton\" onclick=\"document.form.submit()\">发布</a>\n" +
+              "    <a class=\"floatButton\" onclick=\"checkHomework()\">发布</a>\n" +
               "</div>\n" +
               "<div align=\"right\" style=\"padding-right: 12%\">\n" +
               "    开始时间:<input CLASS=\"score\" type=\"text\" name=\"beginTime\" id=\"beginTime\" value=\"" + homework.getBeginTime() + "\" title=\"选择开始时间\"\n" +

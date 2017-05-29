@@ -38,19 +38,16 @@ input.ref-key{
 .choice{
     width: 95%;
 }
-.choice_field{
+.choice_field,.completion_field,.operation_field{
     width: 95%;
     margin: 20px;
-
 }
 .float-right{
     height:70px;
     padding: 4px;
     margin-right: 20px;
 }
-.completion_field{
 
-}
 .narrow{
     width: 80px;
 }

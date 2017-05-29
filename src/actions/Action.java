@@ -86,16 +86,9 @@ public class Action extends ActionSupport {
 
     public String SelectStudents(){
         ArrayList<Users> Students = new ArrayList<Users>();
-        try {
-            request.setCharacterEncoding("UTF-8");
-            response.setContentType("text/html;charset=utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
         String selectType = (String) request.getParameter("selectType");
         if("1".equals(selectType)){
             String className = request.getParameter("className");
-            System.out.println("className="+className);
             dao.selectStudent(Students, 1, className);
         }
         else if("2".equals(selectType)){
@@ -207,6 +200,11 @@ public class Action extends ActionSupport {
             }
         }
         return ERROR;
+    }
+
+    public String Logout(){
+        session.setAttribute("user",null);
+        return SUCCESS;
     }
 
     public void setUser(Users user) {

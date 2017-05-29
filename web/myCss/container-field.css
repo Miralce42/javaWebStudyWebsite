@@ -7,13 +7,14 @@
     margin-left: auto;
     box-sizing: border-box;
     display: block;
-    width: 80%;
+    width: 85%;
     min-height: 100%;
     padding-top: 15px;
     animation:fadein 1s;
+    padding-bottom: 50px;
 }
 .field-animation{
-    animation:fadein 2s;
+    animation:fadein 1s;
 }
 
 @-webkit-keyframes fadein {

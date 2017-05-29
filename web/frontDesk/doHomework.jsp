@@ -1,5 +1,4 @@
 <%@ page import="beans.Users" %>
-<%@ page import="WebDB.StudentDAO" %>
 <%@ page import="beans.Homework" %>
 <%@ page import="WebDB.TeacherDAO" %>
 <%@ page import="cn.vove7.mydiv.DoHomeworkDiv" %><%--
@@ -22,11 +21,10 @@
     <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css"/>
     <%
         String homeworkId = request.getParameter("homeworkId");
-        String homeworkTitle = request.getParameter("homeworkTitle");
         Users student = (Users) session.getAttribute("user");
-        StudentDAO studentDAO = new StudentDAO(student);
         Homework thisHomework = new TeacherDAO(student).getHomeworkDetail(homeworkId);//使用TeacherDAO获取作业详情
         DoHomeworkDiv doHomeworkDiv=new DoHomeworkDiv(student,thisHomework);
+        String homeworkTitle = thisHomework.getHomeworkTitle();
     %>
 </head>
 <body>
@@ -41,7 +39,7 @@
         <form name="form" method="post" action="commitHomework.servlet">
             <%
                 if(thisHomework.getChoiceHomeworkList().size()>0){
-                    out.println("<h3>选择题</h3>");
+                    out.println("<h4>选择题</h4>");
                 }
             %>
             <div id="choicesField">
@@ -49,15 +47,17 @@
             </div>
             <%
                 if(thisHomework.getCompletionHomeworkList().size()>0){
-                    out.println("<h3>填空题</h3>");
+                    out.println("<h4>填空题</h4>");
                 }
             %>
             <div class="completionsField">
                 <%=doHomeworkDiv.getCompletionsValue()%>
             </div>
+            <br>
+            <br>
             <%
                 if(thisHomework.getOperationHomeworkList().size()>0){
-                    out.println("<h3>操作题</h3>");
+                    out.println("<h4>操作题</h4>");
                 }
             %>
             <div class="operationsField">

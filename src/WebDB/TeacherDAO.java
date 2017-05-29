@@ -147,13 +147,13 @@ public class TeacherDAO {
 
             int questionIndex = 1;
             for (ChoiceHomework choiceHomework : newHomework.getChoiceHomeworkList()) {//插入选择题记录
-                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer，score) " +
-                        "values(?,?,?,?,?)";
-                if (db_manager.executeUpdate(insertChoiceSql, new String[]{homeworkId
-                        , Integer.toString(questionIndex++)//*
-                        , choiceHomework.getQuestion()
-                        , choiceHomework.getRef_ky()
-                        ,choiceHomework.getScore()
+                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,refer_key,score) values(?,?,?,?,?)";
+                if (db_manager.executeUpdate(insertChoiceSql, new String[]{
+                        homeworkId,
+                        Integer.toString(questionIndex++),//*
+                        choiceHomework.getQuestion(),
+                        choiceHomework.getRef_ky(),
+                        choiceHomework.getScore()
                 }) != 1) {
                     db_manager.rollbackAffair();//因db_manager逻辑，发生exception
                     return false;
@@ -173,10 +173,11 @@ public class TeacherDAO {
             }
             //插入填空记录
             for (CompletionHomework completionHomework : newHomework.getCompletionHomeworkList()) {
-                String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content,score) values(?,?,?)";
-                if (db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId
-                        , completionHomework.getCompletionContent()
-                        , completionHomework.getScore()}) != 1) {
+                String insertCompletionSql = "insert into hw_question_completion(hw_id,question_content,refer_key,score) values(?,?,?,?)";
+                if (db_manager.executeUpdate(insertCompletionSql, new String[]{homeworkId,
+                        completionHomework.getCompletionContent(),
+                        completionHomework.getRefKey(),
+                        completionHomework.getScore()}) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
@@ -219,7 +220,7 @@ public class TeacherDAO {
                 return false;
             }
             //update选择题
-            String updateChoiceSql="update hw_question_choice set question_content=?,reference_answer=?,score=? where id=?";
+            String updateChoiceSql="update hw_question_choice set question_content=?,refer_key=?,score=? where id=?";
             for (ChoiceHomework choiceHomework : homework.getChoiceHomeworkList()) {
                 if(db_manager.executeUpdate(updateChoiceSql,new String[]{
                         choiceHomework.getQuestion(),
@@ -227,6 +228,19 @@ public class TeacherDAO {
                         choiceHomework.getScore(),
                         choiceHomework.getId()
                 })!=1){
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+                //update选项
+                String updateOptionSql="update choiceofquestion set content=? where choice_id=? and choice_key=?";
+                if(db_manager.executeUpdate(updateOptionSql,new String[]{
+                        choiceHomework.getChoice_A(),choiceHomework.getId(),"A"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_B(),choiceHomework.getId(),"B"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_C(),choiceHomework.getId(),"C"})!=1||
+                        db_manager.executeUpdate(updateOptionSql,new String[]{
+                                choiceHomework.getChoice_D(),choiceHomework.getId(),"D"})!=1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
@@ -282,7 +296,6 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-
     public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
@@ -302,13 +315,14 @@ public class TeacherDAO {
                         .setEndTime(homeworkResultSet.getString("closing_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
 
+
                 //获取选择题集
                 ResultSet choiceSet = db_manager.executeQuery(getChiocesSql, new String[]{homeworkId});
                 while (choiceSet.next()) {//先存放choice,防止结果集丢失
                     ChoiceHomework choiceHomework = new ChoiceHomework();
                     choiceHomework.setId(choiceSet.getString("id"))
                             .setQuestion(choiceSet.getString("question_content"))
-                            .setRef_ky(choiceSet.getString("reference_answer"))
+                            .setRef_ky(choiceSet.getString("refer_key"))
                             .setScore(choiceSet.getString("score"));
                     choiceHomeworkList.add(choiceHomework);
                 }
