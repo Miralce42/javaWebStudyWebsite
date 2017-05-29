@@ -74,7 +74,7 @@ public class BrowserHomeworkDiv {
                 "      D."+choiceHomework.getChoice_D() +
                 "   </div>\n" +
                 "<div style=\"float:left\"><strong>你的选择：" + commitKey + "&nbsp&nbsp&nbsp&nbsp&nbsp正确答案："
-                +ref_key+"(得分："+answerScore+")</strong></div>" +
+                +ref_key+"&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
                 "<div class=\"is-correct\"><img align=\"right\" width=20px src=\""+imgSrc+"\"></div>" +
                 "</div>";
     }
@@ -96,7 +96,7 @@ public class BrowserHomeworkDiv {
                 "    </div>\n" +
                 "    <div>\n" +
                 "       <div style=\"float:left\"><strong>你的回答:"+commitKey+"&nbsp&nbsp&nbsp&nbsp&nbsp  正确答案："
-                        +ref_key +"(得分："+answerScore+")</strong></div>" +
+                        +ref_key +"&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
                 "    </div>\n" +
                 "    <div class=\"is-correct\"><img align=\"right\" width=20px src=\"" + imgSrc + "\"></div>" +
                 " </div>";
@@ -108,14 +108,15 @@ public class BrowserHomeworkDiv {
         if(answerScore==null){
             answerScore="未批阅";
         }
-        return " <div class=\"operation_field\"><input type=\"hidden\" name=\"operation_id_1\" value=\"5\">\n" +
-                "            <div class=\"operationQuestion\">\n" +
-                "               <div style=\"float: left\">"+index+"、</div>\n" +
-                    operationHomework.getQuestionContent()+
-                "               <strong>你的回答：(得分："+answerScore+")</strong>\n" +
-                "               <div class=\"operation-answer\">\n" + commitKey+
-                "               </div>\n" +
-                "            </div>\n" +
-                "         </div>";
+        return
+                " <div class=\"operation_field\"><input type=\"hidden\" name=\"operation_id_1\" value=\"5\">\n" +
+                "    <div class=\"operationQuestion\">\n" +
+                "       <div style=\"float: left\">"+index+"、</div>\n" +
+                            operationHomework.getQuestionContent()+
+                "       <strong>你的回答：&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong>\n" +
+                "       <div class=\"operation-answer\">\n" + commitKey+
+                "       </div>\n" +
+                "    </div>\n" +
+                " </div>";
     }
 }

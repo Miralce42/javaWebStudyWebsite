@@ -50,7 +50,7 @@ public class DoHomeworkDiv {
                 check_C = "",
                 check_D = "";
         String savedKey = studentDAO.getChoiceAnswer(choiceHomework.getId());
-        if (!savedKey.equals("")) {
+        if (savedKey!=null&&!savedKey.equals("")) {
             switch (ChoiceOption.valueOf(savedKey)) {
                 case A:
                     check_A = "checked";

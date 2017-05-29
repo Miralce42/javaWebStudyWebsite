@@ -271,11 +271,11 @@ public class StudentDAO {
         }
     }
 
-    public boolean commitHomework(HomeworkAnswer homeworkAnswer) {//保存、提交作业
+    public boolean commitHomework(HomeworkAnswerSheet homeworkAnswerSheet) {//保存、提交作业
 
         try {
-            db_manager.beginAffair();//
-            if (commitHomeworkStatus(homeworkAnswer) && insertIntoHomeworkAnswer(homeworkAnswer)) {//提交作业状态、放入答题卡
+            db_manager.beginAffair();//事务开始
+            if (commitHomeworkStatus(homeworkAnswerSheet) && insertIntoHomeworkAnswer(homeworkAnswerSheet)) {//提交作业状态、放入答题卡
                 db_manager.Commit();//提交
                 return true;
             } else {
@@ -304,59 +304,59 @@ public class StudentDAO {
         }
     }
 
-    private boolean commitHomeworkStatus(HomeworkAnswer homeworkAnswer) {
-        String status = String.valueOf(homeworkAnswer.getHomeworkStatus());//状态
+    private boolean commitHomeworkStatus(HomeworkAnswerSheet homeworkAnswerSheet) {
+        String status = String.valueOf(homeworkAnswerSheet.getHomeworkStatus());//状态
         String sql;
         //判断是否存在上传记录
-        if (isExistCommitRecord(homeworkAnswer.getHomeworkId(), homeworkAnswer.getUserId())) {//update
+        if (isExistCommitRecord(homeworkAnswerSheet.getHomeworkId(), homeworkAnswerSheet.getUserId())) {//update
             sql = "update homework_status set status=? where hw_id=? and user_id=?";
         } else {//insert
             sql = "insert into homework_status(status,hw_id,user_id) values(?,?,?)";
         }
         return db_manager.executeUpdate(sql, new String[]{
-                status, homeworkAnswer.getHomeworkId(), student.getUsername()}) == 1;
+                status, homeworkAnswerSheet.getHomeworkId(), student.getUsername()}) == 1;
     }
 
-    private boolean insertIntoHomeworkAnswer(HomeworkAnswer homeworkAnswer) {
-        String userId=homeworkAnswer.getUserId();
+    private boolean insertIntoHomeworkAnswer(HomeworkAnswerSheet homeworkAnswerSheet) {
+        String userId= homeworkAnswerSheet.getUserId();
         //放入选择
-        for (Answer choiceAnswer : homeworkAnswer.getChoiceAnswers()) {
+        for (AnswerSheet choiceAnswerSheet : homeworkAnswerSheet.getChoiceAnswers()) {
             String insertChoiceAnswerSql;
-            if(isExistAnswer("answersheet_choice",choiceAnswer.getQuestionId(),userId)){
+            if(isExistAnswer("answersheet_choice", choiceAnswerSheet.getQuestionId(),userId)){
                 insertChoiceAnswerSql="update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
             }else {
                 insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertChoiceAnswerSql, new String[]{
-                    choiceAnswer.getAnswer(), choiceAnswer.getQuestionId(),
-                    userId, homeworkAnswer.getHomeworkId()
+                    choiceAnswerSheet.getAnswer(), choiceAnswerSheet.getQuestionId(),
+                    userId, homeworkAnswerSheet.getHomeworkId()
             }) != 1) return false;
         }
         //填空
-        for (Answer completionAnswer : homeworkAnswer.getCompletionAnswers()) {
+        for (AnswerSheet completionAnswerSheet : homeworkAnswerSheet.getCompletionAnswers()) {
             String insertCompleionAnswerSql;
-            if(isExistAnswer("answersheet_completion",completionAnswer.getQuestionId(),userId)){
+            if(isExistAnswer("answersheet_completion", completionAnswerSheet.getQuestionId(),userId)){
                 insertCompleionAnswerSql="update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
             }else {
                 insertCompleionAnswerSql = "insert into answersheet_completion(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertCompleionAnswerSql, new String[]{
-                    completionAnswer.getAnswer(), completionAnswer.getQuestionId(),
-                    userId, homeworkAnswer.getHomeworkId()
+                    completionAnswerSheet.getAnswer(), completionAnswerSheet.getQuestionId(),
+                    userId, homeworkAnswerSheet.getHomeworkId()
             }) != 1) return false;
         }
         //操作题
-        for(Answer operationAnswer:homeworkAnswer.getOperationAnswer()){
+        for(AnswerSheet operationAnswerSheet : homeworkAnswerSheet.getOperationAnswer()){
             String insertOperationSql;
-            if(isExistAnswer("answersheet_operation",operationAnswer.getQuestionId(),userId)){
+            if(isExistAnswer("answersheet_operation", operationAnswerSheet.getQuestionId(),userId)){
                 insertOperationSql="update answersheet_operation set answer=? where question_id=? and user_id=? and hw_id=?";
             }
             else {
                 insertOperationSql="insert into answersheet_operation(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if(db_manager.executeUpdate(insertOperationSql,new String[]{
-                    operationAnswer.getAnswer(),operationAnswer.getQuestionId(),
-                    userId,homeworkAnswer.getHomeworkId()
+                    operationAnswerSheet.getAnswer(), operationAnswerSheet.getQuestionId(),
+                    userId, homeworkAnswerSheet.getHomeworkId()
             })!=1) return false;
         }
         return true;
@@ -371,8 +371,83 @@ public class StudentDAO {
         }
     }
 
-    private void correctHomework() {//批改作业
+    public boolean autoCorrectHomework(HomeworkAnswerSheet homeworkAnswerSheet) {//批改选择填空作业
+        //从学a生nswersheet_XX与hw_question_XXX比较
+        try {
+            db_manager.beginAffair();//事务开始
+//            String homeworkId=homeworkAnswerSheet.getHomeworkId();
 
+            //批阅该学生选择题
+            String getChoiceKeySql="SELECT refer_key,score FROM hw_question_choice where id=?";
+            for (AnswerSheet choiceAnswer:homeworkAnswerSheet.getChoiceAnswers()){
+                String[] result=getKey_Score(db_manager.executeQuery(getChoiceKeySql,new String[]{
+                        choiceAnswer.getQuestionId()}));
+                if(result==null){
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+                double quetionScore=Double.parseDouble(result[1]);//题目分
+                double getScore=choiceAnswer.getAnswer().equals(result[0])? quetionScore:0;//判断得分
+                if(!giveMark("answersheet_choice",choiceAnswer.getQuestionId(),getScore)){//给分
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+            }
+
+            //填空每个空均分题分
+            String getCompletionKeySql="SELECT refer_key,score FROM hw_question_completion where id=?";
+            for (AnswerSheet completionAnswer:homeworkAnswerSheet.getCompletionAnswers()){
+                String[] result=getKey_Score(db_manager.executeQuery(getCompletionKeySql,new String[]{
+                    completionAnswer.getQuestionId()}));
+                if(result==null){
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+                String[] answerKey=result[0].split("#");//参考答案
+                double perScore=Double.parseDouble(result[1])/(answerKey.length);//每个空的分
+                String[] stuAnswer=completionAnswer.getAnswer().split("#");//学生答案
+                int correctNum=0;//答对数
+                for(int i=0;i<answerKey.length&&i<stuAnswer.length;i++){
+                    if(stuAnswer[i].equals(answerKey[i]))
+                        correctNum++;
+                }
+                double getScore=perScore*correctNum;//得分
+                if(!giveMark("answersheet_completion",completionAnswer.getQuestionId(),getScore)){//给分
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+            }
+
+            db_manager.Commit();
+            return true;
+        } catch (SQLException e) {
+            try {
+                db_manager.rollbackAffair();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+    private String[] getKey_Score(ResultSet resultSet){
+        try {
+            resultSet.next();
+            return new String[]{
+                    resultSet.getString("refer_key"),
+                    resultSet.getString("score")
+            };
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    private boolean giveMark(String tableName,String questionId,double score){
+        String sql="update "+tableName+" set score=? where question_id=? and user_id=?";
+        return db_manager.executeUpdate(sql, new String[]{
+                Double.toString(score),
+                questionId, student.getUsername()
+        }) == 1;
     }
     public String getHomeworkTitle(String homeworkId){
         String sql="select title from homework where id=?";

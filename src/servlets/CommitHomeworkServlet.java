@@ -1,8 +1,8 @@
 package servlets;
 
 import WebDB.StudentDAO;
-import beans.Answer;
-import beans.HomeworkAnswer;
+import beans.AnswerSheet;
+import beans.HomeworkAnswerSheet;
 import beans.StudentHomework.HomeworkStatus;
 import beans.Users;
 
@@ -24,34 +24,35 @@ public class CommitHomeworkServlet extends HttpServlet {
       Users student=(Users)request.getSession().getAttribute("user");
       String action=request.getParameter("action");
       String homeworkId=request.getParameter("homeworkId");
-
+      //提交设为FINISHED状态，保存SAVED状态
       HomeworkStatus homeworkStatus=action.equals("save")? HomeworkStatus.SAVED: HomeworkStatus.FINISHED;
-      ArrayList<Answer> choiceAnswers=new ArrayList<>();
-      ArrayList<Answer> completionAnswers=new ArrayList<>();
-      ArrayList<Answer> operationAnswers=new ArrayList<>();
+
+      ArrayList<AnswerSheet> choiceAnswerSheets =new ArrayList<>();
+      ArrayList<AnswerSheet> completionAnswerSheets =new ArrayList<>();
+      ArrayList<AnswerSheet> operationAnswerSheets =new ArrayList<>();
       String choiceId;
       //获取选择
       for (int i = 1; (choiceId = request.getParameter("choiceId_" + i)) != null; i++) {
-         Answer choiceAnswer=new Answer(choiceId,
+         AnswerSheet choiceAnswerSheet =new AnswerSheet(choiceId,
                  request.getParameter("choice_"+i));
-         choiceAnswers.add(choiceAnswer);
+         choiceAnswerSheets.add(choiceAnswerSheet);
       }
       //获取填空
       String completionId;
       for (int i = 1; (completionId = request.getParameter("completionId_" + i)) != null; i++) {
-         Answer completionAnswer=new Answer(completionId,
+         AnswerSheet completionAnswerSheet =new AnswerSheet(completionId,
                  request.getParameter("completion_answer_"+i));
-         completionAnswers.add(completionAnswer);
+         completionAnswerSheets.add(completionAnswerSheet);
       }
       String operationId;
       for(int i=1;(operationId=request.getParameter("operation_id_"+i))!=null;i++){
          String operationContent=request.getParameter("operation_content_"+i);
-         operationAnswers.add(new Answer(operationId,operationContent));
+         operationAnswerSheets.add(new AnswerSheet(operationId,operationContent));
       }
-      HomeworkAnswer homeworkAnswer=new HomeworkAnswer(student.getUsername(),
+      HomeworkAnswerSheet homeworkAnswerSheet =new HomeworkAnswerSheet(student.getUsername(),
               homeworkId,homeworkStatus,
-              choiceAnswers,completionAnswers,
-              operationAnswers
+              choiceAnswerSheets, completionAnswerSheets,
+              operationAnswerSheets
       );
 
       StudentDAO studentDAO=new StudentDAO(student);
@@ -59,7 +60,10 @@ public class CommitHomeworkServlet extends HttpServlet {
       String pageTitle;//执行消息页面title
       String pageContent;
       HttpSession session= request.getSession();
-      if(studentDAO.commitHomework(homeworkAnswer)){
+      if(studentDAO.commitHomework(homeworkAnswerSheet)){
+
+          // 保存提交成功
+          studentDAO.autoCorrectHomework(homeworkAnswerSheet);//自动批改 （保存&提交）
          if(homeworkStatus==HomeworkStatus.FINISHED){
             pageTitle="提交成功";
             pageContent = pageTitle+",<a href=frontDesk/browserHomework.jsp?homeworkId="+homeworkId+">查看作业</a>";
