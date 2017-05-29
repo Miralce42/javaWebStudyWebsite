@@ -72,7 +72,9 @@
                 out.println("<h6 align=\"center\"><a id=\"login\" href=\"../login.jsp\">登录</a></h6>");
             }
             else{
-                out.println("<h6 align=\"center\">欢迎登录，<a id=\"login\" href=\"myInfo.jsp\">韩壮</a><br><br><a id=\"login\" href=\"logout.action\">注销</a></h6>");
+                out.println("<h6 align=\"center\">欢迎登录，<a id=\"login\" href=\"myInfo.jsp\">");
+                out.println(user.getName());
+                out.println("<br><br></a><a id=\"login\" href=\"logout.action\">注销</a></h6>");
             }
         %>
         <nav id="fh5co-main-menu" role="navigation">
