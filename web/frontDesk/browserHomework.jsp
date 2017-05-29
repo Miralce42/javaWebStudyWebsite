@@ -38,7 +38,7 @@
          <h2><%=homeworkTitle%>
          </h2>
       </div>
-      <div align="right" style="margin-bottom: 20px;margin-right: 20px">
+      <div align="right" style="color: red;margin-bottom: 20px;margin-right: 20px">
          <p>得分：<%=StudentDAO.getAggregateScore(student.getUsername(), homeworkId)%>
          </p>
       </div>

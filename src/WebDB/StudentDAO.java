@@ -508,9 +508,10 @@ public class StudentDAO {
         });
         try {
             if(resultSet.next()){
-                return resultSet.getString("score");
+                String score= resultSet.getString("score");
+                return score==null? "暂无得分":score;
             }else {
-                return "暂时无分数";
+                return "暂无得分";
             }
         } catch (SQLException e) {
             e.printStackTrace();

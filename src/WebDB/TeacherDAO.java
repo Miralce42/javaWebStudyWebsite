@@ -489,12 +489,12 @@ public class TeacherDAO {
     }
 
     public void calAggregateScore(String userId, String homeworkId) {//计算总分
-        String sql = "update homework_status set score=(\n" +
-                "(select sum(score) from answersheet_choice where hw_id=? and user_id=?)+" +
-                "(select sum(score) from answersheet_completion where hw_id=? and user_id=?)+" +
-                " (select sum(score) from answersheet_operation where hw_id=? and user_id=?)" +
+        String sql = "update homework_status set score=(" +
+                "(select sum(ifnull(score,0)) from answersheet_choice where hw_id=? and user_id=?)+" +
+                "(select sum(ifnull(score,0)) from answersheet_completion where hw_id=? and user_id=?)+" +
+                " (select sum(ifnull(score,0)) from answersheet_operation where hw_id=? and user_id=?)" +
                 ")" +
-                " where user_id=? and hw_id=?";
+                " where hw_id=? and user_id=?";
         db_manager.executeUpdate(sql, new String[]{
                 homeworkId, userId,
                 homeworkId, userId,

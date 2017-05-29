@@ -73,7 +73,7 @@ public class CommitHomeworkServlet extends HttpServlet {
                 pageContent = pageTitle + ",<a href=frontDesk/browserHomework.jsp?homeworkId=" + homeworkId + ">查看作业</a>";
             } else {
                 pageTitle = "保存成功";
-                pageContent = pageTitle + ",<a href=frontDesk/doHomework.jsp?homeworkId=" + homeworkId + "&homeworkTitle=作业>继续编辑</a>";
+                pageContent = pageTitle + ",<a href=frontDesk/doHomework.jsp?homeworkId=" + homeworkId + ">继续编辑</a>";
             }
         } else {
             if (homeworkStatus == HomeworkStatus.FINISHED) {
