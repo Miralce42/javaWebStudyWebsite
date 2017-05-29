@@ -79,6 +79,14 @@
         <servlet-name>CommitHomework</servlet-name>
         <servlet-class>servlets.CommitHomeworkServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CorrectHomeworkServlet</servlet-name>
+        <servlet-class>servlets.CorrectHomeworkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CorrectHomeworkServlet</servlet-name>
+        <url-pattern>/backDesk/correctHomework.servlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CommitHomework</servlet-name>
         <url-pattern>/frontDesk/commitHomework.servlet</url-pattern>

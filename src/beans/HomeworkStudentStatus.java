@@ -26,7 +26,7 @@ public class HomeworkStudentStatus {
       switch (homeworkStatus) {
          case FINISHED:
          case SAVED:
-            buttonStatusValue = "<a href=correctHomework.jsp?" + homeworkId + " class='floatButton'>批改</a>\n";
+            buttonStatusValue = "<a href=correctHomework.jsp?homeworkId=" + homeworkId + "&studentId="+userId+" class='floatButton'>批改</a>\n";
             break;
          case UNFINISHED:
          default:

@@ -1,5 +1,4 @@
 <%@ page import="beans.Users" %>
-<%@ page import="WebDB.StudentDAO" %>
 <%@ page import="beans.Homework" %>
 <%@ page import="WebDB.TeacherDAO" %>
 <%@ page import="cn.vove7.mydiv.DoHomeworkDiv" %><%--
@@ -22,11 +21,10 @@
     <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css"/>
     <%
         String homeworkId = request.getParameter("homeworkId");
-        String homeworkTitle = request.getParameter("homeworkTitle");
         Users student = (Users) session.getAttribute("user");
-        StudentDAO studentDAO = new StudentDAO(student);
         Homework thisHomework = new TeacherDAO(student).getHomeworkDetail(homeworkId);//使用TeacherDAO获取作业详情
         DoHomeworkDiv doHomeworkDiv=new DoHomeworkDiv(student,thisHomework);
+        String homeworkTitle = thisHomework.getHomeworkTitle();
     %>
 </head>
 <body>

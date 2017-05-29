@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static beans.StudentHomework.HomeworkStatus.CORRECTED;
+
 /**
  * Created by Vove on 2017/5/20.
  *
@@ -147,7 +149,7 @@ public class TeacherDAO {
 
             int questionIndex = 1;
             for (ChoiceHomework choiceHomework : newHomework.getChoiceHomeworkList()) {//插入选择题记录
-                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer,score) values(?,?,?,?,?)";
+                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,refer_key,score) values(?,?,?,?,?)";
                 if (db_manager.executeUpdate(insertChoiceSql, new String[]{
                         homeworkId,
                         Integer.toString(questionIndex++),//*
@@ -220,7 +222,7 @@ public class TeacherDAO {
                 return false;
             }
             //update选择题
-            String updateChoiceSql="update hw_question_choice set question_content=?,reference_answer=?,score=? where id=?";
+            String updateChoiceSql="update hw_question_choice set question_content=?,refer_key=?,score=? where id=?";
             for (ChoiceHomework choiceHomework : homework.getChoiceHomeworkList()) {
                 if(db_manager.executeUpdate(updateChoiceSql,new String[]{
                         choiceHomework.getQuestion(),
@@ -296,7 +298,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-    public Homework getHomeworkDetail(String homeworkId) {
+    public Homework getHomeworkDetail(String homeworkId) {//获取作业详细
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
         ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();
@@ -322,7 +324,7 @@ public class TeacherDAO {
                     ChoiceHomework choiceHomework = new ChoiceHomework();
                     choiceHomework.setId(choiceSet.getString("id"))
                             .setQuestion(choiceSet.getString("question_content"))
-                            .setRef_ky(choiceSet.getString("reference_answer"))
+                            .setRef_ky(choiceSet.getString("refer_key"))
                             .setScore(choiceSet.getString("score"));
                     choiceHomeworkList.add(choiceHomework);
                 }
@@ -412,6 +414,38 @@ public class TeacherDAO {
             return  null;
         }
 
+    }
+    public boolean correctOperation(String userId,String homeworkId,ArrayList<AnswerSheet> operations){
+        Users student=new Users();
+        student.setUsername(userId);
+        StudentDAO studentDAO=new StudentDAO(student);
+        try {
+            db_manager.beginAffair();
+            String updateStatussql="update homework_status set status=? where user_id=? and hw_id=?";
+            if(db_manager.executeUpdate(updateStatussql,new String[]{String.valueOf(CORRECTED),userId,homeworkId})!=1){
+                db_manager.rollbackAffair();
+                return false;
+            }
+
+            for (AnswerSheet answerSheet:operations){
+                if(!studentDAO.giveMark("answersheet_operation",answerSheet.getQuestionId(),answerSheet.getScore())){
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+            }
+
+            db_manager.Commit();
+            return true;
+        } catch (SQLException e) {
+            try {
+                db_manager.rollbackAffair();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                return false;
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

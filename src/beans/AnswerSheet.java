@@ -4,14 +4,19 @@ package beans;
  * Created by Vove on 2017/5/27.
  * 选择题答题卡
  */
-public class Answer {
+public class AnswerSheet {
     private String questionId;
     private String answer;
-    private int score;
+    private double score;
 
-    public Answer(String questionId, String answer) {
+    public AnswerSheet(String questionId, String answer) {
         this.questionId = questionId;
         this.answer = answer;
+    }
+
+    public AnswerSheet(String questionId, double score) {
+        this.questionId = questionId;
+        this.score = score;
     }
 
     public String getQuestionId() {
@@ -30,11 +35,11 @@ public class Answer {
         this.answer = answer;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

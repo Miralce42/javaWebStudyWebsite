@@ -11,6 +11,9 @@
             <result name="teacher" type="redirect">/backDesk/homeworkManager.jsp</result>
             <result name="error">/login.jsp</result>
         </action>
+        <action name="logout" class="actions.Action" method="Logout" >
+            <result name="success" type="redirect">/login.jsp</result>
+        </action>
         <action name="ChgPw" class="actions.Action" method="ChgPw">
             <result name="success">/login.jsp</result>
             <result name="error">/changePassword.jsp</result>
