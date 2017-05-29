@@ -42,6 +42,7 @@ public class StudentHomework {
          case SAVED:
             return "继续编辑";
          case FINISHED:
+         case CORRECTED:
             return "查看";
          case UNFINISHED:
             return "做作业";
@@ -92,11 +93,11 @@ public class StudentHomework {
    }
 
    public enum HomeworkStatus {
+      CORRECTED,//已批
       UNFINISHED,//未完成
       FINISHED,//完成
       SAVED,//保存
       CLOSED,//关闭
       UNCLOSED,//未关闭
-      DELETED//删除
    }
 }

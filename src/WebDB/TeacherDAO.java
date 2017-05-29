@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static beans.StudentHomework.HomeworkStatus.CORRECTED;
+
 /**
  * Created by Vove on 2017/5/20.
  *
@@ -412,6 +414,38 @@ public class TeacherDAO {
             return  null;
         }
 
+    }
+    public boolean correctOperation(String userId,String homeworkId,ArrayList<AnswerSheet> operations){
+        Users student=new Users();
+        student.setUsername(userId);
+        StudentDAO studentDAO=new StudentDAO(student);
+        try {
+            db_manager.beginAffair();
+            String updateStatussql="update homework_status set status=? where user_id=? and hw_id=?";
+            if(db_manager.executeUpdate(updateStatussql,new String[]{String.valueOf(CORRECTED),userId,homeworkId})!=1){
+                db_manager.rollbackAffair();
+                return false;
+            }
+
+            for (AnswerSheet answerSheet:operations){
+                if(!studentDAO.giveMark("answersheet_operation",answerSheet.getQuestionId(),answerSheet.getScore())){
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+            }
+
+            db_manager.Commit();
+            return true;
+        } catch (SQLException e) {
+            try {
+                db_manager.rollbackAffair();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                return false;
+            }
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

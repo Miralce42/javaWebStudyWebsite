@@ -14,15 +14,7 @@
 <head>
    <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/doHomeworkStyle.css"/>
-   <style type="text/css">
-      .is-correct {
-         margin-right: 10%;
-         margin-bottom: 80px;
-      }
-      .operation-answer{
-         padding:10px;
-      }
-   </style>
+
    <%
       String homeworkId = request.getParameter("homeworkId");
       String homeworkTitle;
@@ -51,8 +43,7 @@
          }
       %>
       <div id="choicesField">
-         <%=browserHomeworkDiv.getChoiceDetailDiv()%>
-
+         <%=browserHomeworkDiv.getChoiceDetailDiv(false)%>
       </div>
       <%
          if (thisHomework.getCompletionHomeworkList().size() > 0) {
@@ -60,7 +51,7 @@
          }
       %>
       <div class="completionsField">
-         <%=browserHomeworkDiv.getCompletionDetailDiv()%>
+         <%=browserHomeworkDiv.getCompletionDetailDiv(false)%>
       </div>
       <%
          if (thisHomework.getOperationHomeworkList().size() > 0) {
@@ -68,8 +59,7 @@
          }
       %>
       <div class="operationsField">
-         <%=browserHomeworkDiv.getOperationDetailDiv()%>
-
+         <%=browserHomeworkDiv.getOperationDetailDiv(false)%>
       </div>
 
    </div>

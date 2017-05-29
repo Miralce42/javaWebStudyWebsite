@@ -430,7 +430,7 @@ public class StudentDAO {
             return false;
         }
     }
-    private String[] getKey_Score(ResultSet resultSet){
+    private String[] getKey_Score(ResultSet resultSet){//获取参考答案&分数
         try {
             resultSet.next();
             return new String[]{
@@ -442,7 +442,7 @@ public class StudentDAO {
             return null;
         }
     }
-    private boolean giveMark(String tableName,String questionId,double score){
+    public boolean giveMark(String tableName,String questionId,double score){
         String sql="update "+tableName+" set score=? where question_id=? and user_id=?";
         return db_manager.executeUpdate(sql, new String[]{
                 Double.toString(score),

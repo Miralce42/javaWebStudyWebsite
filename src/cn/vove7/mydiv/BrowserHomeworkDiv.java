@@ -16,34 +16,34 @@ public class BrowserHomeworkDiv {
         studentDAO = new StudentDAO(student);
     }
 
-    public String getChoiceDetailDiv() {
+    public String getChoiceDetailDiv(boolean b) {//是否显示答案(教师端，学生端)
         StringBuilder builder = new StringBuilder();
         int index = 1;
         for (ChoiceHomework choiceHomework : homework.getChoiceHomeworkList()) {
-            builder.append(buildChoiceDetail(index++, choiceHomework));
+            builder.append(buildChoiceDetail(index++, choiceHomework,b));
         }
         return builder.toString();
     }
 
-    public String getCompletionDetailDiv() {
+    public String getCompletionDetailDiv(boolean b) {
         StringBuilder builder = new StringBuilder();
         int index = 1;
         for (CompletionHomework completionHomework : homework.getCompletionHomeworkList()) {
-            builder.append(buildCompletionDetail(index++, completionHomework));
+            builder.append(buildCompletionDetail(index++, completionHomework,b));
         }
         return builder.toString();
     }
 
-    public String getOperationDetailDiv() {
+    public String getOperationDetailDiv(boolean b) {
         StringBuilder builder = new StringBuilder();
         int index = 1;
         for (OperationHomework operationHomework : homework.getOperationHomeworkList()) {
-            builder.append(buildOperationDetail(index++, operationHomework));
+            builder.append(buildOperationDetail(index++, operationHomework,b));
         }
         return builder.toString();
     }
 
-    private String buildChoiceDetail(int index, ChoiceHomework choiceHomework) {
+    private String buildChoiceDetail(int index, ChoiceHomework choiceHomework,boolean b) {
         String commitKey = studentDAO.getChoiceAnswer(choiceHomework.getId());
         String ref_key=choiceHomework.getRef_ky();
         String answerScore=studentDAO.getChoiceAnswerScore(choiceHomework.getId());//得分
@@ -62,24 +62,26 @@ public class BrowserHomeworkDiv {
                 "      " + choiceHomework.getQuestion() + "\n" +
                 "   </div>\n" +
                 "   <div class=\"option\">\n" +
-                "      A."+choiceHomework.getChoice_A() +
+                "      A.&nbsp&nbsp&nbsp"+choiceHomework.getChoice_A() +
                 "   </div>\n" +
                 "   <div class=\"option\">\n" +
-                "      B."+choiceHomework.getChoice_B() +
+                "      B.&nbsp&nbsp&nbsp"+choiceHomework.getChoice_B() +
                 "   </div>\n" +
                 "   <div class=\"option\">\n" +
-                "      C."+choiceHomework.getChoice_C() +
+                "      C.&nbsp&nbsp&nbsp"+choiceHomework.getChoice_C() +
                 "   </div>\n" +
                 "   <div class=\"option\">\n" +
-                "      D."+choiceHomework.getChoice_D() +
+                "      D.&nbsp&nbsp&nbsp"+choiceHomework.getChoice_D() +
                 "   </div>\n" +
-                "<div style=\"float:left\"><strong>你的选择：" + commitKey + "&nbsp&nbsp&nbsp&nbsp&nbsp正确答案："
-                +ref_key+"&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
+                "<div style=\"float:left\"><strong>你的选择：" + commitKey + "&nbsp&nbsp&nbsp&nbsp&nbsp"+
+                (b?"正确答案：" +ref_key:"")+
+//                "正确答案：" +ref_key+
+                "&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
                 "<div class=\"is-correct\"><img align=\"right\" width=20px src=\""+imgSrc+"\"></div>" +
                 "</div>";
     }
 
-    private String buildCompletionDetail(int index, CompletionHomework completionHomework) {
+    private String buildCompletionDetail(int index, CompletionHomework completionHomework,boolean b) {
         String commitKey = studentDAO.getCompletionAnswer(completionHomework.getId());
         String ref_key=completionHomework.getRefKey();
         String answerScore=studentDAO.getCompletionAnswerScore(completionHomework.getId());//得分
@@ -95,21 +97,28 @@ public class BrowserHomeworkDiv {
                     completionHomework.getCompletionContent() +
                 "    </div>\n" +
                 "    <div>\n" +
-                "       <div style=\"float:left\"><strong>你的回答:"+commitKey+"&nbsp&nbsp&nbsp&nbsp&nbsp  正确答案："
-                        +ref_key +"&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
+                "       <div style=\"float:left\"><strong>你的回答:"+commitKey+"&nbsp&nbsp&nbsp&nbsp&nbsp"+
+                        (b?"正确答案：" +ref_key:"")+
+//                        "正确答案：" +ref_key +
+                        "&nbsp&nbsp&nbsp&nbsp&nbsp(得分："+answerScore+")</strong></div>" +
                 "    </div>\n" +
                 "    <div class=\"is-correct\"><img align=\"right\" width=20px src=\"" + imgSrc + "\"></div>" +
                 " </div>";
     }
 
-    private String buildOperationDetail(int index, OperationHomework operationHomework) {
+    private String buildOperationDetail(int index, OperationHomework operationHomework,boolean b) {
         String commitKey = studentDAO.getOperationAnswer(operationHomework.getId());
         String answerScore=studentDAO.getOperationAnswerScore(operationHomework.getId());//得分
         if(answerScore==null){
             answerScore="未批阅";
         }
+        String scoreInput="<div align=\"right\" style=\"margin-bottom: 10px;\">" +
+                "分数：<input class=\"score\" id=\"operation_"+index+"\" name=\"operation_score_"+operationHomework.getId() +
+                "\" type=\"text\"></div>";
         return
-                " <div class=\"operation_field\"><input type=\"hidden\" name=\"operation_id_1\" value=\"5\">\n" +
+                " <div class=\"operation_field\">" +
+                        "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+operationHomework.getId()+"\">\n" +
+                        (b? scoreInput:"")+
                 "    <div class=\"operationQuestion\">\n" +
                 "       <div style=\"float: left\">"+index+"、</div>\n" +
                             operationHomework.getQuestionContent()+
