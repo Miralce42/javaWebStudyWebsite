@@ -19,7 +19,7 @@
       String homeworkTitle;
       Users student = (Users) session.getAttribute("user");
 
-      StudentDAO studentDAO=new StudentDAO();
+      StudentDAO studentDAO = new StudentDAO();
       homeworkTitle = studentDAO.getHomeworkTitle(homeworkId);
 
       Homework thisHomework = new TeacherDAO().getHomeworkDetail(homeworkId);
@@ -39,7 +39,8 @@
          </h2>
       </div>
       <div align="right" style="margin-bottom: 20px;margin-right: 20px">
-         <p>得分：<%=StudentDAO.getAggregateScore(student.getUsername(),homeworkId)%></p>
+         <p>得分：<%=StudentDAO.getAggregateScore(student.getUsername(), homeworkId)%>
+         </p>
       </div>
       <%
          if (thisHomework.getChoiceHomeworkList().size() > 0) {
@@ -65,7 +66,7 @@
       <div class="operationsField">
          <%=browserHomeworkDiv.getOperationDetailDiv(false)%>
       </div>
-
    </div>
+</div>
 </body>
 </html>
