@@ -147,7 +147,7 @@ public class TeacherDAO {
 
             int questionIndex = 1;
             for (ChoiceHomework choiceHomework : newHomework.getChoiceHomeworkList()) {//插入选择题记录
-                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,reference_answer,score) values(?,?,?,?,?)";
+                String insertChoiceSql = "insert into hw_question_choice(hw_id,question_index,question_content,refer_key,score) values(?,?,?,?,?)";
                 if (db_manager.executeUpdate(insertChoiceSql, new String[]{
                         homeworkId,
                         Integer.toString(questionIndex++),//*
@@ -220,7 +220,7 @@ public class TeacherDAO {
                 return false;
             }
             //update选择题
-            String updateChoiceSql="update hw_question_choice set question_content=?,reference_answer=?,score=? where id=?";
+            String updateChoiceSql="update hw_question_choice set question_content=?,refer_key=?,score=? where id=?";
             for (ChoiceHomework choiceHomework : homework.getChoiceHomeworkList()) {
                 if(db_manager.executeUpdate(updateChoiceSql,new String[]{
                         choiceHomework.getQuestion(),
@@ -322,7 +322,7 @@ public class TeacherDAO {
                     ChoiceHomework choiceHomework = new ChoiceHomework();
                     choiceHomework.setId(choiceSet.getString("id"))
                             .setQuestion(choiceSet.getString("question_content"))
-                            .setRef_ky(choiceSet.getString("reference_answer"))
+                            .setRef_ky(choiceSet.getString("refer_key"))
                             .setScore(choiceSet.getString("score"));
                     choiceHomeworkList.add(choiceHomework);
                 }

@@ -108,14 +108,15 @@ public class BrowserHomeworkDiv {
         if(answerScore==null){
             answerScore="未批阅";
         }
-        return " <div class=\"operation_field\"><input type=\"hidden\" name=\"operation_id_1\" value=\"5\">\n" +
-                "            <div class=\"operationQuestion\">\n" +
-                "               <div style=\"float: left\">"+index+"、</div>\n" +
-                    operationHomework.getQuestionContent()+
-                "               <strong>你的回答：(得分："+answerScore+")</strong>\n" +
-                "               <div class=\"operation-answer\">\n" + commitKey+
-                "               </div>\n" +
-                "            </div>\n" +
-                "         </div>";
+        return
+                " <div class=\"operation_field\"><input type=\"hidden\" name=\"operation_id_1\" value=\"5\">\n" +
+                "    <div class=\"operationQuestion\">\n" +
+                "       <div style=\"float: left\">"+index+"、</div>\n" +
+                            operationHomework.getQuestionContent()+
+                "       <strong>你的回答：(得分："+answerScore+")</strong>\n" +
+                "       <div class=\"operation-answer\">\n" + commitKey+
+                "       </div>\n" +
+                "    </div>\n" +
+                " </div>";
     }
 }
