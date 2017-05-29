@@ -202,6 +202,11 @@ public class Action extends ActionSupport {
         return ERROR;
     }
 
+    public String Logout(){
+        session.setAttribute("user",null);
+        return SUCCESS;
+    }
+
     public void setUser(Users user) {
         this.user = user;
     }
