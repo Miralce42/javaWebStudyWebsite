@@ -31,7 +31,7 @@ public class StudentDAO {
     }
 
     public ArrayList<StudentHomework> getHomeworkList() {
-        String sql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()<closing_time and now()>create_time ORDER BY closing_time DESC";
+        String sql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()<closing_time and now()>create_time ORDER BY closing_time DESC";
         //未结束
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, null);
@@ -57,7 +57,7 @@ public class StudentDAO {
                 homeworkList.add(studentHomework);
             }
             //获取已关闭
-            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_closing=0 and now()>closing_time ORDER BY closing_time DESC";
+            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()>closing_time ORDER BY closing_time DESC";
             ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
             while (finishedSet.next()) {
                 String homeworkId = finishedSet.getString("id");
@@ -500,5 +500,23 @@ public class StudentDAO {
             e.printStackTrace();
             return null;
         }
+    }
+    public static String getAggregateScore(String studentId,String homeworkId){//获取总分
+        String sql="select score from homework_status where user_id=? and hw_id=?";
+        ResultSet resultSet=new DB_Manager().executeQuery(sql,new String[]{
+                studentId,homeworkId
+        });
+        try {
+            if(resultSet.next()){
+                return resultSet.getString("score");
+            }else {
+                return "暂时无分数";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+
     }
 }

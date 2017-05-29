@@ -1,7 +1,6 @@
 <%@ page import="WebDB.StudentDAO" %>
 <%@ page import="beans.Homework" %>
 <%@ page import="beans.Users" %>
-<%@ page import="beans.StudentHomework" %>
 <%@ page import="WebDB.TeacherDAO" %>
 <%@ page import="cn.vove7.mydiv.BrowserHomeworkDiv" %><%--
   Created by IntelliJ IDEA.
@@ -25,9 +24,11 @@
       String moduleString = "批改作业";
       Users student=new Users();
       student.setUsername(studentId);
-      String homeworkTitle=new StudentDAO().getHomeworkTitle(homeworkId);
 
-      Homework thisHomework = new TeacherDAO().getHomeworkDetail(homeworkId);
+      Users teacher=(Users)session.getAttribute("user");
+      String homeworkTitle=new StudentDAO().getHomeworkTitle(homeworkId);
+      TeacherDAO teacherDAO=new TeacherDAO(teacher);
+      Homework thisHomework = teacherDAO.getHomeworkDetail(homeworkId);
       BrowserHomeworkDiv browserHomeworkDiv = new BrowserHomeworkDiv(student,thisHomework );
    %>
 
@@ -42,7 +43,7 @@
          </h2>
       </div>
       <div class="student-info">
-         学生：计算机151 来来来
+         学生：<%=teacherDAO.getStudentMajorName(studentId)%>
       </div>
 
       <%

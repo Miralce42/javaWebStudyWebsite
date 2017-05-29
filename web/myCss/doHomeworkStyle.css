@@ -37,3 +37,7 @@ img{
     height: initial;
     vertical-align: middle;
 }
+.student-info{
+    font-size: 1.2em;
+    margin-bottom: 30px;
+}

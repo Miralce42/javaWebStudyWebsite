@@ -2,6 +2,7 @@ package servlets;
 
 import WebDB.TeacherDAO;
 import beans.AnswerSheet;
+import org.bouncycastle.jcajce.provider.symmetric.TEA;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +33,10 @@ public class CorrectHomeworkServlet extends HttpServlet {
         HttpSession session= request.getSession();
         String pageTitle;//执行消息页面title
         String pageContent;
-        if(new TeacherDAO().correctOperation(studentId,homeworkId,operations)){
+        TeacherDAO teacherDAO=new TeacherDAO();
+        if(teacherDAO.correctOperation(studentId,homeworkId,operations)){
+            teacherDAO.calAggregateScore(studentId,homeworkId);//计算总分
+
             pageTitle="批改完成";
             pageContent = pageTitle+",<a href=backDesk/studentsHomeworkList.jsp?homeworkId="+homeworkId+">返回学生作业列表</a>";
         }else {

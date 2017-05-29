@@ -84,8 +84,8 @@
             <div class="navbar-btn">
                 <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <div style="float: left;margin-top: 8px;margin-bottom: 8px;text-align: center; min-width: 66%;max-width: 73%">
-                <h2><%=moduleString%></h2>
+            <div style="float: left;margin-top: 20px;margin-bottom: 8px;text-align: center; min-width: 66%;max-width: 73%">
+                <h4><%=moduleString%></h4>
             </div>
             <div class="navbar-btn navbar-btn-right">
                 <a class="btn btn-success update-pro" href="../frontDesk/index.jsp" title="main page" target="_blank"><i class="fa fa-rocket"></i> <span>前往前台主页</span></a>

@@ -22,13 +22,15 @@ public class HomeworkStudentStatus {
    }
 
    public String getStatusDivContent() {
-      String buttonStatusValue;
+      String buttonStatusValue="";
       switch (homeworkStatus) {
          case FINISHED:
          case SAVED:
-            buttonStatusValue = "<a href=correctHomework.jsp?homeworkId=" + homeworkId + "&studentId="+userId+" class='floatButton'>批改</a>\n";
+         case CORRECTED:
+            buttonStatusValue = "<a href=correctHomework.jsp?homeworkId=" + homeworkId + "&studentId="+userId+" class='floatButton'>批改</a>";
             break;
          case UNFINISHED:
+            break;
          default:
             buttonStatusValue = "";
       }

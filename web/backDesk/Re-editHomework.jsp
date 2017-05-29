@@ -42,7 +42,6 @@
    <title><%=moduleString%>
    </title>
 
-
 </head>
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
@@ -52,7 +51,18 @@
       <form name="form" action="publishHomework.servlet" method="post">
          <input type="hidden" name="action" value="reedit">
          <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
-         <%=reeditHomeworkDiv.getHead()%>
+
+         <div class="float-right"> 
+             <input class="homework-title" name="homeworkTitle" type="text" value="<%=thisHomework.getHomeworkTitle()%>" placeholder="作业标题">
+             <a class="floatButton" onclick="checkHomework()">发布</a>
+         </div>
+         <div align="right" style="padding-right: 6%">
+             开始时间:<input CLASS="score" type="text" name="beginTime" id="beginTime" value="<%=thisHomework.getBeginTime()%>" title="选择开始时间"
+                    onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
+             结束时间:<input CLASS="score" type="text" name="endTime" id="endTime" value=" <%=thisHomework.getEndTime()%>" placeholder="选择结束时间" onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
+            <a class="floatButton" onclick="deleteHomework()">删除作业</a>
+         </div>
+         
          <h2>选择题</h2>
          <div id="choices_field">
             <%=reeditHomeworkDiv.getChoiceDiv()%>
@@ -64,15 +74,24 @@
             <%=reeditHomeworkDiv.getCompletionDiv()%>
          </div>
          <h2>操作题</h2>
-         <div class="operations_field" id="completions_field">
+         <div class="operations_field">
             <%=reeditHomeworkDiv.getOperationDiv()%>
          </div>
       </form>
    </div>
-   <script>
+
+   <form method="post" name="deleteForm" action="deleteHomework.action">
+      <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
+   </form>
+   <script    type="text/javascript">
        choiceNum=<%=thisHomework.getChoiceHomeworkList().size()+1%>;
        completionNum=<%=thisHomework.getCompletionHomeworkList().size()+1%>;
        operationNum=<%=thisHomework.getOperationHomeworkList().size()+1%>;
+       function deleteHomework() {
+           if(confirm("确认删除？")){
+               document.deleteForm.submit();
+           }
+       }
    </script>
 </div>
 </body>
