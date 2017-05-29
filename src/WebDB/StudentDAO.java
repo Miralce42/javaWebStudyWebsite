@@ -406,10 +406,17 @@ public class StudentDAO {
                 String[] answerKey=result[0].split("#");//参考答案
                 double perScore=Double.parseDouble(result[1])/(answerKey.length);//每个空的分
                 String[] stuAnswer=completionAnswer.getAnswer().split("#");//学生答案
-
-
+                int correctNum=0;//答对数
+                for(int i=0;i<answerKey.length&&i<stuAnswer.length;i++){
+                    if(stuAnswer[i].equals(answerKey[i]))
+                        correctNum++;
+                }
+                double getScore=perScore*correctNum;//得分
+                if(!giveMark("answersheet_completion",completionAnswer.getQuestionId(),getScore)){//给分
+                    db_manager.rollbackAffair();
+                    return false;
+                }
             }
-
 
             db_manager.Commit();
             return true;

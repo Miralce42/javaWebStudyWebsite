@@ -40,7 +40,8 @@ public class LoginFilter implements Filter {
               "/frontDesk/topicDetail.jsp",
               "/frontDesk/createTopic.jsp",
               "/frontDesk/myInfo.jsp",
-              "/frontDesk/browserHomework.jsp"
+              "/frontDesk/browserHomework.jsp",
+              "/frontDesk/commitHomework.servlet"
       };
       String[] filterStudentPage = new String[]{//后台过滤页面,限制教师访问
               "/backDesk/homeworkManager.jsp",
