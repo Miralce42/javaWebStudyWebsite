@@ -38,7 +38,7 @@ public class ManagerHomeworkDiv {
                     homework.statusToValue_stu()
             );
 
-            builder.append(managerHomeworkDiv.toStuString());//divContent
+            builder.append(managerHomeworkDiv.buildBump_stu());//divContent
 
             if (i % 3 == 0) {
                 builder.append("</div>");
@@ -81,17 +81,17 @@ public class ManagerHomeworkDiv {
 
             switch (homework.getHomeworkStatus()) {
                 case CLOSED:
-                    closedBuilder.append(managerHomeworkDiv.buildOpenHomeworkBump(false));
+                    closedBuilder.append(managerHomeworkDiv.buildBump_tea(false));
                     closedNum++;
                     haveClosedHomework = true;
                     break;
                 case UNCLOSED:
-                    unclosedBuilder.append(managerHomeworkDiv.buildOpenHomeworkBump(false));
+                    unclosedBuilder.append(managerHomeworkDiv.buildBump_tea(false));
                     unclosedNum++;
                     haveUnclosedHomework = true;
                     break;
                 case DELETED:
-                    deletedBuilder.append(managerHomeworkDiv.buildOpenHomeworkBump(true));
+                    deletedBuilder.append(managerHomeworkDiv.buildBump_tea(true));
                     deletedNum++;
                     haveDeletedHomework = true;
                     break;
@@ -121,7 +121,7 @@ public class ManagerHomeworkDiv {
     }
 
 
-    public String toStuString() {//学生端
+    private String buildBump_stu() {//学生端
         String url = buttonValue.equals("查看") ? "browserHomework.jsp" : "doHomework.jsp";
         return
                 " <div class=\"col-md-4\">\n" +
@@ -141,10 +141,10 @@ public class ManagerHomeworkDiv {
                         " </div>\n";
     }
 
-    private String buildOpenHomeworkBump(boolean isDeleted) {//构造开放作业块
+    private String buildBump_tea(boolean isDeleted) {//构造开放作业块
 
         String buttonValue =
-                 "<a href="+(!isDeleted ?("Re-editHomework.jsp"):"ReOpenHomework.jsp")+"?homeworkId=" + hwId + " class='floatButton'>" + "重新编辑" + "</a>" +
+                 "<a href="+(!isDeleted ?("Re-editHomework.jsp"):"editDeletedHomework.jsp")+"?homeworkId=" + hwId + " class='floatButton'>" + "重新编辑" + "</a>" +
                         (!isDeleted ? "<a href=studentsHomeworkList.jsp?homeworkId=" + hwId + " class='floatButton'> 批改作业</a>" : "");
 
         return
