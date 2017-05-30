@@ -321,7 +321,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-    public Homework getHomeworkDetail(String homeworkId) {//获取作业详细
+    public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
         ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();
