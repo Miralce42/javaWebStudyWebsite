@@ -144,7 +144,8 @@ public class ManagerHomeworkDiv {
     private String buildBump_tea(boolean isDeleted) {//构造开放作业块
 
         String buttonValue =
-                 "<a href="+(!isDeleted ?("Re-editHomework.jsp"):"editDeletedHomework.jsp")+"?homeworkId=" + hwId + " class='floatButton'>" + "重新编辑" + "</a>" +
+                 "<a href="+(!isDeleted ?("Re-editHomework.jsp"):"editDeletedHomework.jsp")+"?homeworkId=" + hwId + " class='floatButton'>"
+                         +(!isDeleted? "重新编辑":"重新编辑发布" )+ "</a>" +
                         (!isDeleted ? "<a href=studentsHomeworkList.jsp?homeworkId=" + hwId + " class='floatButton'> 批改作业</a>" : "");
 
         return

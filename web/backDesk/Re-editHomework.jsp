@@ -26,7 +26,7 @@
          response.sendRedirect("../executeMessage.jsp");
          return;
       }
-      ReeditHomeworkDiv reeditHomeworkDiv = new ReeditHomeworkDiv(thisHomework);
+      ReeditHomeworkDiv reeditHomeworkDiv = new ReeditHomeworkDiv(thisHomework,false);
    %>
    <script type="text/javascript" src="../js/jquery.min.js"></script>
 
@@ -46,7 +46,7 @@
    <!--右侧布局-->
    <div class="container-field">
       <form name="form" action="publishHomework.servlet" method="post">
-         <input type="hidden" name="action" value="reedit">
+         <input type="hidden" name="action" value="REEDITING">
          <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
 
          <div class="float-right"> 

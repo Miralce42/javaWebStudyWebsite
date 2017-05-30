@@ -29,14 +29,14 @@ public class DohHomeworkFilter implements Filter {
             StudentHomework.HomeworkStatus homeworkStatus = new StudentDAO(student).getStudentHomeworkStatus(homeworkId);
             if (homeworkStatus != null &
                     homeworkStatus != StudentHomework.HomeworkStatus.FINISHED &&
-                    homeworkStatus != StudentHomework.HomeworkStatus.CORRECTED){//未完成，放通
+                    homeworkStatus != StudentHomework.HomeworkStatus.CORRECTED) {//未完成，放通
                 chain.doFilter(req, resp);
                 return;
             }
         }
 
         session.setAttribute("title", "出错");
-        String pageContent = "无法访问此资源,返回<a href=frontDesk/studentHomework.jsp>作业列表</a>";
+        String pageContent = "作业已提交完成,返回<a href=frontDesk/studentHomework.jsp>作业列表</a>";
         session.setAttribute("pageContent", pageContent);
         ((HttpServletResponse) resp).sendRedirect("../executeMessage.jsp");
 
