@@ -28,6 +28,7 @@ public class StudentHomework {
 
    public String statusToValue_tea() {//教师获取作业状态
       switch (homeworkStatus) {
+         case DELETED:
          case UNCLOSED:
             return "重新编辑";
          case CLOSED:
@@ -93,11 +94,14 @@ public class StudentHomework {
    }
 
    public enum HomeworkStatus {
-      CORRECTED,//已批
+      CORRECTED,//教师已批阅
       UNFINISHED,//未完成
-      FINISHED,//完成
-      SAVED,//保存
+      FINISHED,//提交作业完成
+      SAVED,//保存包夜
+
+
       CLOSED,//关闭
       UNCLOSED,//未关闭
+      DELETED//删除
    }
 }

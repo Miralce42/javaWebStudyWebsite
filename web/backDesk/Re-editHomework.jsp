@@ -13,12 +13,9 @@
 <head>
    <%
       String moduleString = "重新编辑作业";
-
       Users teacher = (Users) session.getAttribute("user");
-
       TeacherDAO teacherDAO = new TeacherDAO(teacher);
       String homeworkId = request.getParameter("homeworkId");
-
    %>
    <%
       //生成布局

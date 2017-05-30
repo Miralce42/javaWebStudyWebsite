@@ -25,33 +25,10 @@
     <h3>我的作业</h3>
         <%
         Users student =(Users)session.getAttribute("user");
-
         StudentDAO studentDAO=new StudentDAO(student);
-
         ArrayList<StudentHomework> homeworkList=studentDAO.getHomeworkList();
-        int i=1;
-        for(StudentHomework homework:homeworkList){
-           if(i%3==1){
-              out.print("<div class=\"row\">\n");//行div
-           }
-           String closingTime=homework.getClosingTime();
 
-           //一个作业块
-           ManagerHomeworkDiv managerHomeworkDiv=new ManagerHomeworkDiv(homework.getId(),
-                   homework.getTitle(),
-                   "截止时间:"+closingTime.substring(0,closingTime.length()-2),
-                   homework.statusToValue_stu()
-           );
-
-           out.println(managerHomeworkDiv.toStuString());//divContent
-
-           if(i%3==0){
-              out.print("</div>");
-           }i++;
-        }
-        if(i%3!=0){
-            out.print("</div>");
-        }
+        out.println(ManagerHomeworkDiv.buildStuBumps(homeworkList));
     %>
 
 </body>

@@ -31,7 +31,7 @@ public class StudentDAO {
     }
 
     public ArrayList<StudentHomework> getHomeworkList() {
-        String sql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()<closing_time and now()>create_time ORDER BY closing_time DESC";
+        String sql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC";
         //未结束
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, null);
@@ -39,8 +39,8 @@ public class StudentDAO {
             while (resultSet.next()) {
                 String homeworkId = resultSet.getString("id");
                 String title = resultSet.getString("title");
-                String createTime = resultSet.getString("create_time");
-                String closingTime = resultSet.getString("closing_time");
+                String createTime = resultSet.getString("begin_time");
+                String closingTime = resultSet.getString("end_time");
 
                 StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
 
@@ -57,13 +57,13 @@ public class StudentDAO {
                 homeworkList.add(studentHomework);
             }
             //获取已关闭
-            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()>closing_time ORDER BY closing_time DESC";
+            String finishedSql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()>end_time ORDER BY end_time DESC";
             ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
             while (finishedSet.next()) {
                 String homeworkId = finishedSet.getString("id");
                 String title = finishedSet.getString("title")+"<div align=right>（已关闭）</div>";//显示已关闭
-                String createTime = finishedSet.getString("create_time");
-                String closingTime = finishedSet.getString("closing_time");
+                String createTime = finishedSet.getString("begin_time");
+                String closingTime = finishedSet.getString("end_time");
                 StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
                 studentHomework.setHomeworkStatus(HomeworkStatus.FINISHED);//设为完成
                 homeworkList.add(studentHomework);

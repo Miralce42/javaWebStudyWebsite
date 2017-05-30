@@ -23,9 +23,9 @@ public class TeacherDAO {
         this.teacher = teacher;
     }
 
-    public ArrayList<StudentHomework> getHomeworkList() {
+    public ArrayList<StudentHomework> getHomeworkList() {//获取作业（未关闭-已关闭-已删除）
         //未结束作业
-        String unfinishSql = "SELECT * FROM homework where now()<closing_time and now()>create_time ORDER BY closing_time DESC ";
+        String unfinishSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC ";
 
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet unfinishedSet = db_manager.executeQuery(unfinishSql, null);
@@ -33,26 +33,40 @@ public class TeacherDAO {
             while (unfinishedSet != null && unfinishedSet.next()) {
                 String id = unfinishedSet.getString("id");
                 String title = unfinishedSet.getString("title");
-                String createTime = unfinishedSet.getString("create_tIme");
-                String closingTime = unfinishedSet.getString("closing_time");
+                String createTime = unfinishedSet.getString("begin_time");
+                String closingTime = unfinishedSet.getString("end_time");
 
                 StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.UNCLOSED);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.UNCLOSED);//设置标志
                 homeworkList.add(studentHomework);
             }
             //获取结束作业
-            String finishSql = "SELECT * FROM homework where now()>closing_time ORDER BY closing_time DESC";
+            String finishSql = "SELECT * FROM homework where now()>end_time ORDER BY end_time DESC";
             ResultSet finishedSet = db_manager.executeQuery(finishSql, null);
             while (finishedSet.next()) {
                 String id = finishedSet.getString("id");
                 String title = finishedSet.getString("title");
-                String createTime = finishedSet.getString("create_time");
-                String closingTime = finishedSet.getString("closing_time");
+                String createTime = finishedSet.getString("begin_time");
+                String closingTime = finishedSet.getString("end_time");
 
                 StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.CLOSED);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.CLOSED);//设置标志
                 homeworkList.add(studentHomework);
             }
+            //获取删除作业
+            String deletedSql = "SELECT * FROM homework where is_delete=1 ORDER BY end_time DESC ";
+            ResultSet deletedSet = db_manager.executeQuery(deletedSql, null);
+            while (deletedSet != null && deletedSet.next()) {
+                String id = deletedSet.getString("id");
+                String title = deletedSet.getString("title");
+                String createTime = deletedSet.getString("begin_time");
+                String closingTime = deletedSet.getString("end_time");
+
+                StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.DELETED);//设置标志
+                homeworkList.add(studentHomework);
+            }
+
             return homeworkList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,8 +74,9 @@ public class TeacherDAO {
         }
     }
 
-    //保存和完成状态
-    public ArrayList<HomeworkStudentStatus> getHomeworkFinishedAndSavedStudentList(String homeworkId) {
+
+    //获取保存和完成状态的学生
+    public ArrayList<HomeworkStudentStatus> getFinishedAndSavedStudentList(String homeworkId) {
         String sql = "SELECT users.user_id,name,status,major,class FROM homework_status,users where hw_id=? " +
                 "and user_type='STUDENT' and users.user_id=homework_status.user_id";
         ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = new ArrayList<HomeworkStudentStatus>();
@@ -73,7 +88,6 @@ public class TeacherDAO {
                 String name = resultSet.getString("name");
                 String major = resultSet.getString("major");
                 String classname = resultSet.getString("class");
-
 
                 //存在记录，存在状态
                 StudentHomework.HomeworkStatus homeworkStatus = StudentHomework.HomeworkStatus.valueOf(status);
@@ -87,6 +101,7 @@ public class TeacherDAO {
         }
     }
 
+    //获取未完成学生
     public ArrayList<HomeworkStudentStatus> getHomeworkUnfinishedStudentList(String homeworkId) {
         String sql = "SELECT users.user_id,name,major,class FROM users " +
                 "where user_type='STUDENT' and user_id not in (" +
@@ -135,7 +150,7 @@ public class TeacherDAO {
         try {
             db_manager.beginAffair();//开始事务
 
-            String sql = "insert into homework(title,create_time,closing_time,is_delete)" +
+            String sql = "insert into homework(title,begin_time,end_time,is_delete)" +
                     " values(?,?,?,0)";
             if (db_manager.executeUpdate(sql, new String[]{newHomework.getHomeworkTitle()
                     , newHomework.getBeginTime()
@@ -211,7 +226,7 @@ public class TeacherDAO {
         try {
             db_manager.beginAffair();
             //update作业状态
-            String updateHomeworkSql = "update homework set title=?,create_time=?,closing_time=? where id=?";
+            String updateHomeworkSql = "update homework set title=?,begin_time=?,end_time=? where id=?";
             if (db_manager.executeUpdate(updateHomeworkSql, new String[]{
                     homework.getHomeworkTitle(),
                     homework.getBeginTime(),
@@ -308,13 +323,13 @@ public class TeacherDAO {
         homework.setCompletionHomeworkList(completionHomeworkList);
         homework.setOperationHomeworkList(operationHomeworkList);
 
-        String homeworkSql = "SELECT title,create_time,closing_time FROM homework where id=?";
+        String homeworkSql = "SELECT title,begin_time,end_time FROM homework where id=?";
         ResultSet homeworkResultSet = db_manager.executeQuery(homeworkSql, new String[]{homeworkId});
         try {
             if (homeworkResultSet.next()) {
                 homework.setHomeworkTitle(homeworkResultSet.getString("title"))
-                        .setBeginTime(homeworkResultSet.getString("create_time"))
-                        .setEndTime(homeworkResultSet.getString("closing_time"));
+                        .setBeginTime(homeworkResultSet.getString("begin_time"))
+                        .setEndTime(homeworkResultSet.getString("end_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
 
 

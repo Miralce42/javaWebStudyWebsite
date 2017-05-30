@@ -45,7 +45,7 @@
    <p>已提交同学</p>
    <hr class="blue">
    <%
-      ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = teacherDAO.getHomeworkFinishedAndSavedStudentList(homeworkId);
+      ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = teacherDAO.getFinishedAndSavedStudentList(homeworkId);
       String finishedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, FINISHED, false);
       out.print(finishedStu);
    %>
