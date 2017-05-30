@@ -27,7 +27,9 @@ public class DohHomeworkFilter implements Filter {
         if (homeworkId != null) {
             Users student = (Users) session.getAttribute("user");
             StudentHomework.HomeworkStatus homeworkStatus = new StudentDAO(student).getStudentHomeworkStatus(homeworkId);
-            if (homeworkStatus != null && homeworkStatus != StudentHomework.HomeworkStatus.FINISHED) {//未完成，放通
+            if (homeworkStatus != null &
+                    homeworkStatus != StudentHomework.HomeworkStatus.FINISHED &&
+                    homeworkStatus != StudentHomework.HomeworkStatus.CORRECTED){//未完成，放通
                 chain.doFilter(req, resp);
                 return;
             }
