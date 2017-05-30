@@ -1,5 +1,6 @@
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="com.dream.FileClasses.FileDAO" %><%--
+<%@ page import="com.dream.FileClasses.FileDAO" %>
+<%@ page import="javax.xml.crypto.Data" %><%--
   Created by Dreamer.
   User: Dreamer
   Date: 2017/5/22
@@ -19,6 +20,7 @@
         String fileSection=null;
         try{
             fileSection=request.getParameter("section");//{"第一章","第二章","第三章","第四章","其他"};
+           System.out.println(fileSection);
         }
         catch (Exception E){
             E.printStackTrace();
@@ -27,9 +29,10 @@
             fileSection="实验文件";
         FileDAO fileDAO=new FileDAO();
         String sql="select * from teachingfile where file_type=? and chapter=?";
-        String[] param={"教学课件资料",fileSection};
+        String[] param={"实践教学资料",fileSection};
         String[] imgurl={"FileImages/doc.jpg","FileImages/doc.jpg","FileImages/zip.jpg","FileImages/jpg.jpg","FileImages/zip.jpg","FileImages/xsl.jpg"};//图标文件路径
         String[] filesuffix={"doc","docx","zip","jpg","rar","xsl"};//文件后缀名数组
+    if(!fileSection.equals("通知")){
     %>
     <div name="firstdiv" style="margin-top: 10%"><!---firstdiv-->
         <div class="fh5co-narrow-content"><!---narrow-->
@@ -73,6 +76,30 @@
                         }//else
                     }//try
                     catch (Exception e){e.printStackTrace();}
+                    }//不是通知
+                            else//是通知
+                            {
+                                try{
+                                    ResultSet resultSet=fileDAO.getResultSet(sql,param);
+                                    if(!resultSet.next()) {
+                %>
+                                <label>暂无文件！</label>
+                                <%
+                                }//if
+                                else {
+                                    resultSet = fileDAO.getResultSet(sql, param);
+                                    out.println("<div style='margin-top:13%;margin-left:10%'><table border=2 style='text-align=center;'><tr><td>时间</td><td>内容</td></tr>");
+                                    while (resultSet.next()) {
+                                        String filename = resultSet.getString("file_name").trim();
+                                        String time= resultSet.getString("upload_date");
+                                       time=time.substring(0,time.indexOf(" "));
+                                        out.println("<tr><td>"+time+"</td><td>"+filename+"</td></tr>");
+                                    }
+                                    out.println("</table></div>");
+                                } //ESLE
+                                }//TRY
+                                catch (Exception A){ }
+                            }//else
                     fileDAO.dbClose();
                 %>
 

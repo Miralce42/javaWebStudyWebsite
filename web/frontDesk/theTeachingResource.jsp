@@ -41,13 +41,16 @@
             {
                 resultSet = fileDAO.getResultSet(sql, param);
                 String filename=null;
-                out.println("<div  style=\"float:left;margin-left:20%;width=45%;margin-top: 10%\">");
+                out.println("<div   style=\"float:left;margin-left:13%;margin-top: 10%;\"> ");
+                out.println("<table border='2' style='text-align:center;vertical-align:middle;'><tr><td>上传时间</td><td>链接</td></tr>");
                 while (resultSet.next())
                 {
+                    String time=resultSet.getString("upload_date");
+                    time=time.substring(0,time.indexOf(" "));
                     filename = resultSet.getString("file_name");
-                        out.println(filename);
+                        out.println("<tr><td>"+time+"</td><td><span>"+filename+"</span></td></tr>");
                 }
-                        out.println("</div>");
+                        out.println("</table></div>");
             }//else
         }//try
         catch (Exception a){
