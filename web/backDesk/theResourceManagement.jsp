@@ -44,7 +44,7 @@
                     String time=resultSet.getString("upload_date");
     %>
     <tr>
-        <td><span><%=filename%></span></td>
+        <td><span> <%=filename%></></td>
         <td><span>上传时间：<%=time%></span></td>
         <td><a href="/delete.servlet?filename=教学资源管理/<%=section%>/<%=filename%>"> 删除</a></td>
     </tr>
