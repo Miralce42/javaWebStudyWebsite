@@ -10,6 +10,7 @@ import static beans.StudentHomework.HomeworkStatus.CORRECTED;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class TeacherDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -41,7 +42,7 @@ public class TeacherDAO {
                 homeworkList.add(studentHomework);
             }
             //获取结束作业
-            String finishSql = "SELECT * FROM homework where now()>end_time ORDER BY end_time DESC";
+            String finishSql = "SELECT * FROM homework where is_delete=0 and now()>end_time ORDER BY end_time DESC";
             ResultSet finishedSet = db_manager.executeQuery(finishSql, null);
             while (finishedSet.next()) {
                 String id = finishedSet.getString("id");
@@ -222,7 +223,7 @@ public class TeacherDAO {
         }
     }
 
-    public boolean ReeditHomework(Homework homework) {
+    public boolean reeditHomework(Homework homework) {
         try {
             db_manager.beginAffair();
             //update作业状态
@@ -298,6 +299,13 @@ public class TeacherDAO {
             return false;
         }
     }
+    public boolean reopenHomework(Homework homework) {
+        //删除原作业，新建作业。
+        String deleteSql = "delete from homework where id=?";
+        //发布新作业
+
+        return db_manager.executeUpdate(deleteSql, new String[]{homework.getHomeworkId()}) == 1 && publishHomework(homework);
+    }
 
     private String getChoiceId() throws SQLException {
         String getHwIdSql = "SELECT max(id) FROM hw_question_choice";
@@ -313,7 +321,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-    public Homework getHomeworkDetail(String homeworkId) {
+    public Homework getHomeworkDetail(String homeworkId) {//获取作业详细
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
         ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();
@@ -432,6 +440,10 @@ public class TeacherDAO {
         }
 
     }
+    public boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status){
+        String updateStatusSql = "update homework_status set status=? where user_id=? and hw_id=?";
+        return db_manager.executeUpdate(updateStatusSql, new String[]{String.valueOf(status), userId, homeworkId})==1;
+    }
 
     public boolean correctOperation(String userId, String homeworkId, ArrayList<AnswerSheet> operations) {
         Users student = new Users();
@@ -439,8 +451,7 @@ public class TeacherDAO {
         StudentDAO studentDAO = new StudentDAO(student);
         try {
             db_manager.beginAffair();
-            String updateStatussql = "update homework_status set status=? where user_id=? and hw_id=?";
-            if (db_manager.executeUpdate(updateStatussql, new String[]{String.valueOf(CORRECTED), userId, homeworkId}) != 1) {
+            if (!updateStuHomeworkStatus(userId,homeworkId,CORRECTED)) {
                 db_manager.rollbackAffair();
                 return false;
             }
@@ -451,6 +462,7 @@ public class TeacherDAO {
                     return false;
                 }
             }
+            calAggregateScore(userId,homeworkId);//更新总分
 
             db_manager.Commit();
             return true;
@@ -505,9 +517,9 @@ public class TeacherDAO {
 
     public void calAggregateScore(String userId, String homeworkId) {//计算总分
         String sql = "update homework_status set score=(" +
-                "(select sum(ifnull(score,0)) from answersheet_choice where hw_id=? and user_id=?)+" +
-                "(select sum(ifnull(score,0)) from answersheet_completion where hw_id=? and user_id=?)+" +
-                " (select sum(ifnull(score,0)) from answersheet_operation where hw_id=? and user_id=?)" +
+                "ifnull((select sum(ifnull(score,0)) from answersheet_choice where hw_id=? and user_id=?),0)+" +
+                "ifnull((select sum(ifnull(score,0)) from answersheet_completion where hw_id=? and user_id=?),0)+" +
+                "ifnull((select sum(ifnull(score,0)) from answersheet_operation where hw_id=? and user_id=?),0)" +
                 ")" +
                 " where hw_id=? and user_id=?";
         db_manager.executeUpdate(sql, new String[]{

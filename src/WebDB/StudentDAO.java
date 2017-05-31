@@ -11,6 +11,8 @@ import beans.TopicComments;
 import beans.TeachingEvaluation;
 import beans.Users;
 
+import static beans.StudentHomework.HomeworkStatus.CORRECTED;
+
 /**
  * Created by Vove on 2017/5/20.
  *
@@ -318,13 +320,13 @@ public class StudentDAO {
     }
 
     private boolean insertIntoHomeworkAnswer(HomeworkAnswerSheet homeworkAnswerSheet) {
-        String userId= homeworkAnswerSheet.getUserId();
+        String userId = homeworkAnswerSheet.getUserId();
         //放入选择
         for (AnswerSheet choiceAnswerSheet : homeworkAnswerSheet.getChoiceAnswers()) {
             String insertChoiceAnswerSql;
-            if(isExistAnswer("answersheet_choice", choiceAnswerSheet.getQuestionId(),userId)){
-                insertChoiceAnswerSql="update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
-            }else {
+            if (isExistAnswer("answersheet_choice", choiceAnswerSheet.getQuestionId(), userId)) {
+                insertChoiceAnswerSql = "update answersheet_choice set answer=? where  question_id=? and user_id=? and hw_id=?";
+            } else {
                 insertChoiceAnswerSql = "insert into answersheet_choice(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertChoiceAnswerSql, new String[]{
@@ -335,9 +337,9 @@ public class StudentDAO {
         //填空
         for (AnswerSheet completionAnswerSheet : homeworkAnswerSheet.getCompletionAnswers()) {
             String insertCompleionAnswerSql;
-            if(isExistAnswer("answersheet_completion", completionAnswerSheet.getQuestionId(),userId)){
-                insertCompleionAnswerSql="update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
-            }else {
+            if (isExistAnswer("answersheet_completion", completionAnswerSheet.getQuestionId(), userId)) {
+                insertCompleionAnswerSql = "update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
+            } else {
                 insertCompleionAnswerSql = "insert into answersheet_completion(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
             if (db_manager.executeUpdate(insertCompleionAnswerSql, new String[]{
@@ -346,23 +348,25 @@ public class StudentDAO {
             }) != 1) return false;
         }
         //操作题
-        for(AnswerSheet operationAnswerSheet : homeworkAnswerSheet.getOperationAnswer()){
+        for (AnswerSheet operationAnswerSheet : homeworkAnswerSheet.getOperationAnswer()) {
             String insertOperationSql;
-            if(isExistAnswer("answersheet_operation", operationAnswerSheet.getQuestionId(),userId)){
-                insertOperationSql="update answersheet_operation set answer=? where question_id=? and user_id=? and hw_id=?";
+            if (isExistAnswer("answersheet_operation", operationAnswerSheet.getQuestionId(), userId)) {
+                insertOperationSql = "update answersheet_operation set answer=? where question_id=? and user_id=? and hw_id=?";
+            } else {
+                insertOperationSql = "insert into answersheet_operation(answer,question_id,user_id,hw_id) values(?,?,?,?)";
             }
-            else {
-                insertOperationSql="insert into answersheet_operation(answer,question_id,user_id,hw_id) values(?,?,?,?)";
-            }
-            if(db_manager.executeUpdate(insertOperationSql,new String[]{
+            if (db_manager.executeUpdate(insertOperationSql, new String[]{
                     operationAnswerSheet.getAnswer(), operationAnswerSheet.getQuestionId(),
                     userId, homeworkAnswerSheet.getHomeworkId()
-            })!=1) return false;
+            }) != 1) return false;
         }
-        return true;
+        //若无操作题，状态设为批改完成
+        return homeworkAnswerSheet.getOperationAnswer().size() != 0 ||
+                new TeacherDAO().updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(),
+                        homeworkAnswerSheet.getHomeworkId(), CORRECTED);
     }
-    private boolean isExistAnswer(String tabltName,String questionId,String userId){//提交作业检查记录
-        String sql="SELECT answer FROM "+tabltName+" where question_id=? and user_id=?";
+    private boolean isExistAnswer(String tableName,String questionId,String userId){//提交作业检查记录
+        String sql="SELECT answer FROM "+tableName+" where question_id=? and user_id=?";
         try {
             return db_manager.executeQuery(sql,new String[]{questionId,userId}).next();
         } catch (SQLException e) {

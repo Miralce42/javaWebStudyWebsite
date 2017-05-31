@@ -44,11 +44,14 @@ public class LoginFilter implements Filter {
               "/frontDesk/commitHomework.servlet"
       };
       String[] filterStudentPage = new String[]{//后台过滤页面,限制教师访问
+              "/backDesk",
+              "/backDesk/",
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
               "/backDesk/publishHomework.jsp",
               "/backDesk/Re-editHomework.jsp",
-              "/backDesk/correctHomework.jsp"
+              "/backDesk/correctHomework.jsp",
+              "/backDesk/editDeletedHomework.jsp"
       };
 
       for (String page : filterPage) {

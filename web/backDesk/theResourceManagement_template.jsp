@@ -41,7 +41,7 @@
 <%@include file="sidebar.jsp"%><!--左侧布局-->
 <div id="fh5co-main" class="right"><!--右侧布局-->
      <div><!--文件上传-->
-           <form action="multipracticefile.action" method="post" enctype="multipart/form-data" >
+           <form action="multiresourcefile.action" method="post" enctype="multipart/form-data" >
             <label>上传资料</label><br/>
             <input type="text" name="file_type" id="file_type" value="教学资源管理" hidden="hidden"/>
             文件类型：
