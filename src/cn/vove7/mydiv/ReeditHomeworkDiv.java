@@ -12,10 +12,12 @@ import cn.vove7.mydiv.DoHomeworkDiv.ChoiceOption;
  */
 public class ReeditHomeworkDiv {
    private Homework homework;
+   private boolean isCanEdit;
 
 
-   public ReeditHomeworkDiv(Homework homework) {
+   public ReeditHomeworkDiv(Homework homework, boolean isCanEdit) {
       this.homework = homework;
+      this.isCanEdit = isCanEdit;
    }
 
    public String getChoiceDiv() {
@@ -44,6 +46,7 @@ public class ReeditHomeworkDiv {
       return builder.toString();
    }
    private String buildOperationValue(int index, OperationHomework operationHomework){
+      String deleteButton=isCanEdit?"<a class=\"floatButton\" onclick=\"deleteChoice(' + num + ')\">删除</a>":"";
       String id=operationHomework.getId();
       String content=operationHomework.getQuestionContent();
       String score=operationHomework.getScore();
@@ -51,26 +54,16 @@ public class ReeditHomeworkDiv {
       return "<div class=\"operation_field\">" +
               "<input type=\"hidden\" name=\"operation_id_"+index+"\" value=\""+id+"\">"+
               "<div class=\"title\">问题" + index + ":</div><div align=\"right\" style=\"margin-bottom: 10px;\">" +
-              "分数：<input class=\"score\" id=\"operation_score_"+index+"\" name=\"operation_score_"+index+"\" type=\"text\" value=\"" + score + "\"></div>" +
+              "分数：<input class=\"score\" id=\"operation_score_"+index+"\" name=\"operation_score_"+index+"\" type=\"text\" value=\"" + score + "\">" +
+              deleteButton+"</div>" +
               "<textarea class=\"ckeditor\" name=\"operation_content_" + index + "\" " +
               "id=\"operation_content_" + index + "\">" + content + "</textarea>" +
               "</div>";
    }
 
-//
-//   public String getHead() {
-//      return  "<div class=\"float-right\">\n" +
-//              "    <input class=\"homework-title\" name=\"homeworkTitle\" type=\"text\" value=\"" + homework.getHomeworkTitle() + "\" placeholder=\"作业标题\">\n" +
-//              "    <a class=\"floatButton\" onclick=\"checkHomework()\">发布</a>\n" +
-//              "</div>\n" +
-//              "<div align=\"right\" style=\"padding-right: 12%\">\n" +
-//              "    开始时间:<input CLASS=\"score\" type=\"text\" name=\"beginTime\" id=\"beginTime\" value=\"" + homework.getBeginTime() + "\" title=\"选择开始时间\"\n" +
-//              "           onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
-//              "    结束时间:<input CLASS=\"score\" type=\"text\" name=\"endTime\" id=\"endTime\" value=\"" + homework.getEndTime() + "\" placeholder=\"选择结束时间\" onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
-//              "</div>";
-//   }
 
    private String buildCompletionValue(int index, CompletionHomework completionHomework){
+      String deleteButton=isCanEdit?"<a class=\"floatButton\" onclick=\"deleteChoice(' + num + ')\">删除</a>":"";
       String completionFieldString;
       String id=completionHomework.getId();
       String refKey=completionHomework.getRefKey();
@@ -78,7 +71,7 @@ public class ReeditHomeworkDiv {
       completionFieldString = "<div class=\"completion_field\">" +
               "<input type=\"hidden\" name=\"completion_id_"+index+"\" value=\""+id+"\">"+
               "<div class=\"title\">题目" + index + ":</div><div align=\"right\" style=\"margin-bottom: 20px;margin-top: 40px\">" +
-              "分数：<input class=\"score\" id=\"comp_score_"+index+"\" name=\"comp_score_"+index+"\" type=\"text\" value=\"" + score + "\"></div>" +
+              "分数：<input class=\"score\" id=\"comp_score_"+index+"\" name=\"comp_score_"+index+"\" type=\"text\" value=\"" + score + "\">"+deleteButton+"</div>" +
               "<textarea class=\"ckeditor\" name=\"question_content_" + index + "\" " +
               "id=\"question_content_" + index + "\">" + completionHomework.getCompletionContent() + "</textarea>" +
               "<p>参考答案(多空以#号分开):</p><input id=\"completion_refKey_"+index+"\" name=\"completion_refKey_"+index+"\" class=\"choice\" type=\"text\" value=\""+refKey+"\">"+
@@ -87,6 +80,7 @@ public class ReeditHomeworkDiv {
    }
 
    private String buildChoiceValue(int index, ChoiceHomework choiceHomework) {
+      String deleteButton=isCanEdit?"<a class=\"floatButton\" onclick=\"deleteChoice(' + num + ')\">删除</a>":"";
       String id=choiceHomework.getId(),
               score = choiceHomework.getScore(),
               s_A = choiceHomework.getChoice_A(),
@@ -105,7 +99,7 @@ public class ReeditHomeworkDiv {
               "<table width=\"100%\"><tr>" +
               "<div class=\"title narrow\">题目" + index + ":</div><div align=\"right\" style=\"margin-bottom: 10px;\">分数：<input class=\"score\" id=\"score_"
               + index + "\" name=\"score_" + index + "\" type=\"text\" value=\""
-              + score + "\"></div><td colspan=\"4\">" + ckediorString +
+              + score + "\">"+deleteButton+"</div><td colspan=\"4\">" + ckediorString +
               "</td></tr><tr><td class=\"narrow\">选项A:</td><td><input class=\"choice\" id=\"choice_" + index + "_A\" type=\"text\" name=\"choice_" + index + "_A\" value=\""
               + s_A + "\" placeholder=\"选项A\"></td><td class=\"narrow\">选项B:</td>" +
               "<td><input class=\"choice\" type=\"text\" id=\"choice_" + index + "_B\" name=\"choice_" + index + "_B\"" +

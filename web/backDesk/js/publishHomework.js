@@ -14,6 +14,9 @@ function setChoiceBum(num) {
 function setCompletionBum(num) {
     completionNum=num;
 }
+function setOperationNum(num) {
+    operationNum=num;
+}
 function addChoice() {
     allChoiceValue.splice(0, allChoiceValue.length);//清空
     for (var i = 1; i < choiceNum; i++) {

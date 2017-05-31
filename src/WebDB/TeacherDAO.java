@@ -10,6 +10,7 @@ import static beans.StudentHomework.HomeworkStatus.CORRECTED;
 
 /**
  * Created by Vove on 2017/5/20.
+ *
  */
 public class TeacherDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -222,7 +223,7 @@ public class TeacherDAO {
         }
     }
 
-    public boolean ReeditHomework(Homework homework) {
+    public boolean reeditHomework(Homework homework) {
         try {
             db_manager.beginAffair();
             //update作业状态
@@ -298,6 +299,13 @@ public class TeacherDAO {
             return false;
         }
     }
+    public boolean reopenHomework(Homework homework) {
+        //删除原作业，新建作业。
+        String deleteSql = "delete from homework where id=?";
+        //发布新作业
+
+        return db_manager.executeUpdate(deleteSql, new String[]{homework.getHomeworkId()}) == 1 && publishHomework(homework);
+    }
 
     private String getChoiceId() throws SQLException {
         String getHwIdSql = "SELECT max(id) FROM hw_question_choice";
@@ -313,7 +321,7 @@ public class TeacherDAO {
         return resultSet.getString(1);
     }
 
-    public Homework getHomeworkDetail(String homeworkId) {//获取作业详细
+    public Homework getHomeworkDetail(String homeworkId) {
         Homework homework = new Homework();
         homework.setHomeworkId(homeworkId);
         ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();

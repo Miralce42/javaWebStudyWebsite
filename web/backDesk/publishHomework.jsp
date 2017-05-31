@@ -36,7 +36,7 @@
     <!--右侧布局-->
     <div class="container-field">
         <form name="form" action="publishHomework.servlet" method="post">
-            <input type="hidden" name="action" value="publish">
+            <input type="hidden" name="action" value="FIRST_PUBLISH">
             <div class="float-right">
                 <input class="homework-title" name="homeworkTitle" type="text" placeholder="作业标题">
                 <a class="floatButton" onclick="checkHomework()">发布</a>
