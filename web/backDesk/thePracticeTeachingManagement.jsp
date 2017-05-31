@@ -28,7 +28,7 @@
                try {
                    ResultSet resultSet = fileDAO.getResultSet("select * from teachingfile where file_type=? and chapter=? order by upload_date", param);
                    if(section.equals("通知")) {
-                       out.println("<table border=2\ align='center'><tr><td>通知上传时间</td><td>通知内容</td><td>功能</td></tr>");
+                       out.println("<table border=2 align='center'><tr><td>通知上传时间</td><td>通知内容</td><td>功能</td></tr>");
                        while (resultSet.next()) {
                                out.println("<tr>");
                            out.println("<td>"+resultSet.getString("upload_date")+"</td><td>" + resultSet.getString("file_name") + "</td>");
