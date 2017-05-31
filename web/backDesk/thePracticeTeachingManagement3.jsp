@@ -84,13 +84,13 @@
                        while (resultSet.next()) {
                            if (temp % 3 == 0)
                                out.println("</tr><tr>");
-                           out.println("<td>" + resultSet.getString("file_name") + "</td>");
+                           out.println("<td>"+resultSet.getString("upload_date")+"</td><td>" + resultSet.getString("file_name") + "</td>");
                            out.println("<td> <a href='practicedbdelete.action?info=实践教学资料/");
                            out.println(filetype[i] + "/" + resultSet.getString("file_name") + "'>删除" + "</a></td>");
                            temp++;
-                       }
+                       }//while
                        out.println("</tr></table></form>");
-                   }
+                   }//if
                    else {
                        while (resultSet.next()) {
                            if (temp % 3 == 0)

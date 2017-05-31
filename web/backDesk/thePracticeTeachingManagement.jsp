@@ -28,14 +28,15 @@
                try {
                    ResultSet resultSet = fileDAO.getResultSet("select * from teachingfile where file_type=? and chapter=? order by upload_date", param);
                    if(section.equals("通知")) {
-                       out.println("<table border=2><tr>");
+                       out.println("<table border=2\ align='center'><tr><td>通知上传时间</td><td>通知内容</td><td>功能</td></tr>");
                        while (resultSet.next()) {
-                               out.println("</tr><tr>");
-                           out.println("<td>" + resultSet.getString("file_name") + "</td>");
+                               out.println("<tr>");
+                           out.println("<td>"+resultSet.getString("upload_date")+"</td><td>" + resultSet.getString("file_name") + "</td>");
                            out.println("<td> <a href='practicedbdelete.action?info=实践教学资料/");
                            out.println(section + "/" + resultSet.getString("file_name") + "'>删除" + "</a></td>");
+                           out.println("</tr>");
                        }
-                       out.println("</tr></table></form>");
+                       out.println("</table></form>");
                    }
                    else {
                        out.println("<table border=2 align='center'><tr><td>文件名</td><td>上传时间</td><td>功能</td>");
