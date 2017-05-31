@@ -57,18 +57,18 @@ public class ReeditHomeworkDiv {
               "</div>";
    }
 
-
-   public String getHead() {
-      return  "<div class=\"float-right\">\n" +
-              "    <input class=\"homework-title\" name=\"homeworkTitle\" type=\"text\" value=\"" + homework.getHomeworkTitle() + "\" placeholder=\"作业标题\">\n" +
-              "    <a class=\"floatButton\" onclick=\"checkHomework()\">发布</a>\n" +
-              "</div>\n" +
-              "<div align=\"right\" style=\"padding-right: 12%\">\n" +
-              "    开始时间:<input CLASS=\"score\" type=\"text\" name=\"beginTime\" id=\"beginTime\" value=\"" + homework.getBeginTime() + "\" title=\"选择开始时间\"\n" +
-              "           onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
-              "    结束时间:<input CLASS=\"score\" type=\"text\" name=\"endTime\" id=\"endTime\" value=\"" + homework.getEndTime() + "\" placeholder=\"选择结束时间\" onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
-              "</div>";
-   }
+//
+//   public String getHead() {
+//      return  "<div class=\"float-right\">\n" +
+//              "    <input class=\"homework-title\" name=\"homeworkTitle\" type=\"text\" value=\"" + homework.getHomeworkTitle() + "\" placeholder=\"作业标题\">\n" +
+//              "    <a class=\"floatButton\" onclick=\"checkHomework()\">发布</a>\n" +
+//              "</div>\n" +
+//              "<div align=\"right\" style=\"padding-right: 12%\">\n" +
+//              "    开始时间:<input CLASS=\"score\" type=\"text\" name=\"beginTime\" id=\"beginTime\" value=\"" + homework.getBeginTime() + "\" title=\"选择开始时间\"\n" +
+//              "           onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
+//              "    结束时间:<input CLASS=\"score\" type=\"text\" name=\"endTime\" id=\"endTime\" value=\"" + homework.getEndTime() + "\" placeholder=\"选择结束时间\" onclick=\"laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})\">\n" +
+//              "</div>";
+//   }
 
    private String buildCompletionValue(int index, CompletionHomework completionHomework){
       String completionFieldString;

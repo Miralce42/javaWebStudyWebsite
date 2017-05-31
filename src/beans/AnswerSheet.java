@@ -7,11 +7,16 @@ package beans;
 public class AnswerSheet {
     private String questionId;
     private String answer;
-    private int score;
+    private double score;
 
     public AnswerSheet(String questionId, String answer) {
         this.questionId = questionId;
         this.answer = answer;
+    }
+
+    public AnswerSheet(String questionId, double score) {
+        this.questionId = questionId;
+        this.score = score;
     }
 
     public String getQuestionId() {
@@ -30,11 +35,11 @@ public class AnswerSheet {
         this.answer = answer;
     }
 
-    public int getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

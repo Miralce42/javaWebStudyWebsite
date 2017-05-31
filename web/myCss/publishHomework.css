@@ -29,7 +29,8 @@ input.ref-key{
     margin-top: 8px;
     margin-left: 10%;
     height: 45px;
-    width: 80%;
+    min-width: 75%;
+    max-width: 80%;
     font-size: 1.2em;
 }
 .choice-title{

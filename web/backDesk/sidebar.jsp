@@ -84,8 +84,8 @@
             <div class="navbar-btn">
                 <button type="button" class="btn-toggle-fullwidth"><i class="lnr lnr-arrow-left-circle"></i></button>
             </div>
-            <div style="float: left;margin-top: 8px;margin-bottom: 8px;text-align: center; min-width: 66%;max-width: 73%">
-                <h2><%=moduleString%></h2>
+            <div style="float: left;margin-top: 20px;margin-bottom: 8px;text-align: center; min-width: 66%;max-width: 73%">
+                <h4><%=moduleString%></h4>
             </div>
             <div class="navbar-btn navbar-btn-right">
                 <a class="btn btn-success update-pro" href="../frontDesk/index.jsp" title="main page" target="_blank"><i class="fa fa-rocket"></i> <span>前往前台主页</span></a>
@@ -98,7 +98,7 @@
     <div class="sidebar-scroll">
         <nav>
             <ul class="nav">
-                <li><a href="homeworkManager"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
+                <li><a href="homeworkManager.jsp"><i class="lnr lnr-home"></i> <span>作业管理</span></a></li>
                 <li><a href="theCoursewareManagement.jsp" class=""><i class="lnr lnr-code"></i> <span>课件管理</span></a></li>
                 <li><a href="theResourceManagement.jsp" class=""><i class="lnr lnr-chart-bars"></i> <span>教学资源管理</span></a></li>
                 <li><a href="CourseEvaluation.jsp" class=""><i class="lnr lnr-cog"></i> <span>课程评价</span></a></li>

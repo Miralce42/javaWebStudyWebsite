@@ -47,7 +47,8 @@ public class LoginFilter implements Filter {
               "/backDesk/homeworkManager.jsp",
               "/backDesk/studentsHomeworkList.jsp",
               "/backDesk/publishHomework.jsp",
-              "/backDesk/Re-editHomework.jsp"
+              "/backDesk/Re-editHomework.jsp",
+              "/backDesk/correctHomework.jsp"
       };
 
       for (String page : filterPage) {

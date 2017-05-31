@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import static beans.StudentHomework.HomeworkStatus.CORRECTED;
+
 /**
  * Created by Vove on 2017/5/20.
- *
  */
 public class TeacherDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -22,9 +23,9 @@ public class TeacherDAO {
         this.teacher = teacher;
     }
 
-    public ArrayList<StudentHomework> getHomeworkList() {
+    public ArrayList<StudentHomework> getHomeworkList() {//获取作业（未关闭-已关闭-已删除）
         //未结束作业
-        String unfinishSql = "SELECT * FROM homework where now()<closing_time and now()>create_time ORDER BY closing_time DESC ";
+        String unfinishSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC ";
 
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet unfinishedSet = db_manager.executeQuery(unfinishSql, null);
@@ -32,26 +33,40 @@ public class TeacherDAO {
             while (unfinishedSet != null && unfinishedSet.next()) {
                 String id = unfinishedSet.getString("id");
                 String title = unfinishedSet.getString("title");
-                String createTime = unfinishedSet.getString("create_tIme");
-                String closingTime = unfinishedSet.getString("closing_time");
+                String createTime = unfinishedSet.getString("begin_time");
+                String closingTime = unfinishedSet.getString("end_time");
 
                 StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.UNCLOSED);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.UNCLOSED);//设置标志
                 homeworkList.add(studentHomework);
             }
             //获取结束作业
-            String finishSql="SELECT * FROM homework where now()>closing_time ORDER BY closing_time DESC";
-            ResultSet finishedSet=db_manager.executeQuery(finishSql,null);
-            while (finishedSet.next()){
+            String finishSql = "SELECT * FROM homework where now()>end_time ORDER BY end_time DESC";
+            ResultSet finishedSet = db_manager.executeQuery(finishSql, null);
+            while (finishedSet.next()) {
                 String id = finishedSet.getString("id");
                 String title = finishedSet.getString("title");
-                String createTime = finishedSet.getString("create_time");
-                String closingTime = finishedSet.getString("closing_time");
+                String createTime = finishedSet.getString("begin_time");
+                String closingTime = finishedSet.getString("end_time");
 
                 StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.CLOSED);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.CLOSED);//设置标志
                 homeworkList.add(studentHomework);
             }
+            //获取删除作业
+            String deletedSql = "SELECT * FROM homework where is_delete=1 ORDER BY end_time DESC ";
+            ResultSet deletedSet = db_manager.executeQuery(deletedSql, null);
+            while (deletedSet != null && deletedSet.next()) {
+                String id = deletedSet.getString("id");
+                String title = deletedSet.getString("title");
+                String createTime = deletedSet.getString("begin_time");
+                String closingTime = deletedSet.getString("end_time");
+
+                StudentHomework studentHomework = new StudentHomework(id, title, createTime, closingTime);
+                studentHomework.setHomeworkStatus(StudentHomework.HomeworkStatus.DELETED);//设置标志
+                homeworkList.add(studentHomework);
+            }
+
             return homeworkList;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,8 +74,9 @@ public class TeacherDAO {
         }
     }
 
-    //保存和完成状态
-    public ArrayList<HomeworkStudentStatus> getHomeworkFinishedAndSavedStudentList(String homeworkId) {
+
+    //获取保存和完成状态的学生
+    public ArrayList<HomeworkStudentStatus> getFinishedAndSavedStudentList(String homeworkId) {
         String sql = "SELECT users.user_id,name,status,major,class FROM homework_status,users where hw_id=? " +
                 "and user_type='STUDENT' and users.user_id=homework_status.user_id";
         ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = new ArrayList<HomeworkStudentStatus>();
@@ -72,7 +88,6 @@ public class TeacherDAO {
                 String name = resultSet.getString("name");
                 String major = resultSet.getString("major");
                 String classname = resultSet.getString("class");
-
 
                 //存在记录，存在状态
                 StudentHomework.HomeworkStatus homeworkStatus = StudentHomework.HomeworkStatus.valueOf(status);
@@ -86,6 +101,7 @@ public class TeacherDAO {
         }
     }
 
+    //获取未完成学生
     public ArrayList<HomeworkStudentStatus> getHomeworkUnfinishedStudentList(String homeworkId) {
         String sql = "SELECT users.user_id,name,major,class FROM users " +
                 "where user_type='STUDENT' and user_id not in (" +
@@ -134,12 +150,12 @@ public class TeacherDAO {
         try {
             db_manager.beginAffair();//开始事务
 
-            String sql = "insert into homework(title,create_time,closing_time,is_closing)" +
+            String sql = "insert into homework(title,begin_time,end_time,is_delete)" +
                     " values(?,?,?,0)";
-            if(db_manager.executeUpdate(sql, new String[]{newHomework.getHomeworkTitle()
+            if (db_manager.executeUpdate(sql, new String[]{newHomework.getHomeworkTitle()
                     , newHomework.getBeginTime()
                     , newHomework.getEndTime()
-            })!=1) {//插入作业记录
+            }) != 1) {//插入作业记录
                 db_manager.rollbackAffair();
                 return false;
             }
@@ -210,62 +226,62 @@ public class TeacherDAO {
         try {
             db_manager.beginAffair();
             //update作业状态
-            String updateHomeworkSql = "update homework set title=?,create_time=?,closing_time=? where id=?";
+            String updateHomeworkSql = "update homework set title=?,begin_time=?,end_time=? where id=?";
             if (db_manager.executeUpdate(updateHomeworkSql, new String[]{
                     homework.getHomeworkTitle(),
                     homework.getBeginTime(),
                     homework.getEndTime(),
-                    homework.getHomeworkId()}) != 1){
+                    homework.getHomeworkId()}) != 1) {
                 db_manager.rollbackAffair();
                 return false;
             }
             //update选择题
-            String updateChoiceSql="update hw_question_choice set question_content=?,refer_key=?,score=? where id=?";
+            String updateChoiceSql = "update hw_question_choice set question_content=?,refer_key=?,score=? where id=?";
             for (ChoiceHomework choiceHomework : homework.getChoiceHomeworkList()) {
-                if(db_manager.executeUpdate(updateChoiceSql,new String[]{
+                if (db_manager.executeUpdate(updateChoiceSql, new String[]{
                         choiceHomework.getQuestion(),
                         choiceHomework.getRef_ky(),
                         choiceHomework.getScore(),
                         choiceHomework.getId()
-                })!=1){
+                }) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
                 //update选项
-                String updateOptionSql="update choiceofquestion set content=? where choice_id=? and choice_key=?";
-                if(db_manager.executeUpdate(updateOptionSql,new String[]{
-                        choiceHomework.getChoice_A(),choiceHomework.getId(),"A"})!=1||
-                        db_manager.executeUpdate(updateOptionSql,new String[]{
-                                choiceHomework.getChoice_B(),choiceHomework.getId(),"B"})!=1||
-                        db_manager.executeUpdate(updateOptionSql,new String[]{
-                                choiceHomework.getChoice_C(),choiceHomework.getId(),"C"})!=1||
-                        db_manager.executeUpdate(updateOptionSql,new String[]{
-                                choiceHomework.getChoice_D(),choiceHomework.getId(),"D"})!=1) {
+                String updateOptionSql = "update choiceofquestion set content=? where choice_id=? and choice_key=?";
+                if (db_manager.executeUpdate(updateOptionSql, new String[]{
+                        choiceHomework.getChoice_A(), choiceHomework.getId(), "A"}) != 1 ||
+                        db_manager.executeUpdate(updateOptionSql, new String[]{
+                                choiceHomework.getChoice_B(), choiceHomework.getId(), "B"}) != 1 ||
+                        db_manager.executeUpdate(updateOptionSql, new String[]{
+                                choiceHomework.getChoice_C(), choiceHomework.getId(), "C"}) != 1 ||
+                        db_manager.executeUpdate(updateOptionSql, new String[]{
+                                choiceHomework.getChoice_D(), choiceHomework.getId(), "D"}) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
             }
             //update填空
-            String updateCompletionSql="update hw_question_completion set question_content=?,refer_key=?,score=? where id=?";
+            String updateCompletionSql = "update hw_question_completion set question_content=?,refer_key=?,score=? where id=?";
             for (CompletionHomework completionHomework : homework.getCompletionHomeworkList()) {
-                if(db_manager.executeUpdate(updateCompletionSql,new String[]{
+                if (db_manager.executeUpdate(updateCompletionSql, new String[]{
                         completionHomework.getCompletionContent(),
                         completionHomework.getRefKey(),
                         completionHomework.getScore(),
                         completionHomework.getId()
-                })!=1){
+                }) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
             }
             //update操作题
-            String updateOperationSql="update hw_question_operation set question_content=?,score=? where id=?";
+            String updateOperationSql = "update hw_question_operation set question_content=?,score=? where id=?";
             for (OperationHomework operationHomework : homework.getOperationHomeworkList()) {
-                if(db_manager.executeUpdate(updateOperationSql,new String[]{
+                if (db_manager.executeUpdate(updateOperationSql, new String[]{
                         operationHomework.getQuestionContent(),
                         operationHomework.getScore(),
                         operationHomework.getId()
-                })!=1){
+                }) != 1) {
                     db_manager.rollbackAffair();
                     return false;
                 }
@@ -282,6 +298,7 @@ public class TeacherDAO {
             return false;
         }
     }
+
     private String getChoiceId() throws SQLException {
         String getHwIdSql = "SELECT max(id) FROM hw_question_choice";
         ResultSet resultSet = db_manager.executeQuery(getHwIdSql, null);
@@ -306,13 +323,13 @@ public class TeacherDAO {
         homework.setCompletionHomeworkList(completionHomeworkList);
         homework.setOperationHomeworkList(operationHomeworkList);
 
-        String homeworkSql = "SELECT title,create_time,closing_time FROM homework where id=?";
+        String homeworkSql = "SELECT title,begin_time,end_time FROM homework where id=?";
         ResultSet homeworkResultSet = db_manager.executeQuery(homeworkSql, new String[]{homeworkId});
         try {
             if (homeworkResultSet.next()) {
                 homework.setHomeworkTitle(homeworkResultSet.getString("title"))
-                        .setBeginTime(homeworkResultSet.getString("create_time"))
-                        .setEndTime(homeworkResultSet.getString("closing_time"));
+                        .setBeginTime(homeworkResultSet.getString("begin_time"))
+                        .setEndTime(homeworkResultSet.getString("end_time"));
                 String getChiocesSql = "SELECT * FROM javawebcourseresources.hw_question_choice where hw_id=? order by question_index";
 
 
@@ -373,23 +390,25 @@ public class TeacherDAO {
             return null;
         }
     }
+
     public double[] getAvgStar() {
-        String ssql ="SELECT AVG(star1) s1,AVG(star2) s2,AVG(star3) s3,AVG(star4) s4 FROM teaching_evaluation";
-        ResultSet resultSet = db_manager.executeQuery(ssql,null);
+        String ssql = "SELECT AVG(star1) s1,AVG(star2) s2,AVG(star3) s3,AVG(star4) s4 FROM teaching_evaluation";
+        ResultSet resultSet = db_manager.executeQuery(ssql, null);
         try {
             resultSet.next();
-            double[] b=new double[4];
-            b[0]=resultSet.getDouble("s1");
-            b[1]=resultSet.getDouble("s2");
-            b[2]=resultSet.getDouble("s3");
-            b[3]=resultSet.getDouble("s4");
+            double[] b = new double[4];
+            b[0] = resultSet.getDouble("s1");
+            b[1] = resultSet.getDouble("s2");
+            b[2] = resultSet.getDouble("s3");
+            b[3] = resultSet.getDouble("s4");
             return b;
         } catch (SQLException e) {
             e.printStackTrace();
-            return  null;
+            return null;
         }
 
     }
+
     public ArrayList<TeachingEvaluation> getStudentEvaluation() {
         String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
         ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<TeachingEvaluation>();
@@ -401,7 +420,7 @@ public class TeacherDAO {
                 String evaluation_content = resultSet.getString("evaluation_content");
                 String evaluate_date = resultSet.getString("evaluate_date");
 
-                TeachingEvaluation teachingEvaluation = new TeachingEvaluation(name,evaluation_content , major, evaluate_date);
+                TeachingEvaluation teachingEvaluation = new TeachingEvaluation(name, evaluation_content, major, evaluate_date);
                 StudentEvaluationSaved.add(teachingEvaluation);
 
             }
@@ -409,10 +428,94 @@ public class TeacherDAO {
         } catch (SQLException e) {
 
             e.printStackTrace();
-            return  null;
+            return null;
         }
 
     }
 
+    public boolean correctOperation(String userId, String homeworkId, ArrayList<AnswerSheet> operations) {
+        Users student = new Users();
+        student.setUsername(userId);
+        StudentDAO studentDAO = new StudentDAO(student);
+        try {
+            db_manager.beginAffair();
+            String updateStatussql = "update homework_status set status=? where user_id=? and hw_id=?";
+            if (db_manager.executeUpdate(updateStatussql, new String[]{String.valueOf(CORRECTED), userId, homeworkId}) != 1) {
+                db_manager.rollbackAffair();
+                return false;
+            }
+
+            for (AnswerSheet answerSheet : operations) {
+                if (!studentDAO.giveMark("answersheet_operation", answerSheet.getQuestionId(), answerSheet.getScore())) {
+                    db_manager.rollbackAffair();
+                    return false;
+                }
+            }
+
+            db_manager.Commit();
+            return true;
+        } catch (SQLException e) {
+            try {
+                db_manager.rollbackAffair();
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                return false;
+            }
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteHomework(String homeworkId) {
+        if (!verifyUser())//验证用户
+            return false;
+        String deleteSql = "UPDATE homework SET is_delete=1 WHERE id=?";
+        return db_manager.executeUpdate(deleteSql, new String[]{homeworkId}) == 1;
+    }
+
+    private boolean verifyUser() {//验证用户
+        String verifySql = "select count(*) from users where user_id=? and password=?";
+        ResultSet resultSet = db_manager.executeQuery(verifySql, new String[]{
+                teacher.getUsername(), teacher.getPassword()
+        });
+        try {
+            return resultSet.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public String getStudentMajorName(String studentId) {
+        String sql = "select major,name from users where user_id=?";
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{studentId});
+        try {
+            if (resultSet.next()) {
+                String major = resultSet.getString("major");
+                String name = resultSet.getString("name");
+                return major + "&nbsp&nbsp&nbsp" + name;
+            } else {
+                return "获取信息失败";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "无法显示学生信息";
+        }
+    }
+
+    public void calAggregateScore(String userId, String homeworkId) {//计算总分
+        String sql = "update homework_status set score=(" +
+                "(select sum(ifnull(score,0)) from answersheet_choice where hw_id=? and user_id=?)+" +
+                "(select sum(ifnull(score,0)) from answersheet_completion where hw_id=? and user_id=?)+" +
+                " (select sum(ifnull(score,0)) from answersheet_operation where hw_id=? and user_id=?)" +
+                ")" +
+                " where hw_id=? and user_id=?";
+        db_manager.executeUpdate(sql, new String[]{
+                homeworkId, userId,
+                homeworkId, userId,
+                homeworkId, userId,
+                homeworkId, userId
+        });
+    }
 }
 

@@ -14,24 +14,17 @@
 <head>
    <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/doHomeworkStyle.css"/>
-   <style type="text/css">
-      .is-correct {
-         margin-right: 10%;
-         margin-bottom: 80px;
-      }
-      .operation-answer{
-         padding:10px;
-      }
-   </style>
    <%
       String homeworkId = request.getParameter("homeworkId");
       String homeworkTitle;
       Users student = (Users) session.getAttribute("user");
 
-      homeworkTitle = new StudentDAO().getHomeworkTitle(homeworkId);
+      StudentDAO studentDAO = new StudentDAO();
+      homeworkTitle = studentDAO.getHomeworkTitle(homeworkId);
 
-      Homework thisHomework = new TeacherDAO(student).getHomeworkDetail(homeworkId);
+      Homework thisHomework = new TeacherDAO().getHomeworkDetail(homeworkId);
       BrowserHomeworkDiv browserHomeworkDiv = new BrowserHomeworkDiv(student, thisHomework);
+
    %>
    <title><%=homeworkTitle%>
    </title>
@@ -45,14 +38,17 @@
          <h2><%=homeworkTitle%>
          </h2>
       </div>
+      <div align="right" style="color: red;margin-bottom: 20px;margin-right: 20px">
+         <p>得分：<%=StudentDAO.getAggregateScore(student.getUsername(), homeworkId)%>
+         </p>
+      </div>
       <%
          if (thisHomework.getChoiceHomeworkList().size() > 0) {
             out.println("<h4>选择题</h4>");
          }
       %>
       <div id="choicesField">
-         <%=browserHomeworkDiv.getChoiceDetailDiv()%>
-
+         <%=browserHomeworkDiv.getChoiceDetailDiv(false)%>
       </div>
       <%
          if (thisHomework.getCompletionHomeworkList().size() > 0) {
@@ -60,7 +56,7 @@
          }
       %>
       <div class="completionsField">
-         <%=browserHomeworkDiv.getCompletionDetailDiv()%>
+         <%=browserHomeworkDiv.getCompletionDetailDiv(false)%>
       </div>
       <%
          if (thisHomework.getOperationHomeworkList().size() > 0) {
@@ -68,10 +64,9 @@
          }
       %>
       <div class="operationsField">
-         <%=browserHomeworkDiv.getOperationDetailDiv()%>
-
+         <%=browserHomeworkDiv.getOperationDetailDiv(false)%>
       </div>
-
    </div>
+</div>
 </body>
 </html>
