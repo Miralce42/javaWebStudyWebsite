@@ -42,7 +42,7 @@ public class TeacherDAO {
                 homeworkList.add(studentHomework);
             }
             //获取结束作业
-            String finishSql = "SELECT * FROM homework where now()>end_time ORDER BY end_time DESC";
+            String finishSql = "SELECT * FROM homework where is_delete=0 and now()>end_time ORDER BY end_time DESC";
             ResultSet finishedSet = db_manager.executeQuery(finishSql, null);
             while (finishedSet.next()) {
                 String id = finishedSet.getString("id");
