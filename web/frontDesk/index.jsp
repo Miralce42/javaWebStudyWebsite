@@ -107,7 +107,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
+                                        <h1>JAVA WEB <strong></strong> will teach you how to create your own Website.</h1>
                                         <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingResource.jsp"> <i class="icon-monitor" ></i>下载资源</a> <a href="theTeachingCourseware.jsp" class="btn  btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>
@@ -120,7 +120,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
+                                        <h1>JAVA WEB <strong></strong> will teach you how to create your own Website.</h1>
                                         <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingResource.jsp"> <i class="icon-monitor" ></i>下载资源</a> <a href="theTeachingCourseware.jsp" class="btn  btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>
@@ -133,7 +133,7 @@
                             <div class="row">
                                 <div class="col-md-8 col-md-offset-2 text-center js-fullheight slider-text">
                                     <div class="slider-text-inner">
-                                        <h1>JAVA WEB <strong></strong> will tech you how to create your own Website.</h1>
+                                        <h1>JAVA WEB <strong></strong> will teach you how to create your own Website.</h1>
                                         <p><a class="btn btn-primary btn-demo popup-vimeo" href="theTeachingResource.jsp"> <i class="icon-monitor" ></i>下载资源</a> <a href="theTeachingCourseware.jsp" class="btn  btn-primary btn-learn">学习<i class="icon-arrow-right3"></i></a></p>
                                     </div>
                                 </div>

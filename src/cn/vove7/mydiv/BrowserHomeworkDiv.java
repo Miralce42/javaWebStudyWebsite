@@ -2,6 +2,7 @@ package cn.vove7.mydiv;
 
 import WebDB.StudentDAO;
 import beans.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Vove on 2017/5/29.
@@ -43,7 +44,8 @@ public class BrowserHomeworkDiv {
         return builder.toString();
     }
 
-    private String buildChoiceDetail(int index, ChoiceHomework choiceHomework,boolean b) {
+    @NotNull
+    private String buildChoiceDetail(int index, ChoiceHomework choiceHomework, boolean b) {
         String commitKey = studentDAO.getChoiceAnswer(choiceHomework.getId());
         String ref_key=choiceHomework.getRef_ky();
         String answerScore=studentDAO.getChoiceAnswerScore(choiceHomework.getId());//得分

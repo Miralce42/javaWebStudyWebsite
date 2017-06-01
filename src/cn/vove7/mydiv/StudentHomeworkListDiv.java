@@ -2,6 +2,7 @@ package cn.vove7.mydiv;
 
 import beans.HomeworkStudentStatus;
 import beans.StudentHomework.HomeworkStatus;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -12,7 +13,8 @@ import java.util.ArrayList;
  */
 public class StudentHomeworkListDiv {
 
-    public static String getDivValue(ArrayList<HomeworkStudentStatus> homeworkStudentStatusArrayList, HomeworkStatus homeworkStatus,boolean b){
+    @NotNull
+    public static String getDivValue(ArrayList<HomeworkStudentStatus> homeworkStudentStatusArrayList, HomeworkStatus homeworkStatus, boolean b){
         StringBuilder builder=new StringBuilder();
         int i = 1;
         boolean haveStudent = false;
