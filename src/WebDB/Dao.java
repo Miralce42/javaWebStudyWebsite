@@ -112,7 +112,7 @@ public class Dao {
 	}
 
 	public int selectClassName(ArrayList<String> classNames){
-		String ssql = "SELECT distinct CONCAT(major,class) from javawebcourseresources.users ORDER BY major;";
+		String ssql = "SELECT distinct CONCAT(major,class) from javawebcourseresources.users where user_type='STUDENT' ORDER BY major;";
 		ResultSet rs = db_manager.executeQuery(ssql,null);
 		try {
 			while(rs.next()){

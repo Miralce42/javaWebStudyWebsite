@@ -2,7 +2,6 @@ package WebDB;
 
 import beans.*;
 import cn.vove7.ResultSetHelper;
-import org.sqlite.core.DB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
