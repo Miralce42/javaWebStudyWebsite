@@ -61,7 +61,7 @@
                 }
             %>
             <div class="operationsField">
-                <%=doHomeworkDiv.getOpeartionValue()%>
+                <%=doHomeworkDiv.getOperationValue()%>
             </div>
            <div align="center" style="margin-top: 20px">
               <a class="floatButton" onclick="saveHomework()">暂时保存</a>

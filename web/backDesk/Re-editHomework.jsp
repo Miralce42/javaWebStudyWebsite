@@ -57,7 +57,7 @@
              开始时间:<input CLASS="score" type="text" name="beginTime" id="beginTime" value="<%=thisHomework.getBeginTime()%>" title="选择开始时间"
                     onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
              结束时间:<input CLASS="score" type="text" name="endTime" id="endTime" value=" <%=thisHomework.getEndTime()%>" placeholder="选择结束时间" onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
-            <a class="floatButton" onclick="deleteHomework()">删除作业</a>
+            <a class="floatButton" onclick="recycleHomework()">放入回收站</a>
          </div>
          
          <h2>选择题</h2>
@@ -77,15 +77,13 @@
       </form>
    </div>
 
-   <form method="post" name="deleteForm" action="deleteHomework.action">
+   <form method="post" name="deleteForm" action="recycleHomework.action">
+      <input type="hidden" name="action" value="recycle">
       <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
    </form>
-   <script    type="text/javascript">
-       choiceNum=<%=thisHomework.getChoiceHomeworkList().size()+1%>;
-       completionNum=<%=thisHomework.getCompletionHomeworkList().size()+1%>;
-       operationNum=<%=thisHomework.getOperationHomeworkList().size()+1%>;
-       function deleteHomework() {
-           if(confirm("确认删除？")){
+   <script type="text/javascript">
+       function recycleHomework() {
+           if(confirm("确认放入回收站？")){
                document.deleteForm.submit();
            }
        }

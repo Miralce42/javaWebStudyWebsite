@@ -91,6 +91,10 @@
             <result name="success">/success.jsp?tag=suploadsuccess</result>
             <result name="fail">/fail.jsp</result>
         </action><!--教学资源多文件-->
+        <action name="recycleHomework" class="actions.DeleteHomeworkAction" method="recycleHomework">
+            <result name="success">/executeMessage.jsp</result>
+            <result name="error">/executeMessage.jsp</result>
+        </action>
         <action name="deleteHomework" class="actions.DeleteHomeworkAction" method="deleteHomework">
             <result name="success">/executeMessage.jsp</result>
             <result name="error">/executeMessage.jsp</result>

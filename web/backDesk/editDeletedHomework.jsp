@@ -59,6 +59,7 @@
                         onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
             结束时间:<input CLASS="score" type="text" name="endTime" id="endTime" placeholder="选择结束时间"
                         onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})" value="<%=thisHomework.getEndTime()%>">
+            <a class="floatButton" onclick="deleteHomework()">永久删除作业</a>
          </div>
 
          <h2>选择题</h2>
@@ -80,11 +81,20 @@
          <a class="floatButton" onclick="addOperation()">添加操作题</a>
       </form>
    </div>
-   <script>
-      setCompletionBum(<%=thisHomework.getCompletionHomeworkList().size()+1%>);
-      setChoiceBum(<%=thisHomework.getChoiceHomeworkList().size()+1%>);
-      setOperationNum(<%=thisHomework.getOperationHomeworkList().size()+1%>);
-   </script>
 </div>
+<script>
+    setCompletionBum(<%=thisHomework.getCompletionHomeworkList().size()+1%>);
+    setChoiceBum(<%=thisHomework.getChoiceHomeworkList().size()+1%>);
+    setOperationNum(<%=thisHomework.getOperationHomeworkList().size()+1%>);
+    function deleteHomework() {
+        if(confirm("确认放入回收站？")){
+            document.deleteForm.submit();
+        }
+    }
+</script>
+<form method="post" name="deleteForm" action="deleteHomework.action">
+   <input type="hidden" name="action" value="delete">
+   <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
+</form>
 </body>
 </html>

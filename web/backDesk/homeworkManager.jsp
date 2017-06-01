@@ -24,6 +24,7 @@
 <div id="fh5co-main" class="right">
    <!--右侧布局-->
    <div class="float-right">
+      <a class="floatButton" href="homeworkStatistics.jsp">作业统计</a>
       <a class="floatButton" href="publishHomework.jsp">发布新作业</a>
    </div>
    <div style="margin-top: 50px">

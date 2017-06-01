@@ -28,7 +28,7 @@
         StudentDAO studentDAO=new StudentDAO(student);
         ArrayList<StudentHomework> homeworkList=studentDAO.getHomeworkList();
 
-        out.println(ManagerHomeworkDiv.buildStuBumps(homeworkList));
+        out.println(ManagerHomeworkDiv.buildStuBumps(student.getUsername(),homeworkList));
     %>
 
 </body>

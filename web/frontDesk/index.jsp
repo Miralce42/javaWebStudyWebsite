@@ -149,12 +149,11 @@
         <div class="fh5co-narrow-content">
             <div class="row row-bottom-padded-md">
                 <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
-                    <img class="img-responsive" src="../frontDesk_assets/images/2.jpg" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
+                    <img class="img-responsive" src="../frontDesk_assets/images/java2.jpeg" alt="Free HTML5 Bootstrap Template by FreeHTML5.co">
                 </div>
                 <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
                     <h2 class="fh5co-heading">课程简介</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
-                    <p>Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
+                    <p>本课程正是以掌握Java Web应用开发为目标，介绍了Web应用开发多个层面上的技术，针对Java Web初学者，按照由浅人深，通俗易懂的原则介绍了Java Web应用开发基础知识、高级技术、编程应用实例，让学员了解、掌握Java Web应用及开发的基本思想，能用它编制面向对象和网络化的程序，并且能够根据实际需求编制出一些实用的程序。</p>
                 </div>
             </div>
         </div>
@@ -166,8 +165,7 @@
                 </div>
                 <div class="col-md-6 animate-box" data-animate-effect="fadeInLeft">
                     <h2 class="fh5co-heading">教学队伍</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
-                    <p>Quisque sit amet efficitur nih. Interdum et malesuada fames ac ante ipsum primis in faucibus interda et malesuada parturient.</p>
+                    <p>王志强，男，毕业于信息工程大学，主要研究方向web开发，移动互联网开发，多年来一直从事“《java/.net程序设计》”、“《移动互联网开发技术》”等课程的教学工作，教学效果良好。个人有较强的开发实战经验，为教学提供充足的实践经验，先后指导学生参加“互联网+，挑战杯”竞赛等，均取得不错的成绩。</p>
                 </div>
             </div>
         </div>

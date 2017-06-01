@@ -6,7 +6,7 @@ package beans;
  */
 public class Users {
     private String username;
-    private UserType user_type;
+//    private UserType user_type;
     private String name;
     private String password;
     private String sex;
@@ -71,11 +71,11 @@ public class Users {
     }
 
     public String getUser_type() {
-        return user_type.name();
+        return userType.name();
     }
 
     public void setUser_type(String user_type) {
-        this.user_type = UserType.valueOf(user_type.toUpperCase());
+        this.userType = UserType.valueOf(user_type.toUpperCase());
     }
 
     public String getSex() {

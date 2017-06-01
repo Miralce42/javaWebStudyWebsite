@@ -31,11 +31,10 @@
    <%
       String homeworkId = request.getParameter("homeworkId");
       String homeworkTitle = new StudentDAO().getHomeworkTitle(homeworkId);
-   %>
-   <title>学生作业详情</title>
-   <%
+
       String moduleString = "学生作业详情--" + homeworkTitle;
    %>
+   <title><%=moduleString%></title>
 </head>
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->

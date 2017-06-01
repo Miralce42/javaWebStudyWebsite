@@ -14,6 +14,8 @@ function checkHomework() {
     }
     var beginTime=$('#beginTime');
     var endTime=$('#endTime');
+    var begin = new Date(beginTime.val().replace(/-/g, "\/"));//转换日期
+    var end = new Date(endTime.val().replace(/-/g, "\/"));
     if (beginTime.val()===""){
         alert("请选择开始时间");
         beginTime.focus();
@@ -22,7 +24,7 @@ function checkHomework() {
         alert("请选择结束时间");
         endTime.focus();
         return;
-    }else if(beginTime>endTime){//
+    }else if(begin>end){//
         alert("请选择正确开始、结束时间");
         return;
     }

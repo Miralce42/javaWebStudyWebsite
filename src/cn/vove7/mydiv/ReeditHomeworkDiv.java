@@ -5,6 +5,8 @@ import beans.CompletionHomework;
 import beans.Homework;
 import beans.OperationHomework;
 import cn.vove7.mydiv.DoHomeworkDiv.ChoiceOption;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Vove on 2017/5/25.
@@ -45,6 +47,8 @@ public class ReeditHomeworkDiv {
       }
       return builder.toString();
    }
+
+   @NotNull
    private String buildOperationValue(int index, OperationHomework operationHomework){
       String deleteButton=isCanEdit?"<a class=\"floatButton\" onclick=\"deleteChoice(' + num + ')\">删除</a>":"";
       String id=operationHomework.getId();
@@ -110,6 +114,7 @@ public class ReeditHomeworkDiv {
               "参考答案:</td><td>" + ref_keyStringValue + "</td></tr> </table></div>";
       return choiceFieldString;
    }
+   @Contract(pure = true)
    private String getRefKeyString(int index, ChoiceOption choiceOption){
       String c_A = "",
               c_B = "",
