@@ -124,9 +124,12 @@ public class ManagerHomeworkDiv {
 
     private String buildBump_stu(String userId, String homeworkId) {//学生端
         String url = buttonValue.equals("查看") ? "browserHomework.jsp" : "doHomework.jsp";
-        String score = TeacherDAO.getStudentGrade(userId, homeworkId);
+        String score ="";
+        if(buttonValue.equals("查看")){
+            score = TeacherDAO.getStudentGrade(userId, homeworkId);
+        }
         String scoreString = "";
-        if (score != null) {
+        if (score != null&&!score.equals("")) {
             scoreString = "<div align='right' style='color:red'>" + score + "分</div>";
         }
         return
