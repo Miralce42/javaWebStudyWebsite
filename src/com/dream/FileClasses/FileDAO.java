@@ -56,10 +56,10 @@ public class FileDAO {
         try {
              int num=0;
            // System.out.println("here");
-             /*DB.executeQuery("update set sql_safe_updates=0;",null);
-             System.out.println("here");*/
-             num=DB.executeUpdate("delete from teachingfile where file_type=? and chapter=? and file_name like ?;", temps);//text字段影响用like
-           // System.out.println("here");
+             /*DB.executeQuery("update set sql_safe_updates=0;",null);*/
+             System.out.println("here");
+             num=DB.executeUpdate("delete from teachingfile where file_type=? and chapter=? and file_name like ? ;", temps);//text字段影响用like
+            System.out.println("here");
              if(num!=0)result=true;
          }
          catch (Exception e) {

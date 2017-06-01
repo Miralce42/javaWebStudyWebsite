@@ -54,6 +54,7 @@ public class FileDelete extends HttpServlet {
          // System.out.println(filePath);
           File root = new File(filePath);
           File[] files = root.listFiles();
+          System.out.println(files.length);
           for (int i = 0; i < files.length; i++) {
               File file = files[i];
               if(truename.equals(file.getName()))
