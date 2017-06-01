@@ -48,9 +48,9 @@ public class BrowserHomeworkDiv {
         String ref_key=choiceHomework.getRef_ky();
         String answerScore=studentDAO.getChoiceAnswerScore(choiceHomework.getId());//得分
         if(answerScore==null){
-            answerScore="未批阅";
+            answerScore="0";
         }
-        if(commitKey.equals("")){
+        if(commitKey==null||commitKey.equals("")){
             commitKey="未选择";
         }
         String str=b? "学生回答":"你的回答";

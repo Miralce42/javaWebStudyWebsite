@@ -1,6 +1,8 @@
 package WebDB;
 
 import beans.*;
+import cn.vove7.ResultSetHelper;
+import org.sqlite.core.DB;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +12,6 @@ import static beans.StudentHomework.HomeworkStatus.CORRECTED;
 
 /**
  * Created by Vove on 2017/5/20.
- *
  */
 public class TeacherDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -26,10 +27,10 @@ public class TeacherDAO {
 
     public ArrayList<StudentHomework> getHomeworkList() {//获取作业（未关闭-已关闭-已删除）
         //未结束作业
-        String unfinishSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC ";
+        String unfinishedSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC ";
 
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
-        ResultSet unfinishedSet = db_manager.executeQuery(unfinishSql, null);
+        ResultSet unfinishedSet = db_manager.executeQuery(unfinishedSql, null);
         try {
             while (unfinishedSet != null && unfinishedSet.next()) {
                 String id = unfinishedSet.getString("id");
@@ -299,6 +300,7 @@ public class TeacherDAO {
             return false;
         }
     }
+
     public boolean reopenHomework(Homework homework) {
         //删除原作业，新建作业。
         String deleteSql = "delete from homework where id=?";
@@ -419,7 +421,7 @@ public class TeacherDAO {
 
     public ArrayList<TeachingEvaluation> getStudentEvaluation() {
         String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
-        ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<TeachingEvaluation>();
+        ArrayList<TeachingEvaluation> StudentEvaluationSaved = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, new String[]{});
         try {
             while (resultSet.next()) {
@@ -440,9 +442,17 @@ public class TeacherDAO {
         }
 
     }
-    public boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status){
+
+    public static String getStudentGrade(String userId, String homeworkId) {
+        String sql = "select score from homework_status where user_id=? and hw_id=?";
+        ResultSet resultSet = new DB_Manager().executeQuery(sql, new String[]{userId, homeworkId});
+
+        return ResultSetHelper.getString(resultSet,"score");
+    }
+
+    boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status) {
         String updateStatusSql = "update homework_status set status=? where user_id=? and hw_id=?";
-        return db_manager.executeUpdate(updateStatusSql, new String[]{String.valueOf(status), userId, homeworkId})==1;
+        return db_manager.executeUpdate(updateStatusSql, new String[]{String.valueOf(status), userId, homeworkId}) == 1;
     }
 
     public boolean correctOperation(String userId, String homeworkId, ArrayList<AnswerSheet> operations) {
@@ -451,7 +461,7 @@ public class TeacherDAO {
         StudentDAO studentDAO = new StudentDAO(student);
         try {
             db_manager.beginAffair();
-            if (!updateStuHomeworkStatus(userId,homeworkId,CORRECTED)) {
+            if (!updateStuHomeworkStatus(userId, homeworkId, CORRECTED)) {
                 db_manager.rollbackAffair();
                 return false;
             }
@@ -462,7 +472,7 @@ public class TeacherDAO {
                     return false;
                 }
             }
-            calAggregateScore(userId,homeworkId);//更新总分
+            calAggregateScore(userId, homeworkId);//更新总分
 
             db_manager.Commit();
             return true;
@@ -478,11 +488,18 @@ public class TeacherDAO {
         }
     }
 
-    public boolean deleteHomework(String homeworkId) {
+    public boolean recycleHomework(String homeworkId) {
         if (!verifyUser())//验证用户
             return false;
         String deleteSql = "UPDATE homework SET is_delete=1 WHERE id=?";
         return db_manager.executeUpdate(deleteSql, new String[]{homeworkId}) == 1;
+    }
+
+    public boolean deleteHomework(String homeworkId) {
+        if (!verifyUser())//验证用户
+            return false;
+        String sql = "delete from homework where id=?";
+        return db_manager.executeUpdate(sql, new String[]{homeworkId}) == 1;
     }
 
     private boolean verifyUser() {//验证用户

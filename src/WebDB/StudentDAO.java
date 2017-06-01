@@ -10,12 +10,12 @@ import beans.StudentHomework.HomeworkStatus;
 import beans.TopicComments;
 import beans.TeachingEvaluation;
 import beans.Users;
+import cn.vove7.ResultSetHelper;
 
 import static beans.StudentHomework.HomeworkStatus.CORRECTED;
 
 /**
  * Created by Vove on 2017/5/20.
- *
  */
 public class StudentDAO {
     private DB_Manager db_manager = new DB_Manager();
@@ -63,7 +63,7 @@ public class StudentDAO {
             ResultSet finishedSet = db_manager.executeQuery(finishedSql, null);
             while (finishedSet.next()) {
                 String homeworkId = finishedSet.getString("id");
-                String title = finishedSet.getString("title")+"<div align=right>（已关闭）</div>";//显示已关闭
+                String title = finishedSet.getString("title") + "<div align=right>（已关闭）</div>";//显示已关闭
                 String createTime = finishedSet.getString("begin_time");
                 String closingTime = finishedSet.getString("end_time");
                 StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
@@ -142,26 +142,26 @@ public class StudentDAO {
         return topic;
     }
 
-   public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
-      String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content,evaluate_date) value(?,?,?,?,?,?,now())";
-      int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(),
-              teachingEvaluation.getStar1()
-              ,teachingEvaluation.getStar2()
-              ,teachingEvaluation.getStar3()
-              ,teachingEvaluation.getStar4()
-              ,teachingEvaluation.getContent()});
-      if (rs == 1) {
-         return true;
-      }
-      return false;
-   }
+    public boolean addTeachingEvaluation(TeachingEvaluation teachingEvaluation) {
+        String ssql = "insert into javawebcourseresources.teaching_evaluation(user_id,star1,star2,star3,star4,evaluation_content,evaluate_date) value(?,?,?,?,?,?,now())";
+        int rs = db_manager.executeUpdate(ssql, new String[]{teachingEvaluation.getUsername(),
+                teachingEvaluation.getStar1()
+                , teachingEvaluation.getStar2()
+                , teachingEvaluation.getStar3()
+                , teachingEvaluation.getStar4()
+                , teachingEvaluation.getContent()});
+        if (rs == 1) {
+            return true;
+        }
+        return false;
+    }
 
-   public int createComment(TopicComments comment){
-      String ssql = "insert into javawebcourseresources.topiccomments(" +
-              "topic_id,user_id,content,is_deleted) " +
-              "values(?,?,?,0)";
-      return db_manager.executeUpdate(ssql,new String[]{comment.getTopicId(),comment.getUsername(),comment.getContent()});
-   }
+    public int createComment(TopicComments comment) {
+        String ssql = "insert into javawebcourseresources.topiccomments(" +
+                "topic_id,user_id,content,is_deleted) " +
+                "values(?,?,?,0)";
+        return db_manager.executeUpdate(ssql, new String[]{comment.getTopicId(), comment.getUsername(), comment.getContent()});
+    }
 
     public ArrayList<TopicComments> getAllComment(String topic_id) {
         String ssql = "select * from javawebcourseresources.topiccomments where is_deleted = 0 and topic_id=?";
@@ -255,9 +255,10 @@ public class StudentDAO {
         ResultSet resultSet = db_manager.executeQuery(sql, new String[]{completionId, student.getUsername()});
         return getAnswer(resultSet);
     }
-    public String getOperationAnswer(String operationId){
-        String sql="SELECT * FROM answersheet_operation where question_id=? and user_id=?";
-        return getAnswer(db_manager.executeQuery(sql,new String[]{operationId,student.getUsername()}));
+
+    public String getOperationAnswer(String operationId) {
+        String sql = "SELECT * FROM answersheet_operation where question_id=? and user_id=?";
+        return getAnswer(db_manager.executeQuery(sql, new String[]{operationId, student.getUsername()}));
     }
 
     private String getAnswer(ResultSet resultSet) {
@@ -365,10 +366,11 @@ public class StudentDAO {
                 new TeacherDAO().updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(),
                         homeworkAnswerSheet.getHomeworkId(), CORRECTED);
     }
-    private boolean isExistAnswer(String tableName,String questionId,String userId){//提交作业检查记录
-        String sql="SELECT answer FROM "+tableName+" where question_id=? and user_id=?";
+
+    private boolean isExistAnswer(String tableName, String questionId, String userId) {//提交作业检查记录
+        String sql = "SELECT answer FROM " + tableName + " where question_id=? and user_id=?";
         try {
-            return db_manager.executeQuery(sql,new String[]{questionId,userId}).next();
+            return db_manager.executeQuery(sql, new String[]{questionId, userId}).next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -382,41 +384,44 @@ public class StudentDAO {
 //            String homeworkId=homeworkAnswerSheet.getHomeworkId();
 
             //批阅该学生选择题
-            String getChoiceKeySql="SELECT refer_key,score FROM hw_question_choice where id=?";
-            for (AnswerSheet choiceAnswer:homeworkAnswerSheet.getChoiceAnswers()){
-                String[] result=getKey_Score(db_manager.executeQuery(getChoiceKeySql,new String[]{
+            String getChoiceKeySql = "SELECT refer_key,score FROM hw_question_choice where id=?";
+            for (AnswerSheet choiceAnswer : homeworkAnswerSheet.getChoiceAnswers()) {
+                String[] result = getKey_Score(db_manager.executeQuery(getChoiceKeySql, new String[]{
                         choiceAnswer.getQuestionId()}));
-                if(result==null){
+                if (result == null) {
                     db_manager.rollbackAffair();
                     return false;
                 }
-                double quetionScore=Double.parseDouble(result[1]);//题目分
-                double getScore=choiceAnswer.getAnswer().equals(result[0])? quetionScore:0;//判断得分
-                if(!giveMark("answersheet_choice",choiceAnswer.getQuestionId(),getScore)){//给分
+                double questionScore = Double.parseDouble(result[1]);//题目分
+                double getScore = 0;
+                if (choiceAnswer.getAnswer() != null) {
+                    getScore = choiceAnswer.getAnswer().equals(result[0]) ? questionScore : 0;//判断得分
+                }
+                if (!giveMark("answersheet_choice", choiceAnswer.getQuestionId(), getScore)) {//给分
                     db_manager.rollbackAffair();
                     return false;
                 }
             }
 
             //填空每个空均分题分
-            String getCompletionKeySql="SELECT refer_key,score FROM hw_question_completion where id=?";
-            for (AnswerSheet completionAnswer:homeworkAnswerSheet.getCompletionAnswers()){
-                String[] result=getKey_Score(db_manager.executeQuery(getCompletionKeySql,new String[]{
-                    completionAnswer.getQuestionId()}));
-                if(result==null){
+            String getCompletionKeySql = "SELECT refer_key,score FROM hw_question_completion where id=?";
+            for (AnswerSheet completionAnswer : homeworkAnswerSheet.getCompletionAnswers()) {
+                String[] result = getKey_Score(db_manager.executeQuery(getCompletionKeySql, new String[]{
+                        completionAnswer.getQuestionId()}));
+                if (result == null) {
                     db_manager.rollbackAffair();
                     return false;
                 }
-                String[] answerKey=result[0].split("#");//参考答案
-                double perScore=Double.parseDouble(result[1])/(answerKey.length);//每个空的分
-                String[] stuAnswer=completionAnswer.getAnswer().split("#");//学生答案
-                int correctNum=0;//答对数
-                for(int i=0;i<answerKey.length&&i<stuAnswer.length;i++){
-                    if(stuAnswer[i].equals(answerKey[i]))
+                String[] answerKey = result[0].split("#");//参考答案
+                double perScore = Double.parseDouble(result[1]) / (answerKey.length);//每个空的分
+                String[] stuAnswer = completionAnswer.getAnswer().split("#");//学生答案
+                int correctNum = 0;//答对数
+                for (int i = 0; i < answerKey.length && i < stuAnswer.length; i++) {
+                    if (stuAnswer[i].equals(answerKey[i]))
                         correctNum++;
                 }
-                double getScore=perScore*correctNum;//得分
-                if(!giveMark("answersheet_completion",completionAnswer.getQuestionId(),getScore)){//给分
+                double getScore = perScore * correctNum;//得分
+                if (!giveMark("answersheet_completion", completionAnswer.getQuestionId(), getScore)) {//给分
                     db_manager.rollbackAffair();
                     return false;
                 }
@@ -434,7 +439,8 @@ public class StudentDAO {
             return false;
         }
     }
-    private String[] getKey_Score(ResultSet resultSet){//获取参考答案&分数
+
+    private String[] getKey_Score(ResultSet resultSet) {//获取参考答案&分数
         try {
             resultSet.next();
             return new String[]{
@@ -446,20 +452,22 @@ public class StudentDAO {
             return null;
         }
     }
-    public boolean giveMark(String tableName,String questionId,double score){
-        String sql="update "+tableName+" set score=? where question_id=? and user_id=?";
+
+    public boolean giveMark(String tableName, String questionId, double score) {
+        String sql = "update " + tableName + " set score=? where question_id=? and user_id=?";
         return db_manager.executeUpdate(sql, new String[]{
                 Double.toString(score),
                 questionId, student.getUsername()
         }) == 1;
     }
-    public String getHomeworkTitle(String homeworkId){
-        String sql="select title from homework where id=?";
-        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{homeworkId});
+
+    public String getHomeworkTitle(String homeworkId) {
+        String sql = "select title from homework where id=?";
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{homeworkId});
         try {
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return resultSet.getString("title");
-            }else {
+            } else {
                 return null;
             }
         } catch (SQLException e) {
@@ -467,13 +475,14 @@ public class StudentDAO {
             return null;
         }
     }
-    public HomeworkStatus getStudentHomeworkStatus(String homeworkId){
-        String sql="select status from homework_status where user_id=? and hw_id=?";
-        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername(),homeworkId});
+
+    public HomeworkStatus getStudentHomeworkStatus(String homeworkId) {
+        String sql = "select status from homework_status where user_id=? and hw_id=?";
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{student.getUsername(), homeworkId});
         try {
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 return HomeworkStatus.valueOf(resultSet.getString("status"));
-            }else {
+            } else {
                 return HomeworkStatus.UNFINISHED;//无记录,未开始
             }
         } catch (SQLException e) {
@@ -481,40 +490,35 @@ public class StudentDAO {
             return null;
         }
     }
-    public String getChoiceAnswerScore(String choiceId){
-        return getAnswerScore("answersheet_choice",choiceId);
+
+    public String getChoiceAnswerScore(String choiceId) {
+        return getAnswerScore("answersheet_choice", choiceId);
     }
-    public String getCompletionAnswerScore(String completionId){
-        return getAnswerScore("answersheet_completion",completionId);
+
+    public String getCompletionAnswerScore(String completionId) {
+        return getAnswerScore("answersheet_completion", completionId);
     }
-    public String getOperationAnswerScore(String operationId){
-        return getAnswerScore("answersheet_operation",operationId);
+
+    public String getOperationAnswerScore(String operationId) {
+        return getAnswerScore("answersheet_operation", operationId);
     }
-    private String getAnswerScore(String tableName,String questionId){
-        String sql="select score from "+tableName+" where user_id=? and question_id=?";
-        ResultSet resultSet=db_manager.executeQuery(sql,new String[]{student.getUsername(),questionId});
-        try {
-            if(resultSet.next()){
-                return resultSet.getString("score");
-//                return resultSet.getDouble("score");
-            }else {
-                return null;//未批改
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+
+    private String getAnswerScore(String tableName, String questionId) {
+        String sql = "select score from " + tableName + " where user_id=? and question_id=?";
+        ResultSet resultSet = db_manager.executeQuery(sql, new String[]{student.getUsername(), questionId});
+        return ResultSetHelper.getString(resultSet, "score");
     }
-    public static String getAggregateScore(String studentId,String homeworkId){//获取总分
-        String sql="select score from homework_status where user_id=? and hw_id=?";
-        ResultSet resultSet=new DB_Manager().executeQuery(sql,new String[]{
-                studentId,homeworkId
+
+    public static String getAggregateScore(String studentId, String homeworkId) {//获取总分
+        String sql = "select score from homework_status where user_id=? and hw_id=?";
+        ResultSet resultSet = new DB_Manager().executeQuery(sql, new String[]{
+                studentId, homeworkId
         });
         try {
-            if(resultSet.next()){
-                String score= resultSet.getString("score");
-                return score==null? "暂无得分":score;
-            }else {
+            if (resultSet.next()) {
+                String score = resultSet.getString("score");
+                return score == null ? "暂无得分" : score;
+            } else {
                 return "暂无得分";
             }
         } catch (SQLException e) {

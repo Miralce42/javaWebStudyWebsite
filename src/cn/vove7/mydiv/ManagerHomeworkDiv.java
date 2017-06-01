@@ -1,6 +1,7 @@
 package cn.vove7.mydiv;
 
 
+import WebDB.TeacherDAO;
 import beans.StudentHomework;
 
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ManagerHomeworkDiv {
         this.buttonValue = buttonValue;
     }
 
-    public static String buildStuBumps(ArrayList<StudentHomework> homeworkList) {
+    public static String buildStuBumps(String userId, ArrayList<StudentHomework> homeworkList) {
         StringBuilder builder = new StringBuilder();
         int i = 1;
         for (StudentHomework homework : homeworkList) {
@@ -38,7 +39,7 @@ public class ManagerHomeworkDiv {
                     homework.statusToValue_stu()
             );
 
-            builder.append(managerHomeworkDiv.buildBump_stu());//divContent
+            builder.append(managerHomeworkDiv.buildBump_stu(userId, homework.getId()));//divContent
 
             if (i % 3 == 0) {
                 builder.append("</div>");
@@ -121,8 +122,13 @@ public class ManagerHomeworkDiv {
     }
 
 
-    private String buildBump_stu() {//学生端
+    private String buildBump_stu(String userId, String homeworkId) {//学生端
         String url = buttonValue.equals("查看") ? "browserHomework.jsp" : "doHomework.jsp";
+        String score = TeacherDAO.getStudentGrade(userId, homeworkId);
+        String scoreString = "";
+        if (score != null) {
+            scoreString = "<div align='right' style='color:red'>" + score + "分</div>";
+        }
         return
                 " <div class=\"col-md-4\">\n" +
                         "     <div class=\"panel\">\n" +
@@ -132,7 +138,7 @@ public class ManagerHomeworkDiv {
                         "             </div>\n" +
                         "         </div>\n" +
                         "         <div class=\"panel-body\">\n"
-                        + body +
+                        + scoreString + body +
                         "         </div>\n" +
                         "         <div class=\"panel-buttonValue\">\n" +
                         "           <a href=" + url + "?homeworkId=" + hwId + " class='floatButton'>  " + buttonValue + "</a>\n" +
@@ -144,8 +150,8 @@ public class ManagerHomeworkDiv {
     private String buildBump_tea(boolean isDeleted) {//构造开放作业块
 
         String buttonValue =
-                 "<a href="+(!isDeleted ?("Re-editHomework.jsp"):"editDeletedHomework.jsp")+"?homeworkId=" + hwId + " class='floatButton'>"
-                         +(!isDeleted? "重新编辑":"重新编辑发布" )+ "</a>" +
+                "<a href=" + (!isDeleted ? ("Re-editHomework.jsp") : "editDeletedHomework.jsp") + "?homeworkId=" + hwId + " class='floatButton'>"
+                        + (!isDeleted ? "重新编辑" : "重新编辑发布") + "</a>" +
                         (!isDeleted ? "<a href=studentsHomeworkList.jsp?homeworkId=" + hwId + " class='floatButton'> 批改作业</a>" : "");
 
         return

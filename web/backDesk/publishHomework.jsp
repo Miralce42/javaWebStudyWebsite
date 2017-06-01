@@ -47,17 +47,17 @@
                 结束时间:<input CLASS="score" type="text" name="endTime" id="endTime" placeholder="选择结束时间" onclick="laydate({istime:true,format: 'YYYY-MM-DD hh:mm:ss'})">
             </div>
 
-            <h2>选择题</h2>
+            <h3>选择题</h3>
             <div id="choices_field">
             </div>
             <a class="floatButton" onclick="addChoice()">添加选择题</a>
             <br>
             <br>
-            <h2>填空题</h2>
+            <h3>填空题</h3>
             <div class="completions_field" id="completions_field">
             </div>
             <a class="floatButton" onclick="addCompletion()">添加填空题</a>
-            <h2>操作题</h2>
+            <h3>操作题</h3>
             <div class="operations_field" id="operations_field">
             </div>
             <a class="floatButton" onclick="addOperation()">添加操作题</a>
