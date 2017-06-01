@@ -3,6 +3,7 @@ package cn.vove7.mydiv;
 
 import WebDB.StudentDAO;
 import beans.*;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Created by Vove on 2017/5/25.
@@ -25,7 +26,7 @@ public class DoHomeworkDiv {
         }
         return builder.toString();
     }
-    public String getOpeartionValue(){
+    public String getOperationValue(){
         StringBuilder builder = new StringBuilder();
         int index = 1;
         for (OperationHomework operationHomework:homework.getOperationHomeworkList()){
@@ -102,7 +103,8 @@ public class DoHomeworkDiv {
                 "</div>";
         return str;
     }
-    private String buildOperationValue(int index,OperationHomework operationHomework){
+    @NotNull
+    private String buildOperationValue(int index, OperationHomework operationHomework){
         String savedAnswer=studentDAO.getOperationAnswer(operationHomework.getId());
         String operationQuestion=operationHomework.getQuestionContent();
 

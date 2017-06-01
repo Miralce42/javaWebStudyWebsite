@@ -3,6 +3,8 @@ package cn.vove7.mydiv;
 
 import WebDB.TeacherDAO;
 import beans.StudentHomework;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -23,6 +25,7 @@ public class ManagerHomeworkDiv {
         this.buttonValue = buttonValue;
     }
 
+    @NotNull
     public static String buildStuBumps(String userId, ArrayList<StudentHomework> homeworkList) {
         StringBuilder builder = new StringBuilder();
         int i = 1;
@@ -122,6 +125,7 @@ public class ManagerHomeworkDiv {
     }
 
 
+    @NotNull
     private String buildBump_stu(String userId, String homeworkId) {//学生端
         String url = buttonValue.equals("查看") ? "browserHomework.jsp" : "doHomework.jsp";
         String score ="";
@@ -150,6 +154,8 @@ public class ManagerHomeworkDiv {
                         " </div>\n";
     }
 
+    @NotNull
+    @Contract(pure = true)
     private String buildBump_tea(boolean isDeleted) {//构造开放作业块
 
         String buttonValue =
