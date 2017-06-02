@@ -363,8 +363,12 @@ public class StudentDAO {
         }
         //若无操作题，状态设为批改完成
         return homeworkAnswerSheet.getOperationAnswer().size() != 0 ||
-                new TeacherDAO().updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(),
+                updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(),
                         homeworkAnswerSheet.getHomeworkId(), CORRECTED);
+    }
+    private boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status) {
+        String updateStatusSql = "update homework_status set status=? where user_id=? and hw_id=?";
+        return db_manager.executeUpdate(updateStatusSql, new String[]{String.valueOf(status), userId, homeworkId}) == 1;
     }
 
     private boolean isExistAnswer(String tableName, String questionId, String userId) {//提交作业检查记录

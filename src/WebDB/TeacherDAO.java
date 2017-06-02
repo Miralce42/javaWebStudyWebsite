@@ -449,7 +449,7 @@ public class TeacherDAO {
         return ResultSetHelper.getString(resultSet,"score");
     }
 
-    boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status) {
+    private boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status) {
         String updateStatusSql = "update homework_status set status=? where user_id=? and hw_id=?";
         return db_manager.executeUpdate(updateStatusSql, new String[]{String.valueOf(status), userId, homeworkId}) == 1;
     }
