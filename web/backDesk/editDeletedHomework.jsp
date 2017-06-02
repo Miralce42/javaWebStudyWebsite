@@ -16,7 +16,6 @@
 
    <script type="text/javascript" src="../laydate/laydate.js"></script>
    <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
-   <script type="text/javascript" src="js/checkHomeworkInfo.js"></script>
    <script type="text/javascript" src="js/publishHomework.js"></script>
    <link type="text/css" rel="stylesheet" href="../myCss/publishHomework.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>

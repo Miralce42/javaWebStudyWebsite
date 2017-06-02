@@ -8,6 +8,9 @@ var operationNum = 1;
 var allChoiceValue = [];
 var allCompletionValue = [];
 var allOperationValue = [];
+
+document.write('<script type="text/javascript" src="js/checkHomeworkInfo.js"></script>');
+
 function setChoiceBum(num) {
     choiceNum=num;
 }

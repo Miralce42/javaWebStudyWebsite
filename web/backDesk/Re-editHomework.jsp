@@ -82,6 +82,9 @@
       <input type="hidden" name="homeworkId" value="<%=homeworkId%>">
    </form>
    <script type="text/javascript">
+       var completionNum=<%=thisHomework.getCompletionHomeworkList().size()+1%>;
+       var choiceNum=<%=thisHomework.getChoiceHomeworkList().size()+1%>;
+       var operationNum=<%=thisHomework.getOperationHomeworkList().size()+1%>;
        function recycleHomework() {
            if(confirm("确认放入回收站？")){
                document.deleteForm.submit();
