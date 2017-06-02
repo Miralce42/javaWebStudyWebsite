@@ -31,7 +31,7 @@
                /* System.out.println(12);*/
                 if(!resultSet.next())
                 {
-                   System.out.println(00);
+                 //  System.out.println(00);
             %>
                <label style="margin-left: 40%">暂无文件！</label>
             <%
@@ -50,8 +50,10 @@
         <tr>
             <td><span><%=filename%></span></td>
             <td><span>上传时间：<%=time%></span></td>
-            <td><a href="/delete.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>"> 删除</a></td>
+            <td><a href="/javaWebStudyWebsite/delete.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>"> 删除</a></td>
         </tr>
+      <%--  <a href="/backDesk/delete.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>">123123</a>
+--%>
         <%
                 }//while
                 out.println("</table>");

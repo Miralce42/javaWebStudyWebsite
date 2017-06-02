@@ -47,8 +47,10 @@
                       <tr>
                       <td><span><%=filename%></span></td>
                       <td><span>上传时间：<%=time%></span></td>
-                      <td><a href='practicedbdelete.action?info=实践教学资料/<%=section%>/<%=filename%>'> 删除</a></td>
-                       </tr>
+  <%--                    <td><a href='practicedbdelete.action?info=实践教学资料/<%=section%>/<%=filename%>'> 删除</a></td>
+    --%>
+                      <td><a href='/javaWebStudyWebsite/delete.servlet?filename=实践教学资料/<%=section%>/<%=filename%>'> 删除</a></td>
+                      </tr>
                        <%
                        }//while
                        out.println("</table>");

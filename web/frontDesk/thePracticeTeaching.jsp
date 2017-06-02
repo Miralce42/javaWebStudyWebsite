@@ -63,13 +63,13 @@
                 %>
                 <%--     <label><%=filename%></label><a href="/download.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>"><img src="../<%=url%>" title="<%=filename%>" alt="<%=filename%>"/>下载</a><br/>--%>
                 <div class="col-md-3 col-sm-6 col-padding text-center animate-box" >
-                    <a href="/download.servlet?filename=教学课件资料/<%=fileSection%>/<%=filename%>" class="work image-popup" style="background-image: url('../<%=url%>')">
+                    <a href="/javaWebStudyWebsite/download.servlet?filename=实践教学资料/<%=fileSection%>/<%=filename%>" class="work image-popup" style="background-image: url('../<%=url%>')">
                         <div class="desc">
                             <h3 style="width: 90%"><%=filename%></h3>
                             <span>上传时间：<%=resultSet.getString("upload_date")%></span>
                             <span>点击下载</span>
                         </div>
-                    </a>
+                     </a>
                 </div>
                 <%
                             }//遍历数据库
@@ -106,6 +106,8 @@
             </div><!---row-->
         </div><!---narrow-->
     </div><!---firstdiv-->
+
+
 </div><!---右侧框架-->
 </body>
 </html>
