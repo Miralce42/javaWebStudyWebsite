@@ -78,7 +78,7 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="index.html">后台管理系统</a>
+            <a href="homeworkManager.jsp">后台管理系统</a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
