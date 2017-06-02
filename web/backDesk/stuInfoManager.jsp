@@ -119,7 +119,7 @@
                             Users allStu = Students.get(i);
 
                     %>
-                        <tr ondblclick="showOneStudent(<%=allStu.getUsername()%>)">
+                        <tr ondblclick="showOneStudent('<%=allStu.getUsername()%>')">
                             <td><%=allStu.getUsername()%></td>
                             <td><%=allStu.getName()%></td>
                             <td><%=allStu.getMajor()%></td>
