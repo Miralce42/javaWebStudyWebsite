@@ -1,0 +1,39 @@
+.list-col {
+    float: left;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+    animation: fadeinLeft 1s;
+}
+
+.list-panel {
+    border-radius: 3px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    font-size: 1.1em;
+    background-color: #fff;
+    height: 80px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+}
+
+.list-heading {
+    position: relative;
+    padding-left: 10px;
+    padding-right: 5px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.list-title {
+    font-weight: 300;
+}
+.title-right{
+    margin-left: 5px;
+    margin-top: 20px;
+}
+.list-box{
+    display:inline-block;
+}

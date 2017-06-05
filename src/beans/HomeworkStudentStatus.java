@@ -43,17 +43,29 @@ public class HomeworkStudentStatus {
             default:
                 buttonStatusValue = "";
         }
-        return " <div class=\"col-md-4\">\n" +
-                "     <div class=\"panel\">\n" +
-                "         <div class=\"panel-heading\">\n" +
-                "             <div class=\"page-title\">" + name +
-                "<div class='title-right'>" + major + classname + "</div>" + scoreDiv+
-                "             </div>" +
+        return "<div class=\"list-col\">\n" +
+                "      <div class=\"list-panel\">\n" +
+                "         <div class=\"list-heading\">\n" +
+                "            <div class=\"list-title\" >\n" +
+                "               <span>"+major+ classname +" &nbsp "+name+"</span>\n" +
+                "               <span class=\"title-right\" style=\"float: right;\">\n" +
+                "                  "+buttonStatusValue+"\n" +
+                "               </span>\n" +
+                "            </div>\n" +
                 "         </div>\n" +
-                "         <div class=\"panel-buttonValue\">" + buttonStatusValue +
-                "         </div>\n" +
-                "     </div>\n" +
-                " </div>\n";
+                "      </div>\n" +
+                "   </div>";
+//                " <div class=\"col-md-4\">\n" +
+//                "     <div class=\"panel\">\n" +
+//                "         <div class=\"panel-heading\">\n" +
+//                "             <div class=\"page-title\">" + name +
+//                "<div class='title-right'>" + major + classname + "</div>" + scoreDiv+
+//                "             </div>" +
+//                "         </div>\n" +
+//                "         <div class=\"panel-buttonValue\">" + buttonStatusValue +
+//                "         </div>\n" +
+//                "     </div>\n" +
+//                " </div>\n";
     }
 
 

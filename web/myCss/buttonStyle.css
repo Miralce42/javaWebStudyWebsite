@@ -12,13 +12,13 @@
 }
 
 a.floatButton {
-    margin: 10px;
+    margin: 5px;
     box-sizing: inherit;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26);
     text-align: center;
     background-color: #4285f4;
     border: 0;
-    padding:5px;
+    padding:4px;
     border-radius: 2px;
     color: #fff;
     cursor: pointer;

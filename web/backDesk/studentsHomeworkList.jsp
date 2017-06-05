@@ -19,6 +19,7 @@
 <head>
    <link type="text/css" rel="stylesheet" href="../myCss/homeworkDivStyle.css">
    <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css">
+   <link type="text/css" rel="stylesheet" href="css/stu_hw_list_style.css">
 
    <%
       Users teacher = (Users) session.getAttribute("user");
@@ -34,7 +35,8 @@
 
       String moduleString = "学生作业详情--" + homeworkTitle;
    %>
-   <title><%=moduleString%></title>
+   <title><%=moduleString%>
+   </title>
 </head>
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
@@ -43,34 +45,38 @@
    <!--右侧布局-->
    <p>已提交同学</p>
    <hr class="blue">
-   <%
-      ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = teacherDAO.getFinishedAndSavedStudentList(homeworkId);
-      String finishedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, FINISHED, false);
-      out.print(finishedStu);
-   %>
-
+   <div class="list-box">
+      <%
+         ArrayList<HomeworkStudentStatus> homeworkFinishedAndSavedStudentList = teacherDAO.getFinishedAndSavedStudentList(homeworkId);
+         String finishedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, FINISHED, false);
+         out.print(finishedStu);
+      %>
+   </div>
    <p>暂时保存同学</p>
    <hr class="blue">
-   <%
-      String savedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, SAVED, false);
-      out.print(savedStu);
-   %>
-
+   <div class="list-box">
+      <%
+         String savedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, SAVED, false);
+         out.print(savedStu);
+      %>
+   </div>
    <p>已批阅</p>
    <hr class="blue">
-   <%
-      String correctedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, CORRECTED, false);
-      out.print(correctedStu);
-   %>
-
+   <div class="list-box">
+      <%
+         String correctedStu = StudentHomeworkListDiv.getDivValue(homeworkFinishedAndSavedStudentList, CORRECTED, false);
+         out.print(correctedStu);
+      %>
+   </div>
    <p>未完成同学</p>
    <hr class="blue">
-   <%
-      ArrayList<HomeworkStudentStatus> homeworkUnfinishedStudentList = teacherDAO.getHomeworkUnfinishedStudentList(homeworkId);
-      String unfinishedStu = StudentHomeworkListDiv.getDivValue(homeworkUnfinishedStudentList, UNFINISHED, true);
-      out.println(unfinishedStu);
-   %>
-
+   <div class="list-box">
+      <%
+         ArrayList<HomeworkStudentStatus> homeworkUnfinishedStudentList = teacherDAO.getHomeworkUnfinishedStudentList(homeworkId);
+         String unfinishedStu = StudentHomeworkListDiv.getDivValue(homeworkUnfinishedStudentList, UNFINISHED, true);
+         out.println(unfinishedStu);
+      %>
+   </div>
 </div>
 </body>
 </html>
