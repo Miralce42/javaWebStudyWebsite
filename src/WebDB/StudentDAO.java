@@ -33,7 +33,7 @@ public class StudentDAO {
     }
 
     public ArrayList<StudentHomework> getHomeworkList() {
-        String sql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC";
+        String sql = "SELECT * FROM javawebcourseresources.homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY begin_time DESC";
         //未结束
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet resultSet = db_manager.executeQuery(sql, null);

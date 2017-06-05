@@ -27,10 +27,10 @@ public class HomeworkStudentStatus {
 
     public String getStatusDivContent() {
         String buttonStatusValue = "";
-        String score = (homeworkStatus== CORRECTED)? TeacherDAO.getStudentGrade(userId,homeworkId):null;
-        String scoreDiv="";
-        if(score!=null){
-            scoreDiv="<div class='title-right' style='color:red'>" + score + "分</div>";
+        String score = (homeworkStatus == CORRECTED) ? TeacherDAO.getStudentGrade(userId, homeworkId) : null;
+        String scoreDiv = "";
+        if (score != null) {
+            scoreDiv = "<div style='color:red;margin-top:9px;'>" + score + "分</div>";
         }
         switch (homeworkStatus) {
             case FINISHED:
@@ -47,11 +47,11 @@ public class HomeworkStudentStatus {
                 "      <div class=\"list-panel\">\n" +
                 "         <div class=\"list-heading\">\n" +
                 "            <div class=\"list-title\" >\n" +
-                "               <span>"+major+ classname +" &nbsp "+name+"</span>\n" +
+                "               <span>" + major + classname + " &nbsp " + name + "</span>\n" +
                 "               <span class=\"title-right\" style=\"float: right;\">\n" +
-                "                  "+buttonStatusValue+"\n" +
+                "                  " + buttonStatusValue + "\n" +
                 "               </span>\n" +
-                "            </div>\n" +
+                "            </div>\n" + scoreDiv +
                 "         </div>\n" +
                 "      </div>\n" +
                 "   </div>";

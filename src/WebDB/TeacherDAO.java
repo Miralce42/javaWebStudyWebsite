@@ -26,7 +26,7 @@ public class TeacherDAO {
 
     public ArrayList<StudentHomework> getHomeworkList() {//获取作业（未关闭-已关闭-已删除）
         //未结束作业
-        String unfinishedSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY end_time DESC ";
+        String unfinishedSql = "SELECT * FROM homework where is_delete=0 and now()<end_time and now()>begin_time ORDER BY begin_time DESC ";
 
         ArrayList<StudentHomework> homeworkList = new ArrayList<>();
         ResultSet unfinishedSet = db_manager.executeQuery(unfinishedSql, null);

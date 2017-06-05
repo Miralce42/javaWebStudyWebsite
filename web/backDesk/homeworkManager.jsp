@@ -12,12 +12,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-   <title>作业管理</title>
    <link type="text/css" rel="stylesheet" href="../myCss/homeworkDivStyle.css">
    <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css">
    <%
       String moduleString = "作业管理";
    %>
+   <title><%=moduleString%></title>
 </head>
 <body>
 <%@include file="sidebar.jsp"%><!--左侧布局-->
