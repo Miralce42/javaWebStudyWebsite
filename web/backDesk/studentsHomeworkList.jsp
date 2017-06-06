@@ -23,9 +23,6 @@
 
    <%
       Users teacher = (Users) session.getAttribute("user");
-      if (teacher == null || !teacher.getUser_type().equals("TEACHER")) {
-         return;
-      }
       TeacherDAO teacherDAO = new TeacherDAO(teacher);
 
    %>

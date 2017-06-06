@@ -1,4 +1,8 @@
-<%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="beans.StudentGradeStatics" %>
+<%@ page import="beans.Users" %>
+<%@ page import="WebDB.TeacherDAO" %>
+<%@ page import="cn.vove7.mydiv.GradeStaticsTable" %><%--
   Created by IntelliJ IDEA.
   User: Vove
   Date: 2017/6/1
@@ -11,8 +15,15 @@
    <link type="text/css" rel="stylesheet" href="../myCss/container-field.css"/>
    <link type="text/css" rel="stylesheet" href="../myCss/buttonStyle.css"/>
    <link type="text/css" rel="stylesheet" href="css/homeworkStaticsStyle.css"/>
+   <script type="text/javascript" src="ajax/ajax_func.js"></script>
    <%
       String moduleString = "作业统计";
+   %>
+   <%
+      Users teacher = (Users) session.getAttribute("user");
+
+      TeacherDAO teacherDAO = new TeacherDAO(teacher);
+      ArrayList<StudentGradeStatics> studentGradeStaticsList = teacherDAO.staticsStudentGradeList(null);
    %>
    <title><%=moduleString%>
    </title>
@@ -24,13 +35,15 @@
    <div class="container-field">
       <form class="navbar-form">
          <div class="input-group">
-            <input type="text" value="" class="form-control" name="searchValue" placeholder="查找学生">
-            <span class="input-group-btn"><button type="button" class="btn btn-primary">Go</button></span>
+            <input type="text" value="" class="form-control" id="condition" placeholder="模糊查询">
+            <span class="input-group-btn">
+               <button type="button" class="btn btn-primary" onclick="sendRequest()">查询</button>
+            </span>
          </div>
       </form>
       <div class="panel">
          <div class="panel-heading">
-            <h3 class="panel-title">Basic Table</h3>
+            <h3 class="panel-title">学生成绩统计</h3>
          </div>
          <div class="panel-body">
             <table class="table">
@@ -39,32 +52,12 @@
                   <th>#</th>
                   <th>学号</th>
                   <th>姓名</th>
-                  <th>专业</th>
-                  <th>平均分</th>
+                  <th>专业班级</th>
+                  <th>作业平均分</th>
                </tr>
                </thead>
-               <tbody>
-               <tr>
-                  <td>1</td>
-                  <td>Steve</td>
-                  <td>Steve</td>
-                  <td>Jobs</td>
-                  <td>@steve</td>
-               </tr>
-               <tr>
-                  <td>2</td>
-                  <td>Simon</td>
-                  <td>Philips</td>
-                  <td>Philips</td>
-                  <td>@simon</td>
-               </tr>
-               <tr>
-                  <td>3</td>
-                  <td>Jane</td>
-                  <td>Jane</td>
-                  <td>Doe</td>
-                  <td>@jane</td>
-               </tr>
+               <tbody id="tbody">
+               <%=GradeStaticsTable.getTableContent(studentGradeStaticsList)%>
                </tbody>
             </table>
          </div>

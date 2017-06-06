@@ -417,6 +417,34 @@ public class TeacherDAO {
         }
 
     }
+    public ArrayList<StudentGradeStatics> staticsStudentGradeList(String condition){
+        String conditionSql=condition==null?"":"where A.user_id like '%"+condition+"%' or name like '%"+condition+"%' or major like '%"+condition+"%' or class like '%"+condition+"%'";
+        String sql="select A.user_id,name,major,class,avg(ifnull(score,0)) as avgscore from (\n" +
+                "(SELECT user_id,name,major,class,id FROM users, homework \n" +
+                "where user_type='STUDENT' and is_delete=0)as A " +
+                "left join homework_status on A.id=homework_status.hw_id and A.user_id=homework_status.user_id  )\n" +
+                conditionSql+
+                "group by A.user_id " +
+                "order by avgscore desc";
+        ResultSet resultSet=db_manager.executeQuery(sql,null);
+        ArrayList<StudentGradeStatics> studentGradeStaticsList=new ArrayList<>();
+        try {
+            while (resultSet.next()){
+                StudentGradeStatics studentGradeStatics=new StudentGradeStatics(
+                  resultSet.getString("user_id"),
+                  resultSet.getString("name"),
+                  resultSet.getString("major"),
+                  resultSet.getString("class"),
+                  resultSet.getString("avgscore")
+                );
+                studentGradeStaticsList.add(studentGradeStatics);
+            }
+            return studentGradeStaticsList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     public ArrayList<TeachingEvaluation> getStudentEvaluation() {
         String sql = "SELECT name,major, evaluate_date,evaluation_content from teaching_evaluation,users where users.user_id=teaching_evaluation.user_id;";
