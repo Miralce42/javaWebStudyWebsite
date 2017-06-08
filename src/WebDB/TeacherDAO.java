@@ -421,7 +421,7 @@ public class TeacherDAO {
         String conditionSql=condition==null?"":"where A.user_id like '%"+condition+"%' or name like '%"+condition+"%' or major like '%"+condition+"%' or class like '%"+condition+"%'";
         String sql="select A.user_id,name,major,class,avg(ifnull(score,0)) as avgscore from (\n" +
                 "(SELECT user_id,name,major,class,id FROM users, homework \n" +
-                "where user_type='STUDENT' and is_delete=0)as A " +
+                "where user_type='STUDENT' and is_delete=0 and now()>end_time)as A " +
                 "left join homework_status on A.id=homework_status.hw_id and A.user_id=homework_status.user_id  )\n" +
                 conditionSql+
                 "group by A.user_id " +
