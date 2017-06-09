@@ -21,7 +21,8 @@ public class PublishHomeworkServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Users teacher = (Users) request.getSession().getAttribute("user");
         TeacherDAO teacherDAO = new TeacherDAO(teacher);
-        HomeworkReleaseWay releaseWay = HomeworkReleaseWay.valueOf(request.getParameter("action").toUpperCase());//发布方式
+        HomeworkReleaseWay releaseWay = HomeworkReleaseWay.valueOf(request.getParameter("action")
+                .toUpperCase());//发布方式
 
         //获取作业信息
         ArrayList<ChoiceHomework> choiceHomeworkList = new ArrayList<>();
@@ -42,7 +43,8 @@ public class PublishHomeworkServlet extends HttpServlet {
             String ref_key = request.getParameter("ref_key_" + i);
             String score = request.getParameter("score_" + i);
 
-            ChoiceHomework choiceHomework = new ChoiceHomework(choiceTitle, choice_A, choice_B, choice_C, choice_D, ref_key, score);
+            ChoiceHomework choiceHomework = new ChoiceHomework(choiceTitle, choice_A,
+                    choice_B, choice_C, choice_D, ref_key, score);
             choiceHomeworkList.add(choiceHomework);
         }
 
@@ -62,7 +64,8 @@ public class PublishHomeworkServlet extends HttpServlet {
                     request.getParameter("operation_score_" + i));
             operationHomeworkList.add(operationHomework);
         }
-        Homework homework = new Homework(homeworkTitle, beginTime, endTime, choiceHomeworkList, completionHomeworkList, operationHomeworkList);
+        Homework homework = new Homework(homeworkTitle, beginTime, endTime,
+                choiceHomeworkList, completionHomeworkList, operationHomeworkList);
 
         String pageTitle="";//执行消息页面title
         String pageContent="";

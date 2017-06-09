@@ -15,7 +15,7 @@ import java.io.IOException;
  * 学生做作业过滤
  * 已完成不可再答
  */
-public class DohHomeworkFilter implements Filter {
+public class DoHomeworkFilter implements Filter {
     public void destroy() {
     }
 
@@ -27,7 +27,7 @@ public class DohHomeworkFilter implements Filter {
         if (homeworkId != null) {
             Users student = (Users) session.getAttribute("user");
             StudentHomework.HomeworkStatus homeworkStatus = new StudentDAO(student).getStudentHomeworkStatus(homeworkId);
-            if (homeworkStatus != null &
+            if (homeworkStatus != null &&
                     homeworkStatus != StudentHomework.HomeworkStatus.FINISHED &&
                     homeworkStatus != StudentHomework.HomeworkStatus.CORRECTED) {//未完成，放通
                 chain.doFilter(req, resp);
@@ -35,7 +35,7 @@ public class DohHomeworkFilter implements Filter {
             }
         }
 
-        session.setAttribute("title", "出错");
+        session.setAttribute("title", "禁止访问");
         String pageContent = "作业已提交完成,返回<a href=frontDesk/studentHomework.jsp>作业列表</a>";
         session.setAttribute("pageContent", pageContent);
         ((HttpServletResponse) resp).sendRedirect("../executeMessage.jsp");

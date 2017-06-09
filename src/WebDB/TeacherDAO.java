@@ -214,7 +214,7 @@ public class TeacherDAO {
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                db_manager.rollbackAffair();
+                db_manager.rollbackAffair();//回滚
                 return false;
             } catch (SQLException e1) {
                 e1.printStackTrace();
@@ -418,7 +418,10 @@ public class TeacherDAO {
 
     }
     public ArrayList<StudentGradeStatics> staticsStudentGradeList(String condition){
-        String conditionSql=condition==null?"":"where A.user_id like '%"+condition+"%' or name like '%"+condition+"%' or major like '%"+condition+"%' or class like '%"+condition+"%'";
+        String conditionSql=condition==null?"":"where A.user_id like '%"+condition+
+                "%' or name like '%"+condition+"%' or major like '%"+condition+
+                "%' or class like '%"+condition+"%'";
+
         String sql="select A.user_id,name,major,class,avg(ifnull(score,0)) as avgscore from (\n" +
                 "(SELECT user_id,name,major,class,id FROM users, homework \n" +
                 "where user_type='STUDENT' and is_delete=0 and now()>end_time)as A " +

@@ -13,6 +13,7 @@ import beans.Users;
 import cn.vove7.ResultSetHelper;
 
 import static beans.StudentHomework.HomeworkStatus.CORRECTED;
+import static beans.StudentHomework.HomeworkStatus.FINISHED;
 
 /**
  * Created by Vove on 2017/5/20.
@@ -67,7 +68,7 @@ public class StudentDAO {
                 String createTime = finishedSet.getString("begin_time");
                 String closingTime = finishedSet.getString("end_time");
                 StudentHomework studentHomework = new StudentHomework(homeworkId, title, createTime, closingTime);
-                studentHomework.setHomeworkStatus(HomeworkStatus.FINISHED);//设为完成
+                studentHomework.setHomeworkStatus(FINISHED);//设为完成
                 homeworkList.add(studentHomework);
             }
 
@@ -341,7 +342,7 @@ public class StudentDAO {
             if (isExistAnswer("answersheet_completion", completionAnswerSheet.getQuestionId(), userId)) {
                 insertCompleionAnswerSql = "update answersheet_completion set answer=? where question_id=? and user_id=? and hw_id=?";
             } else {
-                insertCompleionAnswerSql = "insert into answersheet_completion(answer,question_id,user_id,hw_id) values(?,?,?,?)";
+                insertCompleionAnswerSql = "insert into answersheet_completion(answer,question_id,user_id,hw_id,score) values(?,?,?,?,0)";
             }
             if (db_manager.executeUpdate(insertCompleionAnswerSql, new String[]{
                     completionAnswerSheet.getAnswer(), completionAnswerSheet.getQuestionId(),
@@ -361,10 +362,11 @@ public class StudentDAO {
                     userId, homeworkAnswerSheet.getHomeworkId()
             }) != 1) return false;
         }
+        //提交时执行
         //若无操作题，状态设为批改完成
-        return homeworkAnswerSheet.getOperationAnswer().size() != 0 ||
-                updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(),
-                        homeworkAnswerSheet.getHomeworkId(), CORRECTED);
+        return homeworkAnswerSheet.getHomeworkStatus() != FINISHED ||
+                homeworkAnswerSheet.getOperationAnswer().size() != 0 ||
+                updateStuHomeworkStatus(homeworkAnswerSheet.getUserId(), homeworkAnswerSheet.getHomeworkId(), CORRECTED);
     }
     private boolean updateStuHomeworkStatus(String userId, String homeworkId, StudentHomework.HomeworkStatus status) {
         String updateStatusSql = "update homework_status set status=? where user_id=? and hw_id=?";
@@ -382,7 +384,7 @@ public class StudentDAO {
     }
 
     public boolean autoCorrectHomework(HomeworkAnswerSheet homeworkAnswerSheet) {//批改选择填空作业
-        //从学a生nswersheet_XX与hw_question_XXX比较
+        //从学生answersheet_XX与hw_question_XXX比较
         try {
             db_manager.beginAffair();//事务开始
 //            String homeworkId=homeworkAnswerSheet.getHomeworkId();

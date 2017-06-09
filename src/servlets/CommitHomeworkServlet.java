@@ -25,6 +25,7 @@ public class CommitHomeworkServlet extends HttpServlet {
         Users student = (Users) request.getSession().getAttribute("user");
         String action = request.getParameter("action");
         String homeworkId = request.getParameter("homeworkId");
+
         //提交设为FINISHED状态，保存SAVED状态
         HomeworkStatus homeworkStatus = action.equals("save") ? HomeworkStatus.SAVED : HomeworkStatus.FINISHED;
 

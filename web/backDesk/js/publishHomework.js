@@ -31,7 +31,6 @@ function addChoice() {
     for (i = 1; i < choiceNum; i++) {
         CKEDITOR.replace("choice-title_" + i);
     }
-
     var choices_field = $('.choices_field');
     choices_field.addClass('field-animation');
 }
@@ -43,7 +42,7 @@ function addCompletion() {
     allCompletionValue.push(getCompletionValue(completionNum, completionNum));
     completionNum++;
     document.getElementById("completions_field").innerHTML = allCompletionValue.toString();
-    for (i = 1; i < completionNum; i++) {
+    for (i = 1; i < completionNum; i++) {//初始化多功能编辑框
         CKEDITOR.replace("question_content_" + i);
     }
 }
@@ -183,7 +182,8 @@ function getCompletionValue(index, num) {
     var completionFieldString;
     completionFieldString = '<div class="completion_field">' +
         '<div class="title">题目' + num + ':</div><div align="right" style="margin-bottom: 10px;">' +
-        '分数：<input class="score" id="comp_score_'+num+'" name="comp_score_'+num+'" type="text" value="' + score + '"><a class="floatButton" onclick="deleteCompletion(' + num + ')">删除</a></div>' +
+        '分数：<input class="score" id="comp_score_'+num+'" name="comp_score_'+num+'" type="text" value="' +
+        score + '"><a class="floatButton" onclick="deleteCompletion(' + num + ')">删除</a></div>' +
         '<textarea class="ckeditor" name="question_content_' + num + '" ' +
         'id="question_content_' + num + '">' + textContent + '</textarea><br><p>参考答案(多空以#号分开):</p>' +
         '<input id="completion_refKey_'+num+'" name="completion_refKey_'+num+'" class="choice" type="text" value="'+refKey+'"></div>';
