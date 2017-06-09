@@ -22,11 +22,11 @@ public class BrowserHomeworkFilter implements Filter {
 
         HttpSession session = ((HttpServletRequest) req).getSession();
         String homeworkId = req.getParameter("homeworkId");
-        System.out.println(homeworkId);
+//        System.out.println(homeworkId);
         if (homeworkId != null) {
             Users student = (Users) session.getAttribute("user");
             StudentHomework.HomeworkStatus homeworkStatus = new StudentDAO(student).getStudentHomeworkStatus(homeworkId);
-            if (homeworkStatus == null ||
+            if (homeworkStatus != null &&
                     homeworkStatus == StudentHomework.HomeworkStatus.FINISHED ||
                     homeworkStatus == StudentHomework.HomeworkStatus.CORRECTED) {//完成，放通
                 chain.doFilter(req, resp);
